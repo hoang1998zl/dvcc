@@ -1,0 +1,228 @@
+[
+  {
+    "phongban_id": 1,
+    "name": "Phong Ban 1",
+    "children": [
+      {
+        "nv_id": 1,
+        "nv_name": "Nguyen Van A",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 1,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "https://apihr.weos.vn/public/chungChi/anbinh25_1709111619328.jpg",
+            "chungchi_status": 1,
+            "chungchi_thoigian": "2024-01-01"
+          },
+          {
+            "chungchi_id": 10,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "https://apihr.weos.vn/public/chungChi/anbinh25_1709111619328.jpg",
+            "chungchi_status": 1,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      },
+      {
+        "nv_id": 2,
+        "nv_name": "Nguyen Van B",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 2,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 1,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      },
+      {
+        "nv_id": 3,
+        "nv_name": "Nguyen Van C",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 3,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 0,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "phongban_id": 2,
+    "name": "Phong Ban 2",
+    "children": [
+      {
+        "nv_id": 4,
+        "nv_name": "Nguyen Van D",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 4,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 0,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      },
+      {
+        "nv_id": 5,
+        "nv_name": "Nguyen Van E",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 5,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 0,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      },
+      {
+        "nv_id": 6,
+        "nv_name": "Nguyen Van F",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 6,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 0,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      },
+      {
+        "nv_id": 7,
+        "nv_name": "Nguyen Van G",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 7,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 0,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      },
+      {
+        "nv_id": 8,
+        "nv_name": "Nguyen Van H",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 8,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 0,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      },
+      {
+        "nv_id": 9,
+        "nv_name": "Nguyen Van I",
+        "nv_order": "ID0123456",
+        "nv_chucvu": "Quản lý",
+        "nv_avatar": "",
+        "nv_ngaysinh": "2023-01-01",
+        "nv_gender": 1,
+        "nv_hocvan": "",
+        "nv_sdt_lienhe": "",
+        "nv_diachithuongtru": "",
+        "nv_diachitamtru": "",
+        "nv_ngayvaolam": "2023-01-01",
+        "nv_chungchi": [
+          {
+            "chungchi_id": 9,
+            "chungchi_name": "Tên chứng chỉ",
+            "chungchi_hinhanh": "",
+            "chungchi_status": 0,
+            "chungchi_thoigian": "2024-01-01"
+          }
+        ]
+      }
+    ]
+  }
+]

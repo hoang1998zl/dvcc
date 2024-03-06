@@ -1,0 +1,14 @@
+{
+  "labels": [
+    "Online",
+    "Offline"
+  ],
+  "data": [
+    4,
+    1
+  ],
+  "backgroundColor": [
+    "#6be6e8",
+    "#d9d9d9"
+  ]
+}

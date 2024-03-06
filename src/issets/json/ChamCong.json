@@ -1,0 +1,60 @@
+[
+  {
+    "nv_id": 1,
+    "nv_name": "Nguyễn Văn A",
+    "nv_avatar": "",
+    "chamcong_ngay": [
+      {
+        "ngay": 1,
+        "thang": 1,
+        "nam": 2023,
+        "chamcong_checkin": "07:00:00",
+        "chamcong_checkout": "17:00:00",
+        "chamcong_checkin_image": "",
+        "chamcong_checkout_image": "",
+        "chamcong_ghichu": "",
+        "chamcong_code": "1"
+      },
+      {
+        "ngay": 2,
+        "thang": 1,
+        "nam": 2023,
+        "chamcong_checkin": "07:00:00",
+        "chamcong_checkout": "17:00:00",
+        "chamcong_checkin_image": "",
+        "chamcong_checkout_image": "",
+        "chamcong_ghichu": "",
+        "chamcong_code": "2"
+      }
+    ]
+  },
+  {
+    "nv_id": 2,
+    "nv_name": "Nguyễn Văn B",
+    "nv_avatar": "",
+    "chamcong_ngay": [
+      {
+        "ngay": 1,
+        "thang": 1,
+        "nam": 2023,
+        "chamcong_checkin": "07:00:00",
+        "chamcong_checkout": "17:00:00",
+        "chamcong_checkin_image": "",
+        "chamcong_checkout_image": "",
+        "chamcong_ghichu": "",
+        "chamcong_code": "1"
+      },
+      {
+        "ngay": 2,
+        "thang": 1,
+        "nam": 2023,
+        "chamcong_checkin": "07:00:00",
+        "chamcong_checkout": "17:00:00",
+        "chamcong_checkin_image": "",
+        "chamcong_checkout_image": "",
+        "chamcong_ghichu": "",
+        "chamcong_code": "2"
+      }
+    ]
+  }
+]

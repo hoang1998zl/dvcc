@@ -1,0 +1,65 @@
+@mixin outlineStyle ($width) {
+  outline-width: $width;
+  outline-style: solid;
+  outline-color: #ccc;
+  outline-offset: -$width;
+}
+
+$orangeDefault: rgb(251, 146, 60);
+$orangeSecond: rgb(255, 237, 213);
+
+#ChamCongTable {
+
+  th,
+  td {
+    @include outlineStyle(1px);
+  }
+
+  thead {
+    tr {
+      background: linear-gradient(#f9f9f9, #e4e4e4);
+
+      th,
+      td {
+        text-align: center;
+        color: $orangeDefault;
+        padding: 0.5rem 0.25rem;
+
+        &:first-child {
+          text-align: left;
+          color: $orangeDefault;
+          padding-left: 0.5rem;
+          box-shadow: inset 5px 0px 0px 0px $orangeDefault;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        text-align: center;
+        position: relative;
+
+        &:first-child {
+          text-align: left;
+          box-shadow: inset 5px 0px 0px 0px $orangeSecond;
+        }
+
+        button {
+          text-align: left;
+          padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+        }
+      }
+
+      &.currentSelectedRow {
+        td {
+          &:first-child {
+            box-shadow: inset 5px 0px 0px 0px $orangeDefault;
+          }
+        }
+      }
+    }
+  }
+
+}

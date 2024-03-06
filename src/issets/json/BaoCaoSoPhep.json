@@ -1,0 +1,37 @@
+[
+  {
+    "bc_id": 1,
+    "bc_name": "Xin đi trễ",
+    "bc_color": "text-sky-500",
+    "bc_status": 1,
+    "bc_total": 0
+  },
+  {
+    "bc_id": 2,
+    "bc_name": "Xin về sớm",
+    "bc_color": "text-purple-500",
+    "bc_status": 1,
+    "bc_total": 0
+  },
+  {
+    "bc_id": 3,
+    "bc_name": "Nghỉ phép",
+    "bc_color": "text-red-500",
+    "bc_status": 1,
+    "bc_total": 0
+  },
+  {
+    "bc_id": 4,
+    "bc_name": "Công tác",
+    "bc_color": "text-green-500",
+    "bc_status": 1,
+    "bc_total": 0
+  },
+  {
+    "bc_id": 5,
+    "bc_name": "Tăng ca",
+    "bc_color": "text-orange-500",
+    "bc_status": 1,
+    "bc_total": 0
+  }
+]
