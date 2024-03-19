@@ -38,6 +38,7 @@ $orangeSecond: rgb(255, 237, 213);
   tbody {
     tr {
       td {
+        height: 2.5rem;
         text-align: center;
         position: relative;
 
@@ -48,12 +49,20 @@ $orangeSecond: rgb(255, 237, 213);
 
         button {
           text-align: left;
-          padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+          padding: 0px 0.25rem 0px 0.5rem;
+          position: absolute;
+          z-index: 0;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
         }
       }
 
       &.currentSelectedRow {
         td {
+          background-color: $orangeSecond;
+
           &:first-child {
             box-shadow: inset 5px 0px 0px 0px $orangeDefault;
           }

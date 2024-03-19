@@ -1,5 +1,5 @@
 import { Dropdown } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { BsThreeDots } from 'react-icons/bs';
 import { FiDownload } from "react-icons/fi";
 import { FaPen } from "react-icons/fa6";
@@ -20,10 +20,10 @@ export default function HoSoChungChi() {
           <div
             className='w-6 aspect-square rounded border border-gray-500 flex justify-center items-center'
           >
-            <FiDownload />
+            <FaPen />
           </div>
           <span>
-            Tải xuống
+            Cập nhật
           </span>
         </button>
       ),
@@ -38,10 +38,10 @@ export default function HoSoChungChi() {
           <div
             className='w-6 aspect-square rounded border border-gray-500 flex justify-center items-center'
           >
-            <FaPen />
+            <FiDownload />
           </div>
           <span>
-            Cập nhật
+            Tải xuống
           </span>
         </button>
       ),
@@ -50,7 +50,7 @@ export default function HoSoChungChi() {
 
   const renderChungChi = () => {
     return currentNhanVien?.nv_chungchi?.map((chungchi, index) => {
-      if (chungchi.chungchi_status == 1) {
+      if (chungchi.chungchi_status === 1) {
         return (
           <div
             key={index}
@@ -65,6 +65,7 @@ export default function HoSoChungChi() {
           </div>
         )
       }
+      return null
     })
   };
 

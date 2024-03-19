@@ -120,9 +120,9 @@ export default function ThoiGianChamCong() {
         </strong>
       </h1>
 
-      <div className='w-full grid grid-cols-1 lg:grid-cols-2'>
+      <div className='w-full h-full grid grid-cols-1 lg:grid-cols-2'>
 
-        <div className='w-full flex flex-col items-center gap-4 px-4'>
+        <div className='self-center w-full flex flex-col items-center gap-4 px-4'>
           <div className='w-full flex justify-center items-center gap-2 text-gray-800'>
             <BsFillBriefcaseFill
               className='text-gray-300 text-2xl'
@@ -179,7 +179,7 @@ export default function ThoiGianChamCong() {
           </div>
         </div>
 
-        <div className='w-full flex flex-col items-center gap-4 px-4 lg:border-l border-gray-800'>
+        <div className='self-center w-full flex flex-col items-center gap-4 px-4 lg:border-l border-gray-800'>
           {renderCaLamViec()}
         </div>
 

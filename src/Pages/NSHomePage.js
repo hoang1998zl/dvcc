@@ -7,7 +7,6 @@ import CauHinhChung from './CauHinhChung/CauHinhChung';
 import HoSo from './HoSo/HoSo';
 import ChamCong from './ChamCong/ChamCong';
 import DuyetApp from './DuyetApp/DuyetApp';
-import Marco from './Marco/Marco';
 import BaoCao from './BaoCao/BaoCao';
 
 export default function NSHomePage() {
@@ -34,7 +33,7 @@ export default function NSHomePage() {
         dispatch(setMainHeight(document.getElementById('NSHomePage').offsetHeight));
       })
     }
-  }, []);
+  }, [dispatch]);
 
   let renderContent = (currentMenu) => {
     switch (currentMenu) {
@@ -43,8 +42,7 @@ export default function NSHomePage() {
       case 3: return <HoSo />;
       case 4: return <DuyetApp />;
       case 5: return <ChamCong />;
-      case 6: return <Marco />;
-      default: return <CauHinhChung />;
+      default: return <BaoCao />;
     }
   }
 

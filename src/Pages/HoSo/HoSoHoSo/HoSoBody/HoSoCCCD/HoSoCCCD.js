@@ -76,7 +76,7 @@ export default function HoSoCCCD() {
           Căn cước công dân
         </h1>
       </div>
-      <div className='w-full grid grid-cols-1 2xl:grid-cols-2 gap-x-4'>
+      <div className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 gap-x-4'>
         <div
           className='flex flex-col items-center gap-y-2 relative'
         >

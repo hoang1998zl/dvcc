@@ -27,7 +27,7 @@ export default function HoSoGioiThieu() {
           <i className="fa-solid fa-pen"></i>
         </button>
       </div>
-      <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2 gap-4'>
+      <div className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 gap-4'>
         <div className='flex items-center gap-4 text-gray-400'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
             <i className="fa-solid fa-cake-candles"></i>
@@ -50,7 +50,7 @@ export default function HoSoGioiThieu() {
               Giới tính
             </p>
             <p className='font-bold text-black'>
-              {currentNhanVien?.nv_gender == 1 ? 'Nam' : (currentNhanVien?.nv_gender == 0 ? 'Nữ' : 'Khác')}
+              {currentNhanVien?.nv_gender === 1 ? 'Nam' : (currentNhanVien?.nv_gender === 0 ? 'Nữ' : 'Khác')}
             </p>
           </div>
         </div>

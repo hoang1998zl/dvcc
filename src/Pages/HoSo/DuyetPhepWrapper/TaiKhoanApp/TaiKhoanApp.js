@@ -113,7 +113,7 @@ export default function TaiKhoanApp() {
         mode="multiple"
         allowClear
         className='w-full'
-        placeholder="Chọn chi nhánh"
+        placeholder="Chọn giờ làm việc"
         options={optionsGioLamViec}
       />
       <div

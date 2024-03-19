@@ -3,33 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import logo from '../../issets/img/logo_orange.jpg'
-import cauhinhchung01 from "../../issets/img/cauhinhchung01.png";
-import cauhinhchung02 from "../../issets/img/cauhinhchung02.png";
-import cauhinhchung03 from "../../issets/img/cauhinhchung03.png";
-import app01 from "../../issets/img/app01.png";
-import app02 from "../../issets/img/app02.png";
-import app03 from "../../issets/img/app03.png";
-import chamcong01 from "../../issets/img/chamcong01.png";
-import chamcong02 from "../../issets/img/chamcong02.png";
-import chamcong03 from "../../issets/img/chamcong03.png";
-import hoso01 from "../../issets/img/hoso01.png";
-import hoso02 from "../../issets/img/hoso02.png";
-import hoso03 from "../../issets/img/hoso03.png";
-import taobangluong01 from "../../issets/img/taobangluong01.png";
-import taobangluong02 from "../../issets/img/taobangluong02.png";
-import taobangluong03 from "../../issets/img/taobangluong03.png";
 
 import { IoCube } from "react-icons/io5";
 import { FaArrowUpRightDots, FaGear, FaUser } from "react-icons/fa6";
 import { LuClock3 } from "react-icons/lu";
 import { FaLocationDot } from "react-icons/fa6";
-import { BsGearWide } from "react-icons/bs";
 
 import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
 
 export default function Header() {
 
-  const [currentHoverMenu, setCurrentHoverMenu] = useState(null);
+  const [currentHoverMenu, setCurrentHoverMenu] = useState(0);
 
   const { currentMenu } = useSelector(state => state.MenuSlice);
   const { isOpenBusiness } = useSelector((state) => state.MenuSlice);
@@ -43,19 +27,6 @@ export default function Header() {
       menu_icon: <FaArrowUpRightDots />,
     },
     {
-      menu_id: 2,
-      menu_name: "Cấu Hình",
-      menu_icon: <FaGear />,
-    },
-    {
-      menu_id: 3,
-      menu_name: "Hồ Sơ",
-      menu_icon: <FaUser />,
-    }, {
-      menu_id: 4,
-      menu_name: "Duyệt App",
-      menu_icon: <IoCube />,
-    }, {
       menu_id: 5,
       menu_name: "Chấm Công",
       menu_icon: (
@@ -64,24 +35,30 @@ export default function Header() {
           <FaLocationDot className='absolute top-1/2 left-1/2 text-center text-xs' />
         </>
       ),
-    }, {
-      menu_id: 6,
-      menu_name: "Macro Lương",
-      menu_icon: (
-        <>
-          <BsGearWide />
-          <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-sm pb-0.5 font-bold'>s</span>
-        </>
-      ),
-    }
+    },
+    {
+      menu_id: 4,
+      menu_name: "Duyệt App",
+      menu_icon: <IoCube />,
+    },
+    {
+      menu_id: 3,
+      menu_name: "Hồ Sơ",
+      menu_icon: <FaUser />,
+    },
+    {
+      menu_id: 2,
+      menu_name: "Cấu Hình",
+      menu_icon: <FaGear />,
+    },
   ];
 
   const renderMenuHeader = () => {
-    return menu.map((item, index) => {
+    return menu.map((item) => {
       return (
         <li
           key={item.menu_id}
-          className={`w-6 lg:w-20 h-full flex flex-col justify-center items-center cursor-pointer border-b-2 relative ${currentHoverMenu == item.menu_id || currentMenu == item.menu_id ? "border-orange-400" : "border-transparent"}`}
+          className={`w-6 lg:w-20 h-full flex flex-col justify-center items-center cursor-pointer border-b-2 relative ${currentHoverMenu === item.menu_id || currentMenu === item.menu_id ? "border-orange-400" : "border-transparent"}`}
           onClick={() => {
             dispatch(setCurrentMenu(item.menu_id));
           }}
@@ -93,12 +70,12 @@ export default function Header() {
           }}
         >
           <div
-            className={`h-6 aspect-square flex justify-center items-center text-xl relative ${currentHoverMenu == item.menu_id || currentMenu == item.menu_id ? "text-orange-400" : "text-gray-500"}`}
+            className={`h-6 aspect-square flex justify-center items-center text-xl relative ${currentHoverMenu === item.menu_id || currentMenu === item.menu_id ? "text-orange-400" : "text-gray-500"}`}
           >
             {item.menu_icon}
           </div>
           <span
-            className={`hidden lg:block text-xs lg:leading-4 ${currentHoverMenu == item.menu_id || currentMenu == item.menu_id ? "text-orange-400" : "text-gray-500"}`}
+            className={`hidden lg:block text-xs lg:leading-4 ${currentHoverMenu === item.menu_id || currentMenu === item.menu_id ? "text-orange-400" : "text-gray-500"}`}
           >
             {item.menu_name}
           </span>

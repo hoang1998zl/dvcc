@@ -51,6 +51,26 @@ export default function BaoCaoChart() {
     },
   };
 
+  const renderChart = () => {
+    return (
+      <div className='w-full p-4 rounded-lg shadow-lg bg-white'>
+        <p
+          className='text-xl font-bold text-orange-400'
+        >
+          Tên phòng ban
+        </p>
+        <Doughnut
+          data={data}
+          options={options}
+        />
+        <p className='text-gray-400 text-center -mt-4'>
+          {jsonChart.data[0]} / {jsonChart.data[0] + jsonChart.data[1]}
+          <span className='ml-2'>nhân sự</span>
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div
       className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 overflow-y-auto customScrollbar'
@@ -58,66 +78,7 @@ export default function BaoCaoChart() {
         maxHeight: `calc(${mainHeight}px - 3rem - ${baocaosophepHeight}px - 2rem)`,
       }}
     >
-      <div className='w-full p-4 rounded-lg shadow-lg bg-white'>
-        <p
-          className='text-xl font-bold text-orange-400'
-        >
-          Tên phòng ban
-        </p>
-        <Doughnut
-          data={data}
-          options={options}
-        />
-        <p className='text-gray-400 text-center -mt-4'>
-          {jsonChart.data[0]} / {jsonChart.data[0] + jsonChart.data[1]}
-          <span className='ml-2'>nhân sự</span>
-        </p>
-      </div>
-      <div className='w-full p-4 rounded-lg shadow-lg bg-white'>
-        <p
-          className='text-xl font-bold text-orange-400'
-        >
-          Tên phòng ban
-        </p>
-        <Doughnut
-          data={data}
-          options={options}
-        />
-        <p className='text-gray-400 text-center -mt-4'>
-          {jsonChart.data[0]} / {jsonChart.data[0] + jsonChart.data[1]}
-          <span className='ml-2'>nhân sự</span>
-        </p>
-      </div>
-      <div className='w-full p-4 rounded-lg shadow-lg bg-white'>
-        <p
-          className='text-xl font-bold text-orange-400'
-        >
-          Tên phòng ban
-        </p>
-        <Doughnut
-          data={data}
-          options={options}
-        />
-        <p className='text-gray-400 text-center -mt-4'>
-          {jsonChart.data[0]} / {jsonChart.data[0] + jsonChart.data[1]}
-          <span className='ml-2'>nhân sự</span>
-        </p>
-      </div>
-      <div className='w-full p-4 rounded-lg shadow-lg bg-white'>
-        <p
-          className='text-xl font-bold text-orange-400'
-        >
-          Tên phòng ban
-        </p>
-        <Doughnut
-          data={data}
-          options={options}
-        />
-        <p className='text-gray-400 text-center -mt-4'>
-          {jsonChart.data[0]} / {jsonChart.data[0] + jsonChart.data[1]}
-          <span className='ml-2'>nhân sự</span>
-        </p>
-      </div>
+      {renderChart()}
     </div>
   )
 }

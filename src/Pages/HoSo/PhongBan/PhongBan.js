@@ -32,22 +32,26 @@ export default function PhongBan() {
           if (indexnv === 0) {
             dispatch(setCurrentNhanVien(nv));
           }
+          return nv
         })
       }
+      return pb
     })
-  }, []);
+  }, [dispatch]);
 
   const handleChangeCurrentPhongBan = (phongban_id) => {
     dispatch(setCurrentPhongBan(phongban_id));
 
-    listPhongBan?.map((pb, indexpb) => {
+    listPhongBan?.map((pb) => {
       if (pb?.phongban_id === phongban_id) {
         pb?.children?.map((nv, indexnv) => {
           if (indexnv === 0) {
             dispatch(setCurrentNhanVien(nv));
           }
+          return nv
         })
       }
+      return pb
     })
   }
 
@@ -143,11 +147,11 @@ export default function PhongBan() {
             }}
           >
             <FaCaretDown
-              className={`text-xs transition-all duration-100 delay-75 ease-linear ${currentPhongBan == phongban.phongban_id ? '' : '-rotate-90'}`}
+              className={`text-xs transition-all duration-100 delay-75 ease-linear ${currentPhongBan === phongban.phongban_id ? '' : '-rotate-90'}`}
             />
             <div className='w-8 flex justify-center items-center'>
               {
-                currentPhongBan == phongban.phongban_id
+                currentPhongBan === phongban.phongban_id
                   ? folderSVG
                   : folderClosedSVG
               }

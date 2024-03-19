@@ -158,7 +158,7 @@ export default function DuyetPhep() {
         </strong>
       </h1>
 
-      <div className='w-full grid grid-cols-1 lg:grid-cols-3 gap-4'>
+      <div className='w-full h-full grid grid-cols-1 lg:grid-cols-3 gap-4'>
         <div
           className='w-full border border-gray-300 rounded-lg p-4 flex flex-col items-center gap-2'
         >

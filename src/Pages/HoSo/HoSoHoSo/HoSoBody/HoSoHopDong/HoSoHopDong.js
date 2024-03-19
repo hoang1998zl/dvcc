@@ -17,10 +17,10 @@ export default function HoSoHopDong() {
           <div
             className='w-6 aspect-square rounded border border-gray-500 flex justify-center items-center'
           >
-            <FiDownload />
+            <FaPen />
           </div>
           <span>
-            Tải xuống
+            Cập nhật
           </span>
         </button>
       ),
@@ -35,10 +35,10 @@ export default function HoSoHopDong() {
           <div
             className='w-6 aspect-square rounded border border-gray-500 flex justify-center items-center'
           >
-            <FaPen />
+            <FiDownload />
           </div>
           <span>
-            Cập nhật
+            Tải xuống
           </span>
         </button>
       ),
