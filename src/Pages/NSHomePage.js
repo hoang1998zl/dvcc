@@ -19,18 +19,18 @@ export default function NSHomePage() {
 
 
   useEffect(() => {
-    dispatch(setHeaderHeight(document.getElementById('Header').offsetHeight));
-    dispatch(setMainHeight(document.getElementById('NSHomePage').offsetHeight));
+    dispatch(setHeaderHeight(document.getElementById('Header')?.offsetHeight));
+    dispatch(setMainHeight(document.getElementById('NSHomePage')?.offsetHeight));
 
     window.addEventListener('resize', () => {
-      dispatch(setHeaderHeight(document.getElementById('Header').offsetHeight));
-      dispatch(setMainHeight(document.getElementById('NSHomePage').offsetHeight));
+      dispatch(setHeaderHeight(document.getElementById('Header')?.offsetHeight));
+      dispatch(setMainHeight(document.getElementById('NSHomePage')?.offsetHeight));
     })
 
     return () => {
       window.removeEventListener('resize', () => {
-        dispatch(setHeaderHeight(document.getElementById('Header').offsetHeight));
-        dispatch(setMainHeight(document.getElementById('NSHomePage').offsetHeight));
+        dispatch(setHeaderHeight(document.getElementById('Header')?.offsetHeight));
+        dispatch(setMainHeight(document.getElementById('NSHomePage')?.offsetHeight));
       })
     }
   }, [dispatch]);
