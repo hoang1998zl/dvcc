@@ -11,15 +11,15 @@ export default function ChamCong() {
   const [BangChamCongHeight, setBangChamCongHeight] = useState(0);
 
   useEffect(() => {
-    setBangChamCongHeight(document.getElementById('ChamCongTable').offsetHeight);
+    setBangChamCongHeight(document.getElementById('ChamCongTable')?.offsetHeight);
 
     window.addEventListener('resize', () => {
-      setBangChamCongHeight(document.getElementById('ChamCongTable').offsetHeight);
+      setBangChamCongHeight(document.getElementById('ChamCongTable')?.offsetHeight);
     })
 
     return () => {
       window.removeEventListener('resize', () => {
-        setBangChamCongHeight(document.getElementById('ChamCongTable').offsetHeight);
+        setBangChamCongHeight(document.getElementById('ChamCongTable')?.offsetHeight);
       })
     }
   }, [])
@@ -36,7 +36,7 @@ export default function ChamCong() {
       <div
         className='w-full flex gap-4'
         style={{
-          '@media (min-width: 786px)': {
+          '@media (minWidth: 786px)': {
             height: `calc((${mainHeight}px - 3rem) - ${BangChamCongHeight}px - 2rem)`,
           }
         }}

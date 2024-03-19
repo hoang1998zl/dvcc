@@ -13,15 +13,15 @@ export default function BaoCaoChart() {
   const [baocaosophepHeight, setBaoCaoSoPhepHeight] = useState(0);
 
   useEffect(() => {
-    setBaoCaoSoPhepHeight(document.getElementById('BaoCaoSoPhep').offsetHeight);
+    setBaoCaoSoPhepHeight(document.getElementById('BaoCaoSoPhep')?.offsetHeight);
 
     window.addEventListener('resize', () => {
-      setBaoCaoSoPhepHeight(document.getElementById('BaoCaoSoPhep').offsetHeight);
+      setBaoCaoSoPhepHeight(document.getElementById('BaoCaoSoPhep')?.offsetHeight);
     });
 
     return () => {
       window.removeEventListener('resize', () => {
-        setBaoCaoSoPhepHeight(document.getElementById('BaoCaoSoPhep').offsetHeight);
+        setBaoCaoSoPhepHeight(document.getElementById('BaoCaoSoPhep')?.offsetHeight);
       });
     }
   }, [baocaosophepHeight])

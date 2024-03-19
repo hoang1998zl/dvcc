@@ -14,18 +14,18 @@ export default function CauHinhChung() {
 
   useEffect(() => {
 
-    setLeftHeight(document.getElementById('chiNhanh').offsetHeight);
-    setRightHeight(document.getElementById('CauHinhChung__right').offsetHeight);
+    setLeftHeight(document.getElementById('chiNhanh')?.offsetHeight);
+    setRightHeight(document.getElementById('CauHinhChung__right')?.offsetHeight);
 
     window.addEventListener('resize', () => {
-      setLeftHeight(document.getElementById('chiNhanh').offsetHeight);
-      setRightHeight(document.getElementById('CauHinhChung__right').offsetHeight);
+      setLeftHeight(document.getElementById('chiNhanh')?.offsetHeight);
+      setRightHeight(document.getElementById('CauHinhChung__right')?.offsetHeight);
     })
 
     return () => {
       window.removeEventListener('resize', () => {
-        setLeftHeight(document.getElementById('chiNhanh').offsetHeight);
-        setRightHeight(document.getElementById('CauHinhChung__right').offsetHeight);
+        setLeftHeight(document.getElementById('chiNhanh')?.offsetHeight);
+        setRightHeight(document.getElementById('CauHinhChung__right')?.offsetHeight);
       })
     }
 
