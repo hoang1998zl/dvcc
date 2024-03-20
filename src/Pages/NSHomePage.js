@@ -8,6 +8,7 @@ import HoSo from './HoSo/HoSo';
 import ChamCong from './ChamCong/ChamCong';
 import DuyetApp from './DuyetApp/DuyetApp';
 import BaoCao from './BaoCao/BaoCao';
+import "./NS.css"
 
 export default function NSHomePage() {
 

@@ -5,16 +5,23 @@ import { FaCaretDown } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPhongBan } from '../../../Redux-toolkit/reducer/PhongBanSlice';
 import { setCurrentNhanVien } from '../../../Redux-toolkit/reducer/UserSlice';
-import dataNhanVien from '../../../issets/json/NhanVien.json'
+import { chamCongService } from '../../../services/chamCongService';
+import { localStorageService } from '../../../services/localStorageService';
+import { toast } from 'react-toastify';
+import { Popconfirm } from 'antd';
 
 export default function PhongBan() {
 
+  let token = localStorageService.getItem("token");
+  let isUpdate = false;
   const dispatch = useDispatch();
 
   const { currentPhongBan } = useSelector(state => state.PhongBanSlice);
   const { currentNhanVien } = useSelector(state => state.UserSlice);
+  let [reload,setReload] = useState(0);
 
   const [listPhongBan, setListPhongBan] = useState([]);
+  let [cloneListPhongBan,setCloneListPhongBan] = useState([]);
   const [addPhongBanRow, setAddPhongBanRow] = useState(false);
   const [addNhanVienRow, setAddNhanVienRow] = useState({
     open: false,
@@ -23,55 +30,169 @@ export default function PhongBan() {
 
 
   useEffect(() => {
-    const dataPhongBan = dataNhanVien;
-    setListPhongBan(dataPhongBan);
-    dataPhongBan?.map((pb, indexpb) => {
-      if (indexpb === 0) {
-        dispatch(setCurrentPhongBan(pb?.phongban_id));
-        pb?.children?.map((nv, indexnv) => {
-          if (indexnv === 0) {
-            dispatch(setCurrentNhanVien(nv));
-          }
-          return nv
-        })
+    chamCongService.getPhongBanNhanVien(token).then((res) => {
+      setListPhongBan(res.data.content);
+      setCloneListPhongBan(res.data.content);
+      if(!currentPhongBan){
+        dispatch(setCurrentPhongBan(res.data.content[0].danhmuc_id));
       }
-      return pb
-    })
-  }, [dispatch]);
-
-  const handleChangeCurrentPhongBan = (phongban_id) => {
-    dispatch(setCurrentPhongBan(phongban_id));
-
-    listPhongBan?.map((pb) => {
-      if (pb?.phongban_id === phongban_id) {
-        pb?.children?.map((nv, indexnv) => {
-          if (indexnv === 0) {
-            dispatch(setCurrentNhanVien(nv));
-          }
-          return nv
-        })
+      if(!currentNhanVien){
+        dispatch(setCurrentNhanVien(res.data.content[0].ns_nhanvien[0]?.nv_id));
       }
-      return pb
+    }).catch((err) => {
+      console.log(err)
     })
+  }, [reload]);
+
+  // các hàm change input
+  let searchUser = (e) => {
+    if (e.target.value == "") {
+        setListPhongBan(cloneListPhongBan);
+        return;
+    }
+    let array = [];
+    cloneListPhongBan?.map((phongBan) => {
+        let isFound = false;
+        let nhanVienList = [];
+        phongBan.ns_nhanvien?.map((nhanVien) => {
+            if (nhanVien?.nv_name.toLowerCase().includes(e.target.value.toLowerCase())) {
+                nhanVienList.push(nhanVien);
+                isFound = true;
+            }
+        })
+        if (isFound) {
+            let data = {
+                danhmuc_id: phongBan.danhmuc_id,
+                danhmuc_name: phongBan.danhmuc_name,
+                ns_nhanvien: nhanVienList
+            }
+            array.push(data);
+        }
+    })
+    setListPhongBan(array);
+    if(listPhongBan[0]){
+      handleChangeCurrentPhongBan(listPhongBan[0].danhmuc_id,0)
+    }
+  }
+  let changeInputPB = (e,indexPB) => {
+    let array = [...listPhongBan];
+    array[indexPB].danhmuc_name = e.target.value;
+    setListPhongBan(array);
+  }
+  let changeInputNV = (indexPB, indexNV, e) => {
+    let array = [...listPhongBan];
+    array[indexPB].ns_nhanvien[indexNV].nv_name = e.target.value;
+    setListPhongBan(array);
+  }
+  // gọi api tạo hoặc cập nhật tên phòng ban
+  let handleCreateUpdatePB = (e,danhmuc_id) => {
+    if (e.target.value == "") {
+        toast.error("Vui Lòng Nhập Tên Phòng Ban!!!", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000
+        }); return;
+    }
+    if (isUpdate) {
+        // đổi tên
+        chamCongService.doiTenPhongBan(token, danhmuc_id, e.target.value).then((res) => {
+            setReload(Date.now());
+        })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else {
+        // tạo mới
+        chamCongService.taoPhongBan(token, e.target.value).then((res) => {
+            setReload(Date.now());
+            e.target.value = "";
+        })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    toast.success("Cập nhật thành công!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+    });
+  }
+  // gọi api tạo hoặc update tên nhân viên
+  let handleCreateUpdateNV = (e,PBId, NVId) => {
+    if (e.target.value == "") {
+        toast.error("Vui Lòng Nhập Tên Nhân Viên!!!", {
+            position: toast.POSITION.TOP_RIGHT
+        }); return;
+    }
+    if (isUpdate) {
+        // đổi tên
+        chamCongService.renameNhanVien(token, e.target.value, NVId).then((res) => {
+            setReload(Date.now());
+        })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else {
+        // tạo mới
+        chamCongService.taoNhanVien(token, PBId, e.target.value).then((res) => {
+            setReload(Date.now());
+            dispatch(setCurrentNhanVien(res.data.content.nv_id))
+            handleCloseAddNhanVien();
+        })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    toast.success("Cập nhật thành công!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+    });
+  }
+  // gọi api xóa phòng ban
+  let handleDeletePB = (danhmuc_id) => {
+    chamCongService.xoaPhongBan(token, danhmuc_id).then((res) => {
+        setReload(Date.now());
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+    toast.success("Xoá Phòng Ban Thành Công!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+    });
+  }
+  // gọi api xóa nhân viên
+  let handleDeleteNV = (idNv) => {
+    chamCongService.xoaNhanVien(token, idNv).then((res) => {
+        setReload(Date.now());
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+    toast.success("Xoá Nhân Viên Thành Công!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+    });
+  }
+  const handleChangeCurrentPhongBan = (danhmuc_id,indexPB) => {
+    dispatch(setCurrentPhongBan(danhmuc_id));
+    if(listPhongBan[indexPB].ns_nhanvien[0]){
+      dispatch(setCurrentNhanVien(listPhongBan[indexPB].ns_nhanvien[0].nv_id));
+    }else{
+      dispatch(setCurrentNhanVien(null));
+    }
   }
 
-  const handleChangeCurrentNhanVien = (nhanvien) => {
-    dispatch(setCurrentNhanVien(nhanvien));
-  }
-
-  const handleContextMenu = (e, type, id) => {
+  const handleContextMenu = (e, type, id,index) => {
     e.preventDefault();
-
     if (type === 'phongban') {
-      document.querySelectorAll('[id^="ContextMenu_NV_"]').forEach(item => {
+      document.querySelectorAll('[id^="ContextMenu_"]').forEach(item => {
         item.classList.add('hidden');
       });
       document.getElementById(`ContextMenu_PB_${id}`).classList.toggle('hidden');
-      handleChangeCurrentPhongBan(id);
+      handleChangeCurrentPhongBan(id,index);
     }
 
     if (type === 'nhanvien') {
-      document.querySelectorAll('[id^="ContextMenu_PB_"]').forEach(item => {
+      document.querySelectorAll('[id^="ContextMenu_"]').forEach(item => {
         item.classList.add('hidden');
       });
       document.getElementById(`ContextMenu_NV_${id}`).classList.toggle('hidden');
@@ -83,7 +204,7 @@ export default function PhongBan() {
 
     type === 'nhanvien' && document.getElementById(`ContextMenu_NV_${id}`).classList.add('hidden');
   };
-
+  // cái này để xử lý hiện ô nhập PB
   const handleAddPhongBan = () => {
     setAddPhongBanRow(true);
     dispatch(setCurrentPhongBan(null));
@@ -91,24 +212,29 @@ export default function PhongBan() {
       document.querySelector('#PhongBan_AddRow input').focus();
     }, 500);
   }
-
-  const handleCloseAddPhongBan = () => {
-    setAddPhongBanRow(false);
-    dispatch(setCurrentPhongBan(1));
-  }
-
-  const handleRenamePhongBan = (phongban_id) => {
+  const handleRenamePhongBan = (danhmuc_id) => {
     setTimeout(() => {
-      document.querySelector(`#PhongBan_${phongban_id} input`).readOnly = false;
-      document.querySelector(`#PhongBan_${phongban_id} input`).classList.add('border rounded px-1 py-0.5');
-      document.querySelector(`#PhongBan_${phongban_id} input`).focus();
+      document.querySelector(`#PhongBan_${danhmuc_id} input`).readOnly = false;
+      document.querySelector(`#PhongBan_${danhmuc_id} input`).classList.add('border','rounded','px-1','py-0.5');
+      document.querySelector(`#PhongBan_${danhmuc_id} input`).focus();
     }, 500);
   }
-
-  const handleUpdateNamePhongBan = (phongban_id) => {
+  const handleRenameNhanVien = (danhmuc_id,nv_id) => {
     setTimeout(() => {
-      document.querySelector(`#PhongBan_${phongban_id} input`).readOnly = true;
-      document.querySelector(`#PhongBan_${phongban_id} input`).classList.remove('border rounded px-1 py-0.5');
+      document.querySelector(`#NV_PhongBan_${danhmuc_id}_${nv_id} input`).readOnly = false;
+      document.querySelector(`#NV_PhongBan_${danhmuc_id}_${nv_id} input`).classList.add('border','rounded','px-1','py-0.5');
+      document.querySelector(`#NV_PhongBan_${danhmuc_id}_${nv_id} input`).focus();
+    }, 500);
+  }
+  const handleUpdateNamePhongBan = (e) => {
+    setTimeout(() => {
+      e.target.readOnly = true;
+      e.target.classList.remove('border','rounded', 'px-1', 'py-0.5');
+    }, 500);
+  }
+  const handleUpdateNameNhanVien = (e) => {
+    setTimeout(() => {
+      e.target.readOnly = true;
     }, 500);
   }
 
@@ -137,21 +263,21 @@ export default function PhongBan() {
           className='w-full relative'
         >
           <div
-            id={`PhongBan_${phongban.phongban_id}`}
+            id={`PhongBan_${phongban?.danhmuc_id}`}
             className='w-full h-8 flex items-center bg-white z-[1] relative'
             onClick={() => {
-              handleChangeCurrentPhongBan(phongban.phongban_id);
+              handleChangeCurrentPhongBan(phongban.danhmuc_id,indexPB);
             }}
             onContextMenu={(e) => {
-              handleContextMenu(e, 'phongban', phongban.phongban_id);
+              handleContextMenu(e, 'phongban', phongban.danhmuc_id,indexPB);
             }}
           >
             <FaCaretDown
-              className={`text-xs transition-all duration-100 delay-75 ease-linear ${currentPhongBan === phongban.phongban_id ? '' : '-rotate-90'}`}
+              className={`text-xs transition-all duration-100 delay-75 ease-linear ${currentPhongBan === phongban?.danhmuc_id ? '' : '-rotate-90'}`}
             />
             <div className='w-8 flex justify-center items-center'>
               {
-                currentPhongBan === phongban.phongban_id
+                currentPhongBan === phongban?.danhmuc_id
                   ? folderSVG
                   : folderClosedSVG
               }
@@ -161,30 +287,38 @@ export default function PhongBan() {
               readOnly
               type="text"
               name=""
-              value={phongban.name}
+              value={phongban?.danhmuc_name}
+              onChange={(e) => changeInputPB(e,indexPB)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleUpdateNamePhongBan(phongban.phongban_id);
+                  e.target.blur();
                 }
+              }}
+              onBlur={(e) => {
+                if(e.target.readOnly){
+                  return;
+                }
+                isUpdate = true;
+                handleUpdateNamePhongBan(e);
+                handleCreateUpdatePB(e,phongban.danhmuc_id)
               }}
             />
           </div>
 
           <div
-            id={`ContextMenu_PB_${phongban.phongban_id}`}
+            id={`ContextMenu_PB_${phongban.danhmuc_id}`}
             className='w-full absolute top-8 bg-white z-10 rounded shadow-lg border p-1 flex flex-col hidden'
             onMouseLeave={() => {
-              handleCloseContextMenu('phongban', phongban.phongban_id);
+              handleCloseContextMenu('phongban', phongban.danhmuc_id);
             }}
-            onClick={() => {
-              handleCloseContextMenu('phongban', phongban.phongban_id);
-            }}
+            // đã chuyển hàm onclick handleCloseContextMenu đi vào từng button. Tránh lỗi popconfim
           >
             <button
               type='button'
               className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
               onClick={() => {
-                handleAddNhanVien(phongban.phongban_id);
+                handleAddNhanVien(phongban.danhmuc_id);
+                handleCloseContextMenu('phongban', phongban.danhmuc_id);
               }}
             >
               Thêm nhân viên
@@ -194,21 +328,34 @@ export default function PhongBan() {
               className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
               onClick={() => {
                 handleAddPhongBan();
+                handleCloseContextMenu('phongban', phongban.danhmuc_id);
               }}
             >
               Thêm phòng ban
             </button>
-            <button
+            <Popconfirm
+                                title="Xoá Phòng Ban"
+                                description="Xác Nhận Xoá Phòng Ban Này?"
+                                okText="Đồng Ý"
+                                cancelText="Huỷ Bỏ"
+                                onConfirm={() => {
+                                  handleCloseContextMenu('phongban', phongban.danhmuc_id);
+                                  handleDeletePB(phongban?.danhmuc_id)
+                                }}
+                            >
+              <button
               type='button'
               className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
-            >
-              Xóa phòng ban
-            </button>
+              >
+                Xóa phòng ban
+              </button>
+            </Popconfirm>
             <button
               type='button'
               className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
               onClick={() => {
-                handleRenamePhongBan(phongban.phongban_id);
+                handleRenamePhongBan(phongban.danhmuc_id);
+                handleCloseContextMenu('phongban', phongban.danhmuc_id);
               }}
             >
               Đổi tên
@@ -218,10 +365,10 @@ export default function PhongBan() {
           {renderNhanVien(phongban, indexPB)}
 
           {
-            addNhanVienRow && true && addNhanVienRow.phongban_id == phongban.phongban_id && (
+            addNhanVienRow.open  && addNhanVienRow.phongban_id == phongban.danhmuc_id && (
               <div
                 id='NhanVien_AddRow'
-                className={`w-full ps-7 h-7 ${currentPhongBan == phongban.phongban_id ? 'flex' : 'hidden'} items-center gap-2`}
+                className={`w-full ps-7 h-7 ${currentPhongBan == phongban.danhmuc_id ? 'flex' : 'hidden'} items-center gap-2`}
               >
                 <div
                   className='w-3 h-full border-l border-b border-gray-900 -translate-y-1/2'
@@ -236,8 +383,12 @@ export default function PhongBan() {
                   placeholder='Nhập tên nhân viên...'
                   onKeyDown={(e) => {
                     if (e.key == 'Enter') {
-                      handleCloseAddNhanVien();
+                      e.target.blur();
                     }
+                  }}
+                  onBlur={(e) => {
+                    isUpdate = false;
+                    handleCreateUpdateNV(e,phongban.danhmuc_id)
                   }}
                 />
               </div>
@@ -249,22 +400,23 @@ export default function PhongBan() {
   };
 
   const renderNhanVien = (phongban, indexPB) => {
-    return phongban.children?.map((nhanvien, indexNV) => {
+    return phongban.ns_nhanvien?.map((nhanvien, indexNV) => {
       return (
         <div
           key={indexNV}
           className='w-full relative'
         >
           <div
-            id={`NV_PhongBan_${phongban.phongban_id}_${nhanvien.nv_id}`}
-            className={`w-full ps-7 relative z-0 ${currentPhongBan == phongban.phongban_id ? '' : 'hidden'}`}
+            id={`NV_PhongBan_${phongban.danhmuc_id}_${nhanvien.nv_id}`}
+            className={`w-full ps-7 relative z-0 ${currentPhongBan == phongban.danhmuc_id ? '' : 'hidden'}`}
           >
             <div
               className='w-full h-7 flex items-center gap-2'
               onClick={() => {
-                handleChangeCurrentNhanVien(nhanvien);
+                dispatch(setCurrentNhanVien(nhanvien?.nv_id));
               }}
               onContextMenu={(e) => {
+                e.target.click();
                 handleContextMenu(e, 'nhanvien', nhanvien.nv_id);
               }}
             >
@@ -275,11 +427,25 @@ export default function PhongBan() {
                 }}
               ></div>
               <input
-                className={`w-full flex-1 focus:outline-none border rounded ${currentNhanVien.nv_id == nhanvien.nv_id ? 'bg-orange-100 border-orange-400' : 'bg-transparent border-transparent'} cursor-pointer px-1 py-0.5`}
+                className={`w-full flex-1 focus:outline-none border rounded ${currentNhanVien == nhanvien.nv_id ? 'bg-orange-100 border-orange-400' : 'bg-transparent border-transparent'} cursor-pointer px-1 py-0.5`}
                 readOnly
                 type="text"
                 name=""
-                value={`Nguyễn Văn A`}
+                value={nhanvien?.nv_name}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.target.blur();
+                  }
+                }}
+                onBlur={(e) => {
+                  if(e.target.readOnly){
+                    return;
+                  }
+                  isUpdate = true;
+                  handleUpdateNameNhanVien(e);
+                  handleCreateUpdateNV(e,phongban.danhmuc_id,nhanvien.nv_id)
+                }}
+                onChange={(e) => changeInputNV(indexPB,indexNV,e)}
               />
             </div>
           </div>
@@ -290,28 +456,34 @@ export default function PhongBan() {
             onMouseLeave={() => {
               handleCloseContextMenu('nhanvien', nhanvien.nv_id);
             }}
-            onClick={() => {
-              handleCloseContextMenu('nhanvien', nhanvien.nv_id);
-            }}
           >
             <button
               type='button'
               className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
               onClick={() => {
-                handleAddNhanVien(phongban.phongban_id);
+                handleAddNhanVien(phongban.danhmuc_id);
+                handleCloseContextMenu('nhanvien', nhanvien.nv_id);
               }}
             >
               Thêm nhân viên mới
             </button>
+            <Popconfirm title="Xoá Nhân Viên" description="Xác Nhận Xoá Nhân Viên Này?" okText="Đồng Ý" cancelText="Huỷ Bỏ"
+                                        onConfirm={() => handleDeleteNV(nhanvien.nv_id)}
+                                    >
+              <button
+              type='button'
+              className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
+              >
+                Xóa nhân viên
+              </button>
+            </Popconfirm>
             <button
               type='button'
               className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
-            >
-              Xóa nhân viên
-            </button>
-            <button
-              type='button'
-              className='w-full focus:outline-none text-left outline outline-1 outline-transparent hover:outline-orange-400 hover:bg-orange-50 px-2 py-1 rounded-sm'
+              onClick={() => {
+                handleRenameNhanVien(phongban.danhmuc_id,nhanvien.nv_id);
+                handleCloseContextMenu('nhanvien', nhanvien.nv_id);
+              }}
             >
               Đổi tên nhân viên
             </button>
@@ -340,13 +512,15 @@ export default function PhongBan() {
         className='w-full h-10 flex items-center justify-center p-1'
       >
         <input
+          onChange={searchUser}
           type="text"
           className='w-full flex-1 h-full border border-r-0 border-orange-400 rounded-s-full p-2 text-sm focus:outline-none placeholder:italic'
-          placeholder='Nhập tên phong ban...'
+          placeholder='Nhập tên nhân viên...'
         />
 
         <button
           type="button"
+          disabled
           className='h-full aspect-square flex justify-center items-center text-orange-400 font-semibold border border-l-0 border-orange-400 rounded-e-full focus:outline-none'
         >
           <FaSearch />
@@ -360,7 +534,7 @@ export default function PhongBan() {
 
         <div
           id={`PhongBan_AddRow`}
-          className={`w-full h-8 ${addPhongBanRow ? 'flex' : 'hidden'} items-center bg-white z-[1] relative`} Ư
+          className={`w-full h-8 ${addPhongBanRow ? 'flex' : 'hidden'} items-center bg-white z-[1] relative`}
         >
           <FaCaretDown
             className={`text-xs transition-all duration-100 delay-75 ease-linear`}
@@ -372,11 +546,16 @@ export default function PhongBan() {
             className='w-full flex-1 focus:outline-none bg-transparent border rounded cursor-pointer px-1 py-0.5'
             type="text"
             name=""
-            placeholder='Nhập tên phong ban...'
+            placeholder='Nhập tên phòng ban...'
             onKeyDown={(e) => {
               if (e.key == 'Enter') {
-                handleCloseAddPhongBan();
+                e.target.blur();
+                setAddPhongBanRow(false);
               }
+            }}
+            onBlur={(e) => {
+              isUpdate = false;
+              handleCreateUpdatePB(e);
             }}
           />
         </div>

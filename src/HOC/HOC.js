@@ -6,6 +6,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { localStorageService } from '../services/localStorageService';
 import { setCongTy } from '../Redux-toolkit/reducer/UserSlice';
 import { setLoading } from '../Redux-toolkit/reducer/PageSlice';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { chamCongService } from '../services/chamCongService';
 
 
@@ -37,6 +39,7 @@ export default function HOC({ Component }) {
   return (
     <div className='h-screen flex flex-col relative select-none'>
       <Component></Component>
+      <ToastContainer></ToastContainer>
     </div>
   )
 }
