@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FaLocationDot } from "react-icons/fa6";
+import { chiNhanhService } from '../../../services/chiNhanhService';
+import { localStorageService } from '../../../services/localStorageService';
 
 export default function ChiNhanh() {
 
+  let token = localStorageService.getItem("token");
+  let [reload,setReload] = useState(0);
   const [chiNhanh, setChiNhanh] = useState([]);
   const [toaDo, setToaDo] = useState({
     lat: "",
@@ -10,169 +14,13 @@ export default function ChiNhanh() {
   });
 
   useEffect(() => {
-    const dataChiNhanh = [
-      {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      }, {
-        chi_nhanh_address: "200 Đường Số 9, phường Tân Phú, Quận 7",
-        chi_nhanh_id: 1,
-        chi_nhanh_name: "Trụ Sở 1",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.7362199,
-        longitude: 106.7151648,
-      },
-      {
-        chi_nhanh_address: "436 Nguyễn Thị Thập, Tân Quy, Quận 7, Thành phố Hồ Chí Minh",
-        chi_nhanh_id: 2,
-        chi_nhanh_name: "Trụ Sở 2",
-        chi_nhanh_status: 1,
-        company_id: 65,
-        latitude: 10.739319,
-        longitude: 106.7083844,
-      },
-    ];
-
-    setChiNhanh(dataChiNhanh);
-    setToaDo({
-      lat: dataChiNhanh[0]?.latitude,
-      lng: dataChiNhanh[0]?.longitude
-    });
-  }, []);
+    chiNhanhService.getChiNhanh(token).then((res) => {
+      setChiNhanh(res.data.content);
+      setToaDo({lat: res.data.content[0]?.latitude,lng: res.data.content[0]?.longitude});
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [reload]);
 
   const handleChangeChiNhanh = (index) => {
     setToaDo({
@@ -182,7 +30,7 @@ export default function ChiNhanh() {
   }
 
   const renderChiNhanh = () => {
-    return chiNhanh.map((item, index) => {
+    return chiNhanh?.map((item, index) => {
       return (
         <div
           key={index}
@@ -196,10 +44,10 @@ export default function ChiNhanh() {
           />
           <div className='flex-1'>
             <p className='text-gray-400 line-clamp-1 text-sm'>
-              {item.chi_nhanh_name}
+              {item?.chi_nhanh_name}
             </p>
             <p className='font-semibold line-clamp-1'>
-              {item.chi_nhanh_address}
+              {item?.chi_nhanh_address}
             </p>
           </div>
         </div>
@@ -237,7 +85,7 @@ export default function ChiNhanh() {
         </div>
         <button
           type="button"
-          className='w-1/3 h-10 mx-auto rounded-full bg-slate-100 font-bold'
+          className='w-1/3 h-10 mx-auto rounded-full bg-slate-100 font-bold hover:bg-orange-400 hover:text-white'
         >
           Cập nhật
         </button>
