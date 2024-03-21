@@ -2,81 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { FaArrowUpRightDots, FaRegClock } from "react-icons/fa6";
 import { BsFillBriefcaseFill } from "react-icons/bs";
 import { Switch } from 'antd';
-import { useSelector } from 'react-redux';
+import { cauHinhChungService } from '../../../services/cauHinhChungService';
+import { localStorageService } from '../../../services/localStorageService';
+import moment from 'moment/moment';
 
 export default function ThoiGianChamCong() {
 
-  const { reload } = useSelector(state => state.PageSlice);
-
+  let [reload,setReload] = useState(0);
   const [gioLamViec, setGioLamViec] = useState([]);
+  let token = localStorageService.getItem("token");
 
   useEffect(() => {
-    const dataGioLamViec = [
-      {
-        hanhChinh: {
-          id: 97,
-          name: 'Hành Chính',
-          gio_bat_dau: '08:30:00',
-          gio_ket_thuc: '17:00:00',
-          loai_ca: 0,
-          gio_cong_chuan: '8',
-          ca_status: 1,
-          company_id: 65,
-          tang_ca_vao: null,
-          tang_ca_ra: null,
-          tang_ca_gio_cong: null
-        },
-        theoCa: [
-          {
-            id: 98,
-            name: 'Ca 1',
-            gio_bat_dau: '08:30:00',
-            gio_ket_thuc: '17:30:00',
-            loai_ca: 1,
-            gio_cong_chuan: '8',
-            ca_status: 0,
-            company_id: 65,
-            tang_ca_vao: null,
-            tang_ca_ra: null,
-            tang_ca_gio_cong: null
-          },
-          {
-            id: 99,
-            name: 'Ca 3',
-            gio_bat_dau: '08:30:00',
-            gio_ket_thuc: '17:30:00',
-            loai_ca: 1,
-            gio_cong_chuan: '8',
-            ca_status: 1,
-            company_id: 65,
-            tang_ca_vao: null,
-            tang_ca_ra: null,
-            tang_ca_gio_cong: null
-          },
-          {
-            id: 100,
-            name: 'Ca 2',
-            gio_bat_dau: '08:30:00',
-            gio_ket_thuc: '17:30:00',
-            loai_ca: 1,
-            gio_cong_chuan: '8',
-            ca_status: 0,
-            company_id: 65,
-            tang_ca_vao: null,
-            tang_ca_ra: null,
-            tang_ca_gio_cong: null
-          }
-        ]
-      }
-    ];
-
-    setGioLamViec(dataGioLamViec);
+      cauHinhChungService.layGioCong(token).then((res) => {
+        setGioLamViec(res.data.content);
+      })
+      .catch((err) => {
+          console.log(err);
+      });
   }, [reload]);
 
-
-
   const renderCaLamViec = () => {
-    return gioLamViec[0]?.theoCa?.map((ca, index) => {
+    return gioLamViec?.theoCa?.map((ca, index) => {
       return (
         <div
           key={index}
@@ -89,12 +35,12 @@ export default function ThoiGianChamCong() {
             <p
               className='text-gray-700 line-clamp-1 text-sm'
             >
-              {ca.name}
+              {ca?.name}
             </p>
             <p
               className='font-bold line-clamp-1 -mt-1'
             >
-              {ca.gio_bat_dau} - {ca.gio_ket_thuc}
+              {moment(ca?.gio_bat_dau,"HH:mm:ss").format("HH:mm")} - {moment(ca?.gio_ket_thuc,"HH:mm:ss").format("HH:mm")}
             </p>
           </div>
           <Switch
@@ -138,14 +84,14 @@ export default function ThoiGianChamCong() {
               >
                 {
                   gioLamViec.hanhChinh?.gio_bat_dau
-                    ? gioLamViec.hanhChinh?.gio_bat_dau
-                    : '00:00:00'
+                    ? moment(gioLamViec.hanhChinh?.gio_bat_dau,"HH:mm:ss").format("HH:mm")
+                    : '00:00'
                 }
                 <span className='mx-2'>-</span>
                 {
                   gioLamViec.hanhChinh?.gio_ket_thuc
-                    ? gioLamViec.hanhChinh?.gio_ket_thuc
-                    : '00:00:00'
+                    ? moment(gioLamViec.hanhChinh.gio_ket_thuc,"HH:mm:ss").format("HH:mm")
+                    : '00:00'
                 }
               </p>
             </div>
@@ -165,13 +111,13 @@ export default function ThoiGianChamCong() {
               >
                 {
                   gioLamViec.hanhChinh?.tang_ca_vao
-                    ? gioLamViec.hanhChinh?.tang_ca_vao
+                    ? moment(gioLamViec.hanhChinh?.tang_ca_vao,"HH:mm:ss").format("HH:mm") 
                     : '00:00:00'
                 }
                 <span className='mx-2'>-</span>
                 {
                   gioLamViec.hanhChinh?.tang_ca_ra
-                    ? gioLamViec.hanhChinh?.tang_ca_ra
+                    ? moment(gioLamViec.hanhChinh?.tang_ca_ra,"HH:mm:ss").format("HH:mm")
                     : '00:00:00'
                 }
               </p>

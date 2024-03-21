@@ -36,7 +36,7 @@ export default function CauHinhChung() {
       id='cauHinhChung'
       className='w-full flex justify-center p-4'
       style={{
-        height: `calc(${mainHeight}px - 3rem)`,
+        // height: `calc(${mainHeight}px - 3rem)`,
       }}
     >
       <div className='w-full 2xl:w-3/4 grid grid-cols-1 lg:grid-cols-2 gap-4'>

@@ -1,3 +1,19 @@
 .ant-btn-primary{
     background: #1677ff !important;
 }
+.customTable td, .customTable th {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+}
+.customTicket::before{
+    content: "\2713";
+    font-size: 2.4rem;
+    font-family: sans-serif;
+    display: inline;
+    color:red;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    text-align: end;
+    border-radius: 3px;
+    transition: all 0.35s;
+  }
