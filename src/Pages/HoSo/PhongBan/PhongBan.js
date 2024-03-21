@@ -9,6 +9,7 @@ import { chamCongService } from '../../../services/chamCongService';
 import { localStorageService } from '../../../services/localStorageService';
 import { toast } from 'react-toastify';
 import { Popconfirm } from 'antd';
+import CharacterRepalce from '../../../GlobalFunction/CharacterReplace'
 
 export default function PhongBan() {
 
@@ -48,6 +49,8 @@ export default function PhongBan() {
   let searchUser = (e) => {
     if (e.target.value == "") {
         setListPhongBan(cloneListPhongBan);
+        dispatch(setCurrentPhongBan(cloneListPhongBan[0].danhmuc_id))
+        dispatch(setCurrentNhanVien(cloneListPhongBan[0].ns_nhanvien[0].nv_id))
         return;
     }
     let array = [];
@@ -55,7 +58,7 @@ export default function PhongBan() {
         let isFound = false;
         let nhanVienList = [];
         phongBan.ns_nhanvien?.map((nhanVien) => {
-            if (nhanVien?.nv_name.toLowerCase().includes(e.target.value.toLowerCase())) {
+            if (CharacterRepalce(nhanVien?.nv_name.toLowerCase()).includes(CharacterRepalce(e.target.value.toLowerCase()))) {
                 nhanVienList.push(nhanVien);
                 isFound = true;
             }
@@ -69,9 +72,13 @@ export default function PhongBan() {
             array.push(data);
         }
     })
+    // chỗ này không dùng hàm hanldeChangeCurrentPB vì hàm setListPhongBan sẽ chạy chậm hơn gây ra lỗi select nv đầu tiên tìm thấy
     setListPhongBan(array);
-    if(listPhongBan[0]){
-      handleChangeCurrentPhongBan(listPhongBan[0].danhmuc_id,0)
+    if(array[0]){
+      if(array[0].ns_nhanvien[0]){
+        dispatch(setCurrentPhongBan(array[0].danhmuc_id));
+        dispatch(setCurrentNhanVien(array[0].ns_nhanvien[0].nv_id));
+      }
     }
   }
   let changeInputPB = (e,indexPB) => {
@@ -174,8 +181,10 @@ export default function PhongBan() {
   }
   const handleChangeCurrentPhongBan = (danhmuc_id,indexPB) => {
     dispatch(setCurrentPhongBan(danhmuc_id));
-    if(listPhongBan[indexPB].ns_nhanvien[0]){
-      dispatch(setCurrentNhanVien(listPhongBan[indexPB].ns_nhanvien[0].nv_id));
+    if(listPhongBan[indexPB]){
+      if(listPhongBan[indexPB].ns_nhanvien[0]){
+        dispatch(setCurrentNhanVien(listPhongBan[indexPB].ns_nhanvien[0].nv_id));
+      }
     }else{
       dispatch(setCurrentNhanVien(null));
     }
