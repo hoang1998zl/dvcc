@@ -103,5 +103,14 @@ export const cauHinhChungService = {
                 token
             }
         })
+    },
+    layThongTinCongTy: (token) => {
+        return axios({
+            url: BASE_URL + `api/cau-hinh-chung/lay-thong-tin-cong-ty`,
+            method: "GET",
+            headers: {
+                token
+            }
+        })
     }
 }

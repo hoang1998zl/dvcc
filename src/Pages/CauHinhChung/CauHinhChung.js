@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import UserOnline from './UserOnline/UserOnline';
 import DuyetPhep from './DuyetPhep/DuyetPhep';
 import ThoiGianChamCong from './ThoiGianChamCong/ThoiGianChamCong';
+import CongTy from './CongTy/CongTy';
 
 export default function CauHinhChung() {
 
@@ -51,7 +52,8 @@ export default function CauHinhChung() {
           }}
         >
           {/* <UserOnline /> */}
-          <DuyetPhep />
+          {/* <DuyetPhep /> */}
+          <CongTy></CongTy>
           <ThoiGianChamCong />
         </div>
       </div>
