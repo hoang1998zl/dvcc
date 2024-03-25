@@ -112,5 +112,27 @@ export const cauHinhChungService = {
                 token
             }
         })
+    },
+    updateLogo: (token,files) => {
+        const formData = new FormData();
+        formData.append("company_logo", files);
+        return axios({
+            url: BASE_URL + `api/cau-hinh-chung/update-logo`,
+            method: "PUT",
+            data: formData,
+            headers: {
+                token
+            }
+        })
+    },
+    updateCongTy: (token,data) => {
+        return axios({
+            url: BASE_URL + `api/cau-hinh-chung/update-cong-ty`,
+            method: "PUT",
+            data ,
+            headers: {
+                token
+            }
+        })
     }
 }

@@ -144,7 +144,7 @@ export default function ThoiGianChamCong() {
 
   let renderCaLamViecTable = () => {
         return gioLamViec.theoCa?.map((ca, index) => {
-            return <tr className='cursor-pointer'>
+            return <tr className='cursor-pointer' key={index}>
                 <td>
                     <Switch
                       name="theoCa"
