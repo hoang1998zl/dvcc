@@ -804,7 +804,7 @@ export default function BangChamCong() {
             >
                 <div className='w-auto relative z-10 text-sm'>
                     <div className='w-full h-full bg-white rounded-lg shadow-md p-2 lg:p-4 pr-0'>
-                        <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-1rem)] pe-4 overflow-y-auto'>
+                        <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-1rem)] pe-4 overflow-y-auto text-center'>
                             <h1 className='uppercase font-bold text-lg'>
                                 {anhChamCong?.vao[0]?.ns_nhanvien?.nv_name}</h1>
                             <p>(Ảnh xác nhận)</p>
@@ -975,7 +975,7 @@ export default function BangChamCong() {
                         </DownloadTableExcel>
                     </div>
                     <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-4rem)] overflow-auto'>
-                        <table className='customTable w-max min-w-full lg:w-full'>
+                        <table className='customTable w-max min-w-full lg:w-full text-center'>
                             <thead className='text-[12px]'>
                                 <th>
                                     <div class="flex items-center">

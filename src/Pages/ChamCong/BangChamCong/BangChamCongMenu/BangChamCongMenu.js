@@ -8,6 +8,8 @@ import { setDanhMuc, setMonth, setYear } from '../../../../Redux-toolkit/reducer
 import moment from 'moment';
 import NhatKyChinhSua from '../NhatKyChinhSua/NhatKyChinhSua';
 import BangCongGuide from '../BangCongGuide/BangCongGuide';
+import QuyUocNgayCongChuan from './QuyUocNgayCongChuan/QuyUocNgayCongChuan';
+import QuyUocTangCa from './QuyUocTangCa/QuyUocTangCa';
 
 const filterOption = (input, option) =>
         (option?.key ?? '').toLowerCase().includes(input.toLowerCase());
@@ -20,6 +22,8 @@ export default function BangChamCongMenu() {
     let [pbList, setPbList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentContent, setCurrentContent] = useState(0);
+    const [isOpenQuyUoc_1, setIsOpenQuyUoc_1] = useState(false);
+    const [isOpenQuyUoc_2, setIsOpenQuyUoc_2] = useState(false);
     const renderContent = () => {
         switch (currentContent) {
             case 0:
@@ -122,6 +126,56 @@ export default function BangChamCongMenu() {
           options={renderOptYear()}
         />
       </div>
+      <div className='flex items-center gap-4 text-black font-normal text-sm'>
+                                <div className='relative'>
+                                    <button
+                                        type="button"
+                                        className="h-7 px-4 rounded bg-white text-orange-400 uppercase font-semibold mb-0.5 hover:mb-0 focus:outline-none"
+                                        style={{
+                                            boxShadow: 'rgba(0, 0, 0, 0.4) 0px 3px 8px'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.target.style.boxShadow = 'none';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.target.style.boxShadow = 'rgba(0, 0, 0, 0.4) 0px 3px 8px';
+                                        }}
+                                        onClick={() => {
+                                            setIsOpenQuyUoc_1(false)
+                                            setIsOpenQuyUoc_2(!isOpenQuyUoc_2);
+                                        }}
+                                    >
+                                        Ngày công chuẩn
+                                    </button>
+                                    <div className={`absolute top-[calc(100%+10px)] right-0 w-[40rem] z-50 transition-all ${isOpenQuyUoc_2 == true ? 'block h-auto opacity-100' : 'hidden h-0 opacity-0'}`}>
+                                        <QuyUocNgayCongChuan />
+                                    </div>
+                                </div>
+                                <div className='relative'>
+                                    <button
+                                        type="button"
+                                        className="h-7 px-4 rounded bg-white text-orange-400 uppercase font-semibold mb-0.5 hover:mb-0 focus:outline-none"
+                                        style={{
+                                            boxShadow: 'rgba(0, 0, 0, 0.4) 0px 3px 8px'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.target.style.boxShadow = 'none';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.target.style.boxShadow = 'rgba(0, 0, 0, 0.4) 0px 3px 8px';
+                                        }}
+                                        onClick={() => {
+                                            setIsOpenQuyUoc_1(!isOpenQuyUoc_1);
+                                            setIsOpenQuyUoc_2(false);
+                                        }}
+                                    >
+                                        Tính tăng ca
+                                    </button>
+                                    <div className={`absolute top-[calc(100%+10px)] right-0 w-[40rem] z-50 transition-all delay-750 duration-300 ease-linear ${isOpenQuyUoc_1 == true ? 'block h-auto opacity-100' : 'hidden h-0 opacity-0'}`}>
+                                        <QuyUocTangCa />
+                                    </div>
+                                </div>
+                            </div>
       <div>
         <Dropdown
           menu={{
