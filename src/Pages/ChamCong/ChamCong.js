@@ -28,12 +28,12 @@ export default function ChamCong() {
     <div
       id='chamCong'
       className='w-full p-4 flex flex-col gap-4'
-      style={{
-        height: `calc(${mainHeight}px - 3rem)`,
-      }}
+      // style={{
+      //   height: `calc(${mainHeight}px - 3rem)`,
+      // }}
     >
       <BangChamCong />
-      <div
+      {/* <div
         className='w-full flex gap-4'
         style={{
           '@media (minWidth: 786px)': {
@@ -43,7 +43,7 @@ export default function ChamCong() {
       >
         <ChamCongDetail />
         <BaoCaoChamCong />
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import PageSlice from "../reducer/PageSlice";
 import MenuSlice from "../reducer/MenuSlice";
 import PhongBanSlice from "../reducer/PhongBanSlice";
 import UserSlice from "../reducer/UserSlice";
+import ChamCongSlice from "../reducer/ChamCongSlice";
 
 
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     MenuSlice: MenuSlice,
     PhongBanSlice: PhongBanSlice,
     UserSlice: UserSlice,
+    ChamCongSlice: ChamCongSlice
   },
 })
 
