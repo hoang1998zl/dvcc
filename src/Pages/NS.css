@@ -17,3 +17,13 @@
     border-radius: 3px;
     transition: all 0.35s;
   }
+.ant-pagination-item-active{
+    border-color: #fb923c !important;
+}
+.ant-pagination-item-active a {
+    color: #fb923c !important;
+}
+.ant-pagination{
+    display: flex;
+    justify-content: center;
+}

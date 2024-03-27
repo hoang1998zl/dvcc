@@ -2,6 +2,7 @@
 .customTable{
     width: max-content;
     min-width: 100%;
+    text-align: center;
   }
   @media screen and (min-width: 769px) {
     .customTable{

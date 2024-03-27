@@ -249,14 +249,14 @@ export default function BangChamCong() {
         if (e.key == "Enter") {
             handleEdit(0, indexRow, indexColumn)
         } else if (e.key == "ArrowUp") {
-            document.getElementById(`btn_${indexRow == 0 ? indexRow : indexRow - 1}_${indexColumn}`).focus();
+            document.getElementById(`btn_${indexRow == 0 ? indexRow : indexRow - 1}_${indexColumn}`)?.focus();
         } else if (e.key == "ArrowDown") {
-            document.getElementById(`btn_${indexRow < `${bangCong.length > 6 ? bangCong.length - 1 : 6}` ? indexRow + 1 : indexRow}_${indexColumn}`).focus();
+            document.getElementById(`btn_${indexRow < `${bangCong.length > 6 ? bangCong.length - 1 : 6}` ? indexRow + 1 : indexRow}_${indexColumn}`)?.focus();
         } else if (e.key == "ArrowLeft") {
-            document.getElementById(`btn_${indexRow}_${indexColumn < 0 ? indexColumn : indexColumn - 1}`).focus();
+            document.getElementById(`btn_${indexRow}_${indexColumn < 0 ? indexColumn : indexColumn - 1}`)?.focus();
         } else if (e.key == "ArrowRight") {
             console.log(indexColumn < arraylenght - 1 ? indexColumn + 1 : indexColumn);
-            document.getElementById(`btn_${indexRow}_${indexColumn < arraylenght - 1 ? indexColumn + 1 : indexColumn}`).focus();
+            document.getElementById(`btn_${indexRow}_${indexColumn < arraylenght - 1 ? indexColumn + 1 : indexColumn}`)?.focus();
         }
     }
     const get2WordLast = (str) => {
