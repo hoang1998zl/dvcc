@@ -9,6 +9,7 @@ import ChamCong from './ChamCong/ChamCong';
 import DuyetApp from './DuyetApp/DuyetApp';
 import BaoCao from './BaoCao/BaoCao';
 import "./NS.css"
+import TaiKhoan from './TaiKhoan/TaiKhoan';
 
 export default function NSHomePage() {
 
@@ -43,6 +44,7 @@ export default function NSHomePage() {
       case 3: return <HoSo />;
       case 4: return <DuyetApp />;
       case 5: return <ChamCong />;
+      case 6: return <TaiKhoan />;
       default: return <BaoCao />;
     }
   }

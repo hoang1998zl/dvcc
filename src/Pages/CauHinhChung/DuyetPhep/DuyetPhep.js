@@ -6,72 +6,96 @@ import { FaPersonSwimming } from "react-icons/fa6";
 import { FaPlane } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import { setReload } from '../../../Redux-toolkit/reducer/PageSlice';
+import CharacterRepalce from '../../../GlobalFunction/CharacterReplace';
+import { nhanVienService } from '../../../services/nhanVienService';
+import {cauHinhChungService} from '../../../services/cauHinhChungService'
+import { localStorageService } from '../../../services/localStorageService';
+import { toast } from 'react-toastify';
 
 const filterOption = (input, option) =>
-  (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+  CharacterRepalce((option?.label ?? '').toLowerCase()).includes(CharacterRepalce(input.toLowerCase()));
 
 export default function DuyetPhep() {
 
   const dispatch = useDispatch();
 
-  const { reload } = useSelector(state => state.PageSlice);
-
+  let [reload,setReload] = useState(0);
+  let token = localStorageService.getItem("token");
   const [nvList, setNvList] = useState([]);
   const [diTreList, setDiTreList] = useState([]);
   const [duyetPhepList, setDuyetPhepList] = useState([]);
   const [congtacList, setCongTacList] = useState([]);
 
-  const dataNv = [
-    {
-      nv_id: 1,
-      nv_name: "Nguyễn Văn A",
-      nv_status: 1,
-      company_id: 65,
-      nv_nguoiduyet_ditre: 0,
-      nv_nguoiduyet_congtac: 1,
-      nv_nguoiduyet_phep: 1
-    },
-    {
-      nv_id: 2,
-      nv_name: "Nguyễn Văn B",
-      nv_status: 1,
-      company_id: 65,
-      nv_nguoiduyet_ditre: 1,
-      nv_nguoiduyet_congtac: 1,
-      nv_nguoiduyet_phep: 0
-    }
-  ];
-
   useEffect(() => {
-
-    setNvList(dataNv);
-    setDiTreList(dataNv?.filter(item => item?.nv_nguoiduyet_ditre === 1));
-    setDuyetPhepList(dataNv?.filter(item => item?.nv_nguoiduyet_phep === 1));
-    setCongTacList(dataNv?.filter(item => item?.nv_nguoiduyet_congtac === 1));
-
-    dispatch(setReload(false));
-
-  }, [reload]);
-
-
+    nhanVienService.getAllNhanVien(token).then((res) => {
+        setNvList(res.data.content);
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+    cauHinhChungService.getNguoiDuyetDiTre(token).then((res) => {
+        setDiTreList(res.data.content)
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+    cauHinhChungService.getNguoiDuyetPhep(token).then((res) => {
+        setDuyetPhepList(res.data.content)
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+    cauHinhChungService.getNguoiDuyetCongTac(token).then((res) => {
+        setCongTacList(res.data.content)
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, [reload])
   const renderOptions = () => {
     let array = [];
-
     nvList.map((nv) => {
       array.push({
         value: nv?.nv_id,
         label: nv?.nv_name
       })
     })
-
     return array;
   };
 
-  const handleAddNguoiDuyet = (nv_id, type) => {
-  };
+  let handlePhanQuyen = (nv_id,col) => {
+    let data = {
+        nv_id,
+        field: col
+    }
+    cauHinhChungService.phanQuyen(token, data).then((res) => {
+        setReload(Date.now());
+        toast.success("Cập nhật thành công!!!", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000
+        });
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+  }
 
-  const handleRemoveNguoiDuyet = (nv_id, type) => {
-  };
+  let handleBoPhanQuyen = (nv_id,col) => {
+        let data = {
+            nv_id,
+            field: col
+        }
+        cauHinhChungService.boPhanQuyen(token, data).then((res) => {
+            setReload(Date.now());
+            toast.success("Cập nhật thành công!!!", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+        })
+            .catch((err) => {
+                console.log(err);
+            });
+  }
 
   const renderNguoiDuyetDiTre = () => {
     return diTreList?.map((nv, index) => {
@@ -87,7 +111,7 @@ export default function DuyetPhep() {
             type="button"
             className='w-6 h-6 flex justify-center items-center text-white bg-orange-400 font-semibold border border-orange-400 rounded'
             onClick={() => {
-              handleRemoveNguoiDuyet(nv?.nv_id, 'nv_nguoiduyet_ditre');
+              handleBoPhanQuyen(nv?.nv_id, 'nv_quyenditre');
             }}
           >
             X
@@ -111,7 +135,7 @@ export default function DuyetPhep() {
             type="button"
             className='w-6 h-6 flex justify-center items-center text-white bg-orange-400 font-semibold border border-orange-400 rounded'
             onClick={() => {
-              handleRemoveNguoiDuyet(nv?.nv_id, 'nv_nguoiduyet_phep');
+              handleBoPhanQuyen(nv?.nv_id, 'nv_quyenphep');
             }}
           >
             X
@@ -122,7 +146,7 @@ export default function DuyetPhep() {
   }
 
   const renderNguoiCongTac = () => {
-    return nvList?.filter(item => item?.nv_nguoiduyet_congtac === 1).map((nv, index) => {
+    return congtacList?.map((nv, index) => {
       return (
         <div
           key={index}
@@ -135,7 +159,7 @@ export default function DuyetPhep() {
             type="button"
             className='w-6 h-6 flex justify-center items-center text-white bg-orange-400 font-semibold border border-orange-400 rounded'
             onClick={() => {
-              handleRemoveNguoiDuyet(nv?.nv_id, 'nv_nguoiduyet_congtac');
+              handleBoPhanQuyen(nv?.nv_id, 'nv_quyencongtac');
             }}
           >
             X
@@ -154,7 +178,7 @@ export default function DuyetPhep() {
       >
         <FaRegCircleCheck />
         <strong>
-          Duyệt phép
+          Quyền Duyệt phép
         </strong>
       </h1>
 
@@ -170,7 +194,7 @@ export default function DuyetPhep() {
           </h1>
           <Select
             onChange={(e) => {
-              handleAddNguoiDuyet(e, "nv_nguoiduyet_ditre")
+              handlePhanQuyen(e, "nv_quyenditre")
             }}
             options={renderOptions()}
             optionFilterProp="children"
@@ -194,10 +218,7 @@ export default function DuyetPhep() {
           </h1>
           <Select
             onChange={(e) => {
-              handleAddNguoiDuyet(e, "nv_nguoiduyet_phep")
-            }}
-            onBlur={(e) => {
-              handleAddNguoiDuyet(e, "nv_nguoiduyet_phep")
+              handlePhanQuyen(e, "nv_quyenphep")
             }}
             options={renderOptions()}
             optionFilterProp="children"
@@ -221,7 +242,7 @@ export default function DuyetPhep() {
           </h1>
           <Select
             onChange={(e) => {
-              handleAddNguoiDuyet(e, "nv_nguoiduyet_congtac")
+              handlePhanQuyen(e, "nv_quyencongtac")
             }}
             options={renderOptions()}
             optionFilterProp="children"

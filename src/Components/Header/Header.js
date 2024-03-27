@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -10,15 +10,31 @@ import { LuClock3 } from "react-icons/lu";
 import { FaLocationDot } from "react-icons/fa6";
 
 import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
+import { dvccService } from '../../services/dvccService';
+import { setNewNoti } from '../../Redux-toolkit/reducer/DuyetAppSlice';
+import { localStorageService } from '../../services/localStorageService';
 
 export default function Header() {
 
+  const token = localStorageService.getItem("token");
   const [currentHoverMenu, setCurrentHoverMenu] = useState(0);
 
   const { currentMenu } = useSelector(state => state.MenuSlice);
   const { isOpenBusiness } = useSelector((state) => state.MenuSlice);
+  let newNoti = useSelector(state => state.DuyetAppSlice.newNoti);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    // cái này để load số thông báo trên duyệt app
+    dvccService.getTotal(token).then((res) => {
+        let total = 0;
+        total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa;
+        dispatch(setNewNoti(total));
+    })
+        .catch((err) => {
+            console.log(err);
+        });
+  }, [])
 
   const menu = [
     {
@@ -51,6 +67,11 @@ export default function Header() {
       menu_name: "Cấu Hình",
       menu_icon: <FaGear />,
     },
+    {
+      menu_id: 6,
+      menu_name: "Tài Khoản",
+      menu_icon: <FaLocationDot />,
+    },
   ];
 
   const renderMenuHeader = () => {
@@ -79,6 +100,12 @@ export default function Header() {
           >
             {item.menu_name}
           </span>
+          {
+                            item.menu_id == 4 &&
+                            <div className={`p-0.5 min-w-[15px] aspect-square rounded-full bg-red-500 absolute top-0 right-1/4 text-white flex justify-center items-center text-[0.6rem]`}>
+                                {newNoti}
+                            </div>
+                        }
         </li>
       )
     })
