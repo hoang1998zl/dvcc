@@ -4,8 +4,6 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaPersonWalkingLuggage } from "react-icons/fa6";
 import { FaPersonSwimming } from "react-icons/fa6";
 import { FaPlane } from "react-icons/fa6";
-import { useDispatch, useSelector } from 'react-redux';
-import { setReload } from '../../../Redux-toolkit/reducer/PageSlice';
 import CharacterRepalce from '../../../GlobalFunction/CharacterReplace';
 import { nhanVienService } from '../../../services/nhanVienService';
 import {cauHinhChungService} from '../../../services/cauHinhChungService'
@@ -16,8 +14,6 @@ const filterOption = (input, option) =>
   CharacterRepalce((option?.label ?? '').toLowerCase()).includes(CharacterRepalce(input.toLowerCase()));
 
 export default function DuyetPhep() {
-
-  const dispatch = useDispatch();
 
   let [reload,setReload] = useState(0);
   let token = localStorageService.getItem("token");

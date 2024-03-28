@@ -2,6 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import PhongBan from '../HoSo/PhongBan/PhongBan';
 import DuyetPhep from '../CauHinhChung/DuyetPhep/DuyetPhep';
+import TaiKhoanDvcc from './TaiKhoanDvcc/TaiKhoanDvcc';
+import DuyetPhepDVCC from './DuyetPhepDVCC/DuyetPhepDVCC';
 
 export default function TaiKhoan() {
   const { mainHeight } = useSelector(state => state.PageSlice);
@@ -21,8 +23,12 @@ export default function TaiKhoan() {
       >
         <PhongBan />
       </div>
-      <div className='w-full'>
+      <div className='w-full flex flex-col'>
           <DuyetPhep></DuyetPhep>
+          <div className='grid md:grid-cols-2 grid-col-1 bg-white rounded-lg shadow-md h-full mt-4 gap-4'>
+              <TaiKhoanDvcc></TaiKhoanDvcc>
+              <DuyetPhepDVCC></DuyetPhepDVCC>
+          </div>
       </div>
     </div>
   )

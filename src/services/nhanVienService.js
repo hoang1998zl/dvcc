@@ -350,7 +350,7 @@ export const  nhanVienService = {
         let transData = {
             thoiviec_date: data.thoiviec_date,
             thoiviec_reson: data.thoiviec_reson,
-            thoiviec_note: data. thoiviec_note
+            thoiviec_note: data.thoiviec_note
         }
         formData.append('nv', JSON.stringify(transData));
         return axios({
