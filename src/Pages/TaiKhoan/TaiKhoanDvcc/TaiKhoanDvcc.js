@@ -10,6 +10,7 @@ import { nhanVienService } from '../../../services/nhanVienService';
 import { cauHinhChungService } from '../../../services/cauHinhChungService';
 import { chiNhanhService } from '../../../services/chiNhanhService';
 import { toast } from 'react-toastify';
+import { setReloadMany } from '../../../Redux-toolkit/reducer/ChamCongSlice';
 
 const filterOption = (input, option) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
@@ -26,6 +27,7 @@ export default function TaiKhoanDvcc() {
           backgroundColor: yellow[700],
         },
     }));
+    let dispatch = useDispatch();
     let token = localStorageService.getItem("token");
     let congTy = useSelector((state) => state.UserSlice.congTy);
     let [reload, setReload] = useState(0);
@@ -134,6 +136,7 @@ export default function TaiKhoanDvcc() {
         }
         nhanVienService.createDvcc(token, baseFormat).then((res) => {
           setReload(Date.now());
+          dispatch(setReloadMany(Date.now()));
           toast.success("Cập nhật thành công!!!", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000
@@ -226,7 +229,7 @@ export default function TaiKhoanDvcc() {
         return array;
     }
 return (
-    <div className='w-full flex flex-col'>
+    <div className='w-full flex flex-col pr-2'>
         <h1
             className=' h-10 flex justify-start items-center gap-2 text-orange-400 text-lg pl-4 pt-2'>
         <FaRegCircleCheck />
@@ -301,10 +304,12 @@ return (
                 options={renderCaLamViec2Select()}
                 />
             </div>
+            <div></div>
             <div>
                 <p>
-                Chụp ảnh khi c/công:
+                  Chụp ảnh khi c/công:
                 </p>
+                <p className='text-transparent'>""</p>
                 <YellowSwitch
                 style={{ marginRight: 10 }}
                 onChange={(e) => changeInput(e, "anhchamcong")}
@@ -314,7 +319,7 @@ return (
             </div>
             <div>
                 <p>
-                Chấm công bất kể khoảng cách:
+                  Chấm công bất kể khoảng cách:
                 </p>
                 <YellowSwitch
                 style={{ marginRight: 10 }}
@@ -323,7 +328,6 @@ return (
                 checked={baseFormat?.is_saler == 1 ? true : false}
                 />
             </div>
-            <div></div>
             <div className='flex justify-end items-end'>
                 <button
                 type="button"

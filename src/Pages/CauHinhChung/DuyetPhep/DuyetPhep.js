@@ -9,6 +9,8 @@ import { nhanVienService } from '../../../services/nhanVienService';
 import {cauHinhChungService} from '../../../services/cauHinhChungService'
 import { localStorageService } from '../../../services/localStorageService';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setReloadMany } from '../../../Redux-toolkit/reducer/ChamCongSlice';
 
 const filterOption = (input, option) =>
   CharacterRepalce((option?.label ?? '').toLowerCase()).includes(CharacterRepalce(input.toLowerCase()));
@@ -17,6 +19,7 @@ export default function DuyetPhep() {
 
   let [reload,setReload] = useState(0);
   let token = localStorageService.getItem("token");
+  let dispatch = useDispatch();
   const [nvList, setNvList] = useState([]);
   const [diTreList, setDiTreList] = useState([]);
   const [duyetPhepList, setDuyetPhepList] = useState([]);
@@ -66,6 +69,7 @@ export default function DuyetPhep() {
     }
     cauHinhChungService.phanQuyen(token, data).then((res) => {
         setReload(Date.now());
+        dispatch(setReloadMany(Date.now()));
         toast.success("Cập nhật thành công!!!", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000
@@ -83,6 +87,7 @@ export default function DuyetPhep() {
         }
         cauHinhChungService.boPhanQuyen(token, data).then((res) => {
             setReload(Date.now());
+            dispatch(setReloadMany(Date.now()));
             toast.success("Cập nhật thành công!!!", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000

@@ -25,7 +25,7 @@ export default function TaiKhoan() {
       </div>
       <div className='w-full flex flex-col'>
           <DuyetPhep></DuyetPhep>
-          <div className='grid md:grid-cols-2 grid-col-1 bg-white rounded-lg shadow-md h-full mt-4 gap-4'>
+          <div className='grid md:grid-cols-2 grid-col-1 bg-white rounded-lg shadow-md h-full mt-4 px-1'>
               <TaiKhoanDvcc></TaiKhoanDvcc>
               <DuyetPhepDVCC></DuyetPhepDVCC>
           </div>
