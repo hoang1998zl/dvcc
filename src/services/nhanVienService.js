@@ -387,4 +387,20 @@ export const  nhanVienService = {
             }
         })
     },
+    updateCV: (token,nv_id,files) => {
+        const formData = new FormData();
+        formData.append("nv_cv", files);
+        let nv = {
+            nv_id
+        }
+        formData.append("nv",JSON.stringify(nv));
+        return axios({
+            url: BASE_URL + "api/nhan-vien/upload-cv",
+            method: "POST",
+            data: formData,
+            headers: {
+                token
+            }
+        });
+    },
 }

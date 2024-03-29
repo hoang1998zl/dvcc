@@ -32,13 +32,13 @@ export default function HoSo() {
       >
         <HoSoWrapper />
       </div>
-      <div
+      {/* <div
         style={{
           width: `${defaultWidth}px`,
         }}
       >
         <DuyetPhepWrapper />
-      </div>
+      </div> */}
     </div>
   )
 }

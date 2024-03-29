@@ -11,6 +11,7 @@ import { cauHinhChungService } from '../../../services/cauHinhChungService';
 import { chiNhanhService } from '../../../services/chiNhanhService';
 import { toast } from 'react-toastify';
 import { setReloadMany } from '../../../Redux-toolkit/reducer/ChamCongSlice';
+import moment from 'moment/moment';
 
 const filterOption = (input, option) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
@@ -180,7 +181,7 @@ export default function TaiKhoanDvcc() {
         caLamViec?.map((item) => {
           array.push({
             value: item?.id,
-            label: <p>{item?.name}: {item?.gio_bat_dau}-{item?.gio_ket_thuc}</p>
+            label: <p>{item?.name}: {moment(item?.gio_bat_dau,"HH:mm:ss").format("HH:mm")}-{moment(item?.gio_ket_thuc,"HH:mm:ss").format("HH:mm")}</p>
           })
         })
         return array;

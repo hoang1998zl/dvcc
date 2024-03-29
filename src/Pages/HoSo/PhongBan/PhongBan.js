@@ -43,7 +43,7 @@ export default function PhongBan() {
     }).catch((err) => {
       console.log(err)
     })
-  }, [reload]);
+  }, [reload,currentPhongBan]);
 
   // các hàm change input
   let searchUser = (e) => {
