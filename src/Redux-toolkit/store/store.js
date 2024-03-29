@@ -5,6 +5,8 @@ import PhongBanSlice from "../reducer/PhongBanSlice";
 import UserSlice from "../reducer/UserSlice";
 import ChamCongSlice from "../reducer/ChamCongSlice";
 import DuyetAppSlice from "../reducer/DuyetAppSlice";
+import ModalSlice from "../../Components/Modal/ModalSlice";
+import HoSoNhanVienSlice from "../reducer/HoSoNhanVienSlice";
 
 
 const store = configureStore({
@@ -14,7 +16,9 @@ const store = configureStore({
     PhongBanSlice: PhongBanSlice,
     UserSlice: UserSlice,
     ChamCongSlice: ChamCongSlice,
-    DuyetAppSlice:DuyetAppSlice
+    DuyetAppSlice:DuyetAppSlice,
+    ModalSlice: ModalSlice,
+    HoSoNhanVienSlice:HoSoNhanVienSlice
   },
 })
 

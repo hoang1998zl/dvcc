@@ -13,7 +13,7 @@ export default function HoSo() {
     <div
       className='w-full flex justify-center gap-4 py-4 2xl:px-4'
       style={{
-        height: `calc(${mainHeight}px - 3rem)`,
+        height: `calc(${mainHeight}px - 3.5rem)`,
       }}
     >
       <div

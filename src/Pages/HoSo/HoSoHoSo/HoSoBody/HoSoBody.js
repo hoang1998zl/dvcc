@@ -4,6 +4,7 @@ import HoSoCCCD from './HoSoCCCD/HoSoCCCD'
 import HoSoGPLX from './HoSoGPLX/HoSoGPLX'
 import HoSoHopDong from './HoSoHopDong/HoSoHopDong'
 import HoSoChungChi from './HoSoChungChi/HoSoChungChi'
+import ModalComponent from '../../../../Components/Modal/ModalComponent'
 
 export default function HoSoBody() {
   return (
@@ -19,6 +20,7 @@ export default function HoSoBody() {
         <HoSoHopDong />
         <HoSoChungChi />
       </div>
+      <ModalComponent></ModalComponent>
     </div>
   )
 }
