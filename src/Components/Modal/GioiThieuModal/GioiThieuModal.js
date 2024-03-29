@@ -145,6 +145,18 @@ function GioiThieuModal() {
           }}
         />
       </div>
+      <div className='w-full flex flex-col gap-2 md:col-span-2'>
+        <p className='font-bold text-gray-400'>
+          Mã Nhân Viên
+        </p>
+        <Input
+          className='w-full'
+          value={nhanVienUpdated?.nv_order}
+          onChange={(e) => {
+            changeInput('nv_order',e.target.value);
+          }}
+        />
+      </div>
     </div>
   )
 }
