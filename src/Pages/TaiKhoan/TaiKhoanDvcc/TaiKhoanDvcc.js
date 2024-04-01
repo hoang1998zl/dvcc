@@ -53,11 +53,13 @@ export default function TaiKhoanDvcc() {
         nv_nguoiduyet_congtac: null,
         nv_nguoiduyet_phep: null,
         nv_anhchamcong: 0,
-        is_saler: 0,
     })
     useEffect(() => {
         setTextUsername("");
         setTextPassWord("");
+        if(!nv_id){
+          return;
+        }
         nhanVienService.getNhanVienTheoId(token, nv_id).then((res) => {
           setThongTinDVCC(res.data.content);
         })
@@ -163,7 +165,8 @@ export default function TaiKhoanDvcc() {
             nv_nguoiduyet_congtac: nv?.nv_nguoiduyet_congtac ? nv.nv_nguoiduyet_congtac : null,
             nv_nguoiduyet_phep: nv?.nv_nguoiduyet_phep ? nv.nv_nguoiduyet_phep : null,
             nv_anhchamcong: nv?.nv_anhchamcong ? nv.nv_anhchamcong : 0,
-            is_saler: nv?.is_saler ? nv.is_saler : 0
+            is_saler: nv?.is_saler ? nv.is_saler : 0,
+            is_parttime: nv?.is_parttime
         }
         setBaseFormat(data);
     }
@@ -213,7 +216,9 @@ export default function TaiKhoanDvcc() {
         } else if (type == "anhchamcong") {
           clone.nv_anhchamcong = Number(e.target.checked);
         } else if (type == "is_saler") {
-            clone.is_saler = Number(e.target.checked);
+          clone.is_saler = Number(e.target.checked);
+        }else if (type == "is_parttime") {
+          clone.is_parttime = e;
         } else {
           clone.nv_password = e.target.value;
         }
@@ -305,7 +310,26 @@ return (
                 options={renderCaLamViec2Select()}
                 />
             </div>
-            <div></div>
+            <div>
+                <p>
+                  Loại nhân viên:
+                </p>
+                <Select
+                className='w-full'
+                onChange={(e) => changeInput(e, "is_parttime")} value={baseFormat?.is_parttime} showSearch placeholder="Chọn Loại Nhân Viên" optionFilterProp="children"
+                filterOption={filterOption}
+                options={[
+                  {
+                    value: 0,
+                    label: "Full-time"
+                  },
+                  {
+                    value: 1,
+                    label: "Part-time"
+                  }
+                ]}
+                />
+            </div>
             <div>
                 <p>
                   Chụp ảnh khi c/công:

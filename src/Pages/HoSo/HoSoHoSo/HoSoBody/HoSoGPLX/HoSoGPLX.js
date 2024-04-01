@@ -1,18 +1,51 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { FaUser } from "react-icons/fa6";
 import { FaPen } from "react-icons/fa6";
+import { localStorageService } from '../../../../../services/localStorageService';
+import { nhanVienService } from '../../../../../services/nhanVienService';
+import { toast } from 'react-toastify';
 
 export default function HoSoGPLX() {
 
   const { currentNhanVien } = useSelector(state => state.UserSlice);
-
+  let token = localStorageService.getItem('token');
+  let [nv,setNV] = useState({});
+  let [reload,setReload] = useState(0);
   const [currentContextMenu, setCurrentContextMenu] = useState({
     open: false,
     type: "",
   });
+  useEffect(()=>{
+    if(!currentNhanVien){
+      return;
+    }
+    nhanVienService.getNhanVienTheoId(token, currentNhanVien).then((res) => {
+      setNV(res.data?.content);
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[currentNhanVien,reload])
 
-
+  let changeGPLX = (e) => {
+    let type = 0;
+    if(currentContextMenu.type == "mattruoc"){
+      type = 0;
+    }else{
+      type = 1;
+    }
+    nhanVienService.updateGPLX(token, nv.nv_id, e.target.files[0], type).then((res) => {
+      setReload(Date.now())
+      toast.success("Cập nhật thành công!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+      });
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   const renderContextMenu = () => {
     return (
       <>
@@ -27,8 +60,8 @@ export default function HoSoGPLX() {
                 type="button"
                 className='w-full px-2 py-1 rounded border border-transparent hover:bg-slate-100 hover:border-orange-400 text-left flex items-center gap-2'
                 onClick={() => {
-                  currentContextMenu.type === "mattruoc" && (window.open(currentNhanVien?.nv_cmnd_truoc) && setCurrentContextMenu({ open: false, type: "" }));
-                  currentContextMenu.type === "matsau" && (window.open(currentNhanVien?.nv_cmnd_sau) && setCurrentContextMenu({ open: false, type: "" }));
+                  currentContextMenu.type === "mattruoc" && (window.open(nv?.nv_gplx_truoc) && setCurrentContextMenu({ open: false, type: "" }));
+                  currentContextMenu.type === "matsau" && (window.open(nv?.nv_gplx_sau) && setCurrentContextMenu({ open: false, type: "" }));
                 }}
               >
                 <div
@@ -42,27 +75,31 @@ export default function HoSoGPLX() {
               </button>
             </li>
             <li className='border-t'>
-              <label htmlFor='nv_cmnd_sau' className='w-full block text-left rounded-md font-normal'>
+              
                 <button
                   type="button"
                   className='w-full px-2 py-1 rounded border border-transparent hover:bg-slate-100 hover:border-orange-400 text-left flex items-center gap-2'
                 >
-                  <input
-                    type="file"
-                    id="nv_cmnd_sau"
-                    className='hidden'
-                    name=""
-                  />
-                  <div
-                    className='w-6 aspect-square rounded border border-gray-500 flex justify-center items-center'
-                  >
-                    <FaPen />
-                  </div>
-                  <span>
-                    Cập nhật
-                  </span>
+                  <label htmlFor='nv_cmnd_sau' className='w-full block text-left rounded-md font-normal'>
+                    <input
+                      type="file"
+                      id="nv_cmnd_sau"
+                      className='hidden'
+                      name=""
+                      onChange={changeGPLX}
+                    />
+                    <div className='flex'>
+                      <div
+                      className='w-6 aspect-square rounded border border-gray-500 flex justify-center items-center'
+                      >
+                        <FaPen />
+                      </div>
+                      <span className='ml-2'>
+                        Cập nhật
+                      </span>
+                    </div>
+                  </label>
                 </button>
-              </label>
             </li>
           </ul>
         </div>
@@ -96,7 +133,7 @@ export default function HoSoGPLX() {
             <img
               id='gplx_image_mattruoc'
               className='w-full h-full object-contain object-center rounded'
-              src={currentNhanVien?.nv_cmnd_truoc}
+              src={nv?.nv_gplx_truoc}
               alt=""
               onClick={() => {
                 setCurrentContextMenu({
@@ -131,7 +168,7 @@ export default function HoSoGPLX() {
             <img
               id='gplx_image_matsau'
               className='w-full h-full object-contain object-center rounded'
-              src={currentNhanVien?.nv_cmnd_sau}
+              src={nv?.nv_gplx_sau}
               alt=""
               onClick={() => {
                 setCurrentContextMenu({

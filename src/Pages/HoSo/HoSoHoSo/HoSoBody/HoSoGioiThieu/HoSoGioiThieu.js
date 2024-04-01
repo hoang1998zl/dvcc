@@ -99,7 +99,7 @@ function HoSoGioiThieu() {
             </p>
           </div>
         </div>
-        <div className='flex items-center gap-4 text-gray-400 md:col-span-2'>
+        <div className='flex items-center gap-4 text-gray-400'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
             <i className="fa-solid fa-location-dot"></i>
           </div>
@@ -109,6 +109,19 @@ function HoSoGioiThieu() {
             </p>
             <p className='font-bold text-black'>
               {nhanVienHS.nv_diachithuongtru}
+            </p>
+          </div>
+        </div>
+        <div className='flex items-center gap-4 text-gray-400'>
+          <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
+            <i className="fa-solid fa-user"></i>
+          </div>
+          <div className='flex-1'>
+            <p className='font-semibold text-base'>
+              Loại Nhân Viên
+            </p>
+            <p className='font-bold text-black'>
+              {nhanVienHS?.is_parttime === 0 ? "Full-time": "Part-time"}
             </p>
           </div>
         </div>

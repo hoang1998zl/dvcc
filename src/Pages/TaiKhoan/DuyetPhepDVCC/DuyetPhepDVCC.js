@@ -21,6 +21,9 @@ export default function DuyetPhepDVCC() {
   let [nghiPhepList, setNghiPhepList] = useState([]);
   let [congTacList, setCongTacList] = useState([]);
   useEffect(() => {
+    if(!nv_id){
+      return;
+    }
     nhanVienService.getNhanVienTheoId(token, nv_id).then((res) => {
       setNV(res.data.content);
     })
