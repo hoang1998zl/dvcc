@@ -89,7 +89,7 @@ export const  nhanVienService = {
             }
         });
     },
-    updateGPLX: (token,nv_id,files,upload_type) => {
+    updateGPLX_LB: (token,nv_id,files,upload_type) => {
         const formData = new FormData();
         formData.append("nv_gplx", files);
         let nv = {
@@ -98,7 +98,7 @@ export const  nhanVienService = {
         }
         formData.append("nv",JSON.stringify(nv));
         return axios({
-            url: BASE_URL + "api/nhan-vien/cap-nhat-gplx",
+            url: BASE_URL + "api/nhan-vien/cap-nhat-gplx-lb",
             method: "POST",
             data: formData,
             headers: {

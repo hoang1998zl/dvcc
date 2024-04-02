@@ -42,7 +42,10 @@ export default function HoSoCCCD() {
       });
     })
       .catch((err) => {
-        console.log(err);
+        toast.error("Cập nhật thất bại!!!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        });
       });
   }
   const renderContextMenu = () => {
@@ -133,7 +136,7 @@ export default function HoSoCCCD() {
             <img
               id='cccd_image_mattruoc'
               className='w-full h-full object-contain object-center rounded'
-              src={nv?.nv_cmnd_truoc}
+              src={nv?.nv_cmnd_truoc?nv?.nv_cmnd_truoc:"https://apihr.weos.vn/public/img_sample/the_cccd_gan_chip_mat_truoc.jpg"}
               alt=""
               onClick={() => {
                 setCurrentContextMenu({
@@ -168,7 +171,7 @@ export default function HoSoCCCD() {
             <img
               id='cccd_image_matsau'
               className='w-full h-full object-contain object-center rounded'
-              src={nv?.nv_cmnd_sau}
+              src={nv?.nv_cmnd_sau?nv.nv_cmnd_sau:"https://apihr.weos.vn/public/img_sample/the_cccd_gan_chip_mat_sau.jpg"}
               alt=""
               onClick={() => {
                 setCurrentContextMenu({

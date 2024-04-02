@@ -132,7 +132,10 @@ export default function HoSoHeader() {
       });
     })
       .catch((err) => {
-        console.log(err);
+        toast.error("Cập nhật thất bại!!!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        });
       });
   }
   let renderDieuChuyen = () => {

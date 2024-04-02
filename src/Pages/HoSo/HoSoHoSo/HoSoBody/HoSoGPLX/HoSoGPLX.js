@@ -35,7 +35,7 @@ export default function HoSoGPLX() {
     }else{
       type = 1;
     }
-    nhanVienService.updateGPLX(token, nv.nv_id, e.target.files[0], type).then((res) => {
+    nhanVienService.updateGPLX_LB(token, nv.nv_id, e.target.files[0], type).then((res) => {
       setReload(Date.now())
       toast.success("Cập nhật thành công!!!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -43,7 +43,10 @@ export default function HoSoGPLX() {
       });
     })
       .catch((err) => {
-        console.log(err);
+        toast.error("Cập nhật thất bại!!!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        });
       });
   }
   const renderContextMenu = () => {
@@ -133,7 +136,7 @@ export default function HoSoGPLX() {
             <img
               id='gplx_image_mattruoc'
               className='w-full h-full object-contain object-center rounded'
-              src={nv?.nv_gplx_truoc}
+              src={nv?.nv_gplx_truoc?nv.nv_gplx_truoc:"https://apihr.weos.vn/public/img_sample/gplx_mat_truoc.jpg"}
               alt=""
               onClick={() => {
                 setCurrentContextMenu({
@@ -168,7 +171,7 @@ export default function HoSoGPLX() {
             <img
               id='gplx_image_matsau'
               className='w-full h-full object-contain object-center rounded'
-              src={nv?.nv_gplx_sau}
+              src={nv?.nv_gplx_sau?nv.nv_gplx_sau:"https://apihr.weos.vn/public/img_sample/gplx_mat_sau.jpg"}
               alt=""
               onClick={() => {
                 setCurrentContextMenu({
