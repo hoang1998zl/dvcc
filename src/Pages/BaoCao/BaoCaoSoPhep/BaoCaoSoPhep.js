@@ -1,20 +1,64 @@
-import React from 'react';
-import baocaosophepjson from '../../../issets/json/BaoCaoSoPhep.json';
-
+import React, { useEffect, useState } from 'react';
 import { FaPersonRunning, FaPersonSwimming, FaPersonWalkingLuggage, FaPlane } from "react-icons/fa6";
 import { LuClock3 } from "react-icons/lu";
+import { localStorageService } from '../../../services/localStorageService';
+import { useSelector } from 'react-redux';
+import { baoCaoService } from '../../../services/baoCaoService';
 
 
 export default function BaoCaoSoPhep() {
-
+  let [reload,setReload] = useState(0);
+  let token = localStorageService.getItem("token");
+  let ngay = useSelector((state) => state.BaoCaoSlice.ngay);
+  let [baoCao,setBaoCao] = useState([]);
+  useEffect(() => {
+    baoCaoService.layThongKe(token,ngay).then((res) => {
+      setBaoCao(res.data.content);
+    }).catch((err) => {
+      console.log(err);
+    })
+  },[reload,ngay])
   const renderBaoCao = () => {
-    return baocaosophepjson?.map((item, index) => {
+    return baoCao?.map((item, index) => {
+      let format = {
+        icon: "",
+        color:"",
+        name:"",
+        background:""
+      }
+      switch(item?.bc_id){
+        case 1: format.icon = <FaPersonRunning />;
+                format.color = "text-sky-500";
+                format.name = "Xin đi trễ";
+                format.background = "bg-sky-100";
+                break;
+        case 2: format.icon = <FaPersonWalkingLuggage />;
+                format.color = "text-purple-500";
+                format.name = "Xin về sớm";
+                format.background = "bg-purple-100";
+                break;
+        case 3: format.icon = <FaPersonSwimming />;
+                format.color = "text-red-500";
+                format.name = "Nghỉ phép";
+                format.background = "bg-red-100";
+                break;
+        case 4: format.icon = <FaPlane />;
+                format.color = "text-green-500";
+                format.name = "Công tác";
+                format.background = "bg-green-100";
+                break;
+        case 5: format.icon = <LuClock3 />;
+                format.color = "text-orange-500";
+                format.name = "Tăng ca";
+                format.background = "bg-orange-100";
+                break;
+      }
       return (
         <div
           key={index}
           className='p-4 rounded-lg shadow-lg bg-white flex gap-4'
         >
-          {
+          {/* {
             item.bc_id == 1 && (
               <div
                 className={`h-full aspect-square rounded-full flex justify-center items-center bg-sky-100 text-sky-500 text-2xl`}
@@ -58,16 +102,20 @@ export default function BaoCaoSoPhep() {
                 <LuClock3 />
               </div>
             )
-          }
-
+          } */}
+          <div
+            className={`h-full aspect-square rounded-full flex justify-center items-center ${format.background} ${format.color} text-2xl relative`}
+          >
+              {format.icon}
+          </div>
           <div
             className={`w-full flex-1 text-center`}
           >
             <p className='text-lg font-bold'>
               {item.bc_total}
             </p>
-            <p className={`${item.bc_color} text-sm font-semibold`}>
-              {item.bc_name}
+            <p className={`${format.color} text-sm font-semibold`}>
+              {format.name}
             </p>
           </div>
         </div>

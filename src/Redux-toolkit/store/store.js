@@ -7,6 +7,7 @@ import ChamCongSlice from "../reducer/ChamCongSlice";
 import DuyetAppSlice from "../reducer/DuyetAppSlice";
 import ModalSlice from "../../Components/Modal/ModalSlice";
 import HoSoNhanVienSlice from "../reducer/HoSoNhanVienSlice";
+import BaoCaoSlice from "../reducer/baoCaoSlice";
 
 
 const store = configureStore({
@@ -18,7 +19,8 @@ const store = configureStore({
     ChamCongSlice: ChamCongSlice,
     DuyetAppSlice:DuyetAppSlice,
     ModalSlice: ModalSlice,
-    HoSoNhanVienSlice:HoSoNhanVienSlice
+    HoSoNhanVienSlice:HoSoNhanVienSlice,
+    BaoCaoSlice: BaoCaoSlice
   },
 })
 
