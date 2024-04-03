@@ -171,6 +171,15 @@ export const  nhanVienService = {
             }
         });
     },
+    deleteChungChi: (token,bangcap_id) => {
+        return axios({
+            url: BASE_URL + "api/nhan-vien/xoa-chung-chi/"+ bangcap_id,
+            method: "DELETE",
+            headers: {
+                token
+            }
+        })
+    },
     getHoSo: (token,nv_id) => {
         return axios({
             url: BASE_URL + "api/nhan-vien/lay-ho-so/"+ nv_id,
