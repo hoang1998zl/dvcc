@@ -13,5 +13,17 @@ export const baoCaoService = {
                 token
             }
         })
+    },
+    layBaoCaoTuan: (token,ngay) => {
+        return axios({
+            url: BASE_URL + "api/bao-cao/lay-bao-cao-tuan",
+            method: "POST",
+            data:{
+                ngay
+            },
+            headers: {
+                token
+            }
+        })
     }
 }
