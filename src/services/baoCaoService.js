@@ -25,5 +25,17 @@ export const baoCaoService = {
                 token
             }
         })
+    },
+    layBaoCaoPhongBan: (token,ngay) => {
+        return axios({
+            url: BASE_URL + "api/bao-cao/lay-bao-cao-phong-ban",
+            method: "POST",
+            data:{
+                ngay
+            },
+            headers: {
+                token
+            }
+        })
     }
 }
