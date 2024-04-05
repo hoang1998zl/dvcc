@@ -144,7 +144,7 @@ export default function HoSoGPLX() {
                   type: '',
                 })
               }}
-              onContextMenu={(e) => {
+              onMouseEnter={(e) => {
                 e.preventDefault();
                 setCurrentContextMenu({
                   open: true,
@@ -179,7 +179,7 @@ export default function HoSoGPLX() {
                   type: '',
                 })
               }}
-              onContextMenu={(e) => {
+              onMouseEnter={(e) => {
                 e.preventDefault();
                 setCurrentContextMenu({
                   open: true,

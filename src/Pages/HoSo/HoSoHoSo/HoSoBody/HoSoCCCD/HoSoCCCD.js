@@ -144,7 +144,7 @@ export default function HoSoCCCD() {
                   type: '',
                 })
               }}
-              onContextMenu={(e) => {
+              onMouseEnter={(e) => {
                 e.preventDefault();
                 setCurrentContextMenu({
                   open: true,
@@ -179,8 +179,8 @@ export default function HoSoCCCD() {
                   type: '',
                 })
               }}
-              onContextMenu={(e) => {
-                e.preventDefault();
+              onMouseEnter={(e) => {
+                // e.preventDefault();
                 setCurrentContextMenu({
                   open: true,
                   type: 'matsau',
