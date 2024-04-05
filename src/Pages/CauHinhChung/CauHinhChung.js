@@ -44,11 +44,13 @@ export default function CauHinhChung() {
         <ChiNhanh />
         <div
           id='CauHinhChung__right'
-          className={`w-full grid grid-cols-1 gap-4 customScrollbar`}
+          className={`w-full flex flex-col gap-4 customScrollbar`}
           style={{
             justifyContent: rightHeight > leftHeight ? 'flex-start' : 'space-between',
-            maxHeight: leftHeight,
             overflowY: 'auto',
+            '@media (min-width: 1024px)': {
+              maxHeight: leftHeight,
+            }
           }}
         >
           {/* <UserOnline /> */}
