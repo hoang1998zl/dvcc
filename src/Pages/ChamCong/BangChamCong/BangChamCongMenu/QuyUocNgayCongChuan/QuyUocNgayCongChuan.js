@@ -49,7 +49,11 @@ export default function QuyUocNgayCongChuan() {
     try {
       clone[index].ns_nhanvien_bangluongchinh[0].ngay_chuan = value;
     } catch (error) {
-
+      toast.error("Vui lòng tạo nhân viên cho phòng ban này trước!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+    });
+    return;
     }
     debounceApi(clone[index]);
     setNgayCongList(clone);
