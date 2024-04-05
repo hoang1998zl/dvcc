@@ -16,7 +16,7 @@ export default function TaiKhoan() {
       }}
     >
       <div
-        className='bg-white rounded-xl shadow-lg p-4 sticky top-0'
+        className='bg-white rounded-xl shadow-lg p-4 sticky top-0 overflow-y-auto customScrollbar'
         style={{
           width: `${defaultWidth}px`,
         }}

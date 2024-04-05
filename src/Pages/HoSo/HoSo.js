@@ -17,7 +17,7 @@ export default function HoSo() {
       }}
     >
       <div
-        className='bg-white rounded-xl shadow-lg p-4 pt-0 sticky top-0 overflow-y-auto'
+        className='bg-white rounded-xl shadow-lg p-4 pt-0 sticky top-0 overflow-y-auto customScrollbar'
         style={{
           width: `${defaultWidth}px`,
         }}
