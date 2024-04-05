@@ -67,42 +67,27 @@ export default function BaoCaoChart() {
           >
             {item?.danhmuc_name}
           </p>
-          <Doughnut
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: item?.data,
-                  backgroundColor: backgroundColor,
-                },
-              ],
-            }}
-            options={options}
-            plugins={[{
-              beforeDraw: function (chart) {
-                const width = chart.width;
-                const height = chart.height;
-                const ctx = chart.ctx;
-        
-                ctx.restore();
-        
-                const fontSize = (height / 160).toFixed(2);
-                ctx.font = `${fontSize}em sans-serif`;
-                ctx.textBaseline = "top";
-        
-                let percent = (online,total) => {
-                  return Math.round(online/total*100);
-                }
-                const text = `${percent(item.data[0],item.data[0] + item.data[1])}%`; // Văn bản bạn muốn hiển thị
-                const textX = Math.round((width - ctx.measureText(text).width) / 3.3);
-                const textY = height / 2.2;
-        
-                ctx.fillText(text, textX, textY);
-                ctx.save();
-              },
-            },
-          ]}
-          />
+          <div className='relative'>
+            {/* sửa lại tỉ lệ trên mobile để tránh bị lệch nhé */}
+            <div  className='absolute md:top-[41%] md:left-[24%] top-[45%] left-[32%]'>
+              <p className='text-2xl font-semibold'>
+                {Math.round(item?.data[0]/(item?.data[0] + item?.data[1]) * 100)}%
+              </p>
+            </div>
+            <Doughnut
+              data={{
+                labels,
+                datasets: [
+                  {
+                    data: item?.data,
+                    backgroundColor: backgroundColor,
+                  },
+                ],
+              }}
+              options={options}
+            />
+          </div>
+          
           <p className='text-gray-400 text-center -mt-4'>
             {item.data[0]} / {item.data[0] + item.data[1]}
             <span className='ml-2'>nhân sự</span>

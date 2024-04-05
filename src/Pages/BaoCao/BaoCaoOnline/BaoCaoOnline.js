@@ -71,44 +71,30 @@ export default function BaoCaoOnline() {
           },
         },
     };
+    let renderePercent = () => {
+      let online = 0;
+      let total = 0;
+      content.map((item) => {
+        online+= item.data[0];
+        total+= (item.data[0] + item.data[1]);
+      })
+      return online + "/" + total;
+    }
     let renderContent = () => {
       if(content.length > 0) {
-        return <Doughnut options={options} 
-          data={{
-            labels,
-            datasets: baoCao
-          }}
-          plugins={[{
-            beforeDraw: function (chart) {
-              const width = chart.width;
-              const height = chart.height;
-              const ctx = chart.ctx;
-      
-              ctx.restore();
-      
-              const fontSize = (height / 160).toFixed(2);
-              ctx.font = `${fontSize}em sans-serif`;
-              ctx.textBaseline = "top";
-      
-              let percent = () => {
-                let online = 0;
-                let total = 0;
-                content.map((item) => {
-                  online+= item.data[0];
-                  total+= (item.data[0] + item.data[1]);
-                })
-                return online + "/" + total;
-              }
-              const text = percent(); // Văn bản bạn muốn hiển thị
-              const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.9;
-      
-              ctx.fillText(text, textX, textY);
-              ctx.save();
-            },
-          },
-        ]}
-        />
+        return <div className=''>
+            <Doughnut options={options} 
+            data={{
+              labels,
+              datasets: baoCao
+            }}
+          />
+          <p className='font-semibold text-3xl text-center'>
+                  {
+                    (renderePercent())
+                  }
+              </p>
+        </div>
       }
     }
  return (

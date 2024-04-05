@@ -27,3 +27,34 @@
     display: flex;
     justify-content: center;
 }
+#lich .ant-picker-content td,#lich .ant-picker-content th{
+    border: 1px solid #d1d5db;
+}
+#lich .ant-picker-content th{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-weight: 500;
+}
+#lich .ant-picker-cell-selected .ant-picker-calendar-date-value, #lich .ant-picker-cell-today .ant-picker-calendar-date-value{
+    color: #fb923c;
+    font-weight: 500;
+}
+#lich .ant-picker-cell-selected .ant-picker-cell-inner{
+    background-color: #fffaf0;
+}
+#lich .ant-picker-cell-selected .ant-picker-cell-inner::before, #lich .ant-picker-cell-today .ant-picker-cell-inner::before{
+    border-color: #fb923c;
+}
+#lich .ant-radio-button-wrapper-checked{
+    color: #fb923c;
+    border-color: #fb923c;
+}
+#lich .ant-radio-button-wrapper-checked::before{
+    background-color: #fb923c;
+}
+#lich .ant-radio-button-wrapper:hover{
+    color: #fb923c;
+}
+#lich .ant-select-selector{
+    border-color: #fb923c;
+}
