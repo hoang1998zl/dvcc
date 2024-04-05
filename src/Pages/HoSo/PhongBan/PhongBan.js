@@ -508,7 +508,7 @@ export default function PhongBan() {
       className='w-full'
     >
       <div
-        className='w-full h-10 flex items-center border-b border-orange-400'
+        className='w-full h-10 flex items-center border-b border-orange-400 sticky top-0 left-0 z-10 bg-white'
       >
         <h1
           className='text-xl font-bold text-orange-400'
@@ -518,7 +518,7 @@ export default function PhongBan() {
       </div>
       <div
         id='searchPhongBan'
-        className='w-full h-10 flex items-center justify-center p-1'
+        className='w-full h-10 flex items-center justify-center p-1 sticky top-10 left-0 z-10 bg-white'
       >
         <input
           onChange={searchUser}

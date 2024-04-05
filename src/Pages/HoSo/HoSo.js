@@ -17,7 +17,7 @@ export default function HoSo() {
       }}
     >
       <div
-        className='bg-white rounded-xl shadow-lg p-4 sticky top-0'
+        className='bg-white rounded-xl shadow-lg p-4 pt-0 sticky top-0 overflow-y-auto'
         style={{
           width: `${defaultWidth}px`,
         }}
