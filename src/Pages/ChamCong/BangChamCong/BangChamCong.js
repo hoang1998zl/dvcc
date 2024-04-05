@@ -2,7 +2,7 @@ import moment from 'moment/moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { chamCongService } from '../../../services/chamCongService';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { localStorageService } from '../../../services/localStorageService';
 import { debounce } from 'lodash';
@@ -494,7 +494,7 @@ export default function BangChamCong() {
     }
     const table = () => {
         return (
-            <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-3rem)] overflow-auto'>
+            <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-3rem)] overflow-auto customScrollbar'>
                 <table className='ChamCongTable'>
                     <thead>
                         <tr className='text-orange-400'>
@@ -792,7 +792,6 @@ export default function BangChamCong() {
                 />
                 <div id='ChamTay' className='w-full mt-2'>
                     {table()}
-                    <ToastContainer />
                 </div>
             </div>
 

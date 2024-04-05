@@ -393,7 +393,7 @@ export default function ChiNhanh() {
                 <img src={tieudePNG} alt="" className='w-6 h-6 object-contain inline me-2' />
                         <span>Địa Điểm Làm Việc</span>
                     </h2>
-                    <div className='overflow-x-auto'>
+                    <div className='overflow-x-auto customScrollbar'>
                         <table className='customTable w-full'>
                             <thead className='sticky top-0 bg-white z-10 text-orange-400 uppercase'>
                                 <th className='text-center w-14'></th>

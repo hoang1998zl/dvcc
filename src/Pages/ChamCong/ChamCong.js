@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import BangChamCong from './BangChamCong/BangChamCong'
 import { useSelector } from 'react-redux';
-import ChamCongDetail from './ChamCongDetail/ChamCongDetail';
-import BaoCaoChamCong from './BaoCaoChamCong/BaoCaoChamCong';
+// import ChamCongDetail from './ChamCongDetail/ChamCongDetail';
+// import BaoCaoChamCong from './BaoCaoChamCong/BaoCaoChamCong';
 
 export default function ChamCong() {
 
