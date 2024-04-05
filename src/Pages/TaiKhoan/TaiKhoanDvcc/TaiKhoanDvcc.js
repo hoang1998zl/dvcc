@@ -235,7 +235,11 @@ export default function TaiKhoanDvcc() {
         return array;
     }
 return (
-    <div className='w-full flex flex-col pr-2'>
+    <div className='w-full flex flex-col pr-2 relative'>
+        {
+          !nv_id && <div className='absolute w-full h-full bg-white opacity-70'>
+          </div>
+        }
         <h1
             className=' h-10 flex justify-start items-center gap-2 text-orange-400 text-lg pl-4 pt-2'>
         <FaRegCircleCheck />

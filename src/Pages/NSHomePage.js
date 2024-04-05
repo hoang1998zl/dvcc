@@ -54,12 +54,11 @@ export default function NSHomePage() {
       id='NSHomePage'
       className='h-screen flex flex-col relative bg-[#eceff8]'
     >
-
       <Header />
 
       <div
         id='NSHomePage'
-        className='w-full'
+        className='w-full overflow-y-scroll customScrollbar'
       >
         {renderContent(currentMenu)}
       </div>

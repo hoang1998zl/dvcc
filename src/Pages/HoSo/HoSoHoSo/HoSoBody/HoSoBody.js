@@ -6,10 +6,11 @@ import HoSoHopDong from './HoSoHopDong/HoSoHopDong'
 import HoSoChungChi from './HoSoChungChi/HoSoChungChi'
 import ModalComponent from '../../../../Components/Modal/ModalComponent'
 
+
 export default function HoSoBody() {
   return (
     <div
-      className='w-full grid grid-cols-1 xl:grid-cols-2 gap-4'
+      className='w-full grid grid-cols-1 lg:grid-cols-2 gap-4 relative'
     >
       <div className='flex flex-col gap-4'>
         <HoSoGioiThieu />
