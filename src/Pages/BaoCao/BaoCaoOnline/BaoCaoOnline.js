@@ -4,12 +4,14 @@ import { useSelector } from 'react-redux';
 import { baoCaoService } from '../../../services/baoCaoService';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { map } from 'lodash';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function BaoCaoOnline() {
     let token = localStorageService.getItem("token");
     let ngay = useSelector((state) => state.BaoCaoSlice.ngay);
+    let [content,setContent] = useState([]);
     let [baoCao,setBaoCao] = useState([
         {
             data: [],
@@ -20,7 +22,8 @@ export default function BaoCaoOnline() {
     let [labels,setLabels] = useState([]);
     useEffect(() => {
         baoCaoService.layBaoCaoPhongBan(token,ngay).then((res) => {
-          xulyData(res.data.content); 
+          xulyData(res.data.content);
+          setContent(res.data.content);
         }).catch((err) => {
           console.log(err);
         })
@@ -39,17 +42,18 @@ export default function BaoCaoOnline() {
     }
     let xulyData = (content) => {
         let label_array = [];
-        let datasets = [];
+        let datasets = [{
+            data: [],
+            backgroundColor:[]
+        }];
         let data = [];
         content?.map((item,index) => {
             label_array.push(item.danhmuc_name);
             data.push(item.data[0]);
         })
-        datasets.push({data});
-        // let backgroundColor = randomColors(content.length);
-        let backgroundColor = ["#6be6e8","#d9d9d9"]
-        datasets.push({backgroundColor})
-        
+        datasets[0].data = data;
+        let backgroundColor = randomColors(content.length);
+        datasets[0].backgroundColor = backgroundColor
         setBaoCao(datasets);
         setLabels(label_array);
     }
@@ -66,7 +70,47 @@ export default function BaoCaoOnline() {
             }
           },
         },
-      };
+    };
+    let renderContent = () => {
+      if(content.length > 0) {
+        return <Doughnut options={options} 
+          data={{
+            labels,
+            datasets: baoCao
+          }}
+          plugins={[{
+            beforeDraw: function (chart) {
+              const width = chart.width;
+              const height = chart.height;
+              const ctx = chart.ctx;
+      
+              ctx.restore();
+      
+              const fontSize = (height / 160).toFixed(2);
+              ctx.font = `${fontSize}em sans-serif`;
+              ctx.textBaseline = "top";
+      
+              let percent = () => {
+                let online = 0;
+                let total = 0;
+                content.map((item) => {
+                  online+= item.data[0];
+                  total+= (item.data[0] + item.data[1]);
+                })
+                return online + "/" + total;
+              }
+              const text = percent(); // Văn bản bạn muốn hiển thị
+              const textX = Math.round((width - ctx.measureText(text).width) / 2);
+              const textY = height / 1.9;
+      
+              ctx.fillText(text, textX, textY);
+              ctx.save();
+            },
+          },
+        ]}
+        />
+      }
+    }
  return (
     <div className='w-full p-4 pr-0'>
         <div className='rounded-lg shadow-lg bg-white p-4'> 
@@ -75,10 +119,7 @@ export default function BaoCaoOnline() {
             >
                 Online
             </p>
-            <Doughnut options={options} data={{
-                labels,
-                datasets: baoCao
-            }}/>
+            {renderContent()}
         </div>
         
     </div>
