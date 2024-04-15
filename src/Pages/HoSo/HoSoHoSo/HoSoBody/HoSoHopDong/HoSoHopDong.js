@@ -141,6 +141,21 @@ export default function HoSoHopDong() {
       </div>
       <div className='w-full flex'>
         <span>
+          Ngày ký hợp đồng:
+        </span>
+        <div className='ml-3 font-medium'>
+          <DatePicker
+            value={dayjs(nv.nv_ngaykyhopdong,"YYYY-MM-DD").isValid()?dayjs(nv.nv_ngaykyhopdong,"YYYY-MM-DD"):''}
+            format="DD-MM-YYYY"
+            onChange={(date,dateString) => {
+              let value = dateString?moment(dateString,'DD-MM-YYYY').format('YYYY-MM-DD'):moment().format('YYYY-MM-DD');
+              handleUpdateNV('nv_ngaykyhopdong',value);
+            }}
+          />
+        </div>
+      </div>
+      <div className='w-full flex'>
+        <span>
             Loại hợp đồng:
         </span>
         <div className='ml-3 font-medium'>
