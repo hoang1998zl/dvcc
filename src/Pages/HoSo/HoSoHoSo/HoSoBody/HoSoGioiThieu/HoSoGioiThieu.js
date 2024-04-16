@@ -125,6 +125,32 @@ function HoSoGioiThieu() {
             </p>
           </div>
         </div>
+        <div className='flex items-center gap-4 text-gray-400'>
+          <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
+            <i className="fa-solid fa-clock"></i>
+          </div>
+          <div className='flex-1'>
+            <p className='font-semibold text-base'>
+              Ngày thử việc
+            </p>
+            <p className='font-bold text-black'>
+              {dayjs(nhanVienHS.nv_ngayvaolam, "YYYY-MM-DD").isValid()?moment(nhanVienHS.nv_ngayvaolam,'YYYY-MM-DD').format('DD - MM - YYYY'):''}
+            </p>
+          </div>
+        </div>
+        <div className='flex items-center gap-4 text-gray-400'>
+          <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
+            <i className="fa-solid fa-clock"></i>
+          </div>
+          <div className='flex-1'>
+            <p className='font-semibold text-base'>
+              Ngày làm chính thức
+            </p>
+            <p className='font-bold text-black'>
+              {dayjs(nhanVienHS.nv_ngaylvchinhthuc, "YYYY-MM-DD").isValid()?moment(nhanVienHS.nv_ngaylvchinhthuc,'YYYY-MM-DD').format('DD - MM - YYYY'):''}
+            </p>
+          </div>
+        </div>
         <div className='flex items-center gap-4 text-gray-400 md:col-span-2'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
             <i className="fa-solid fa-location-dot"></i>
@@ -135,19 +161,6 @@ function HoSoGioiThieu() {
             </p>
             <p className='font-bold text-black'>
               {nhanVienHS.nv_diachitamtru}
-            </p>
-          </div>
-        </div>
-        <div className='flex items-center gap-4 text-gray-400'>
-          <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
-            <i className="fa-solid fa-clock"></i>
-          </div>
-          <div className='flex-1'>
-            <p className='font-semibold text-base'>
-              Ngày vào làm
-            </p>
-            <p className='font-bold text-black'>
-              {dayjs(nhanVienHS.nv_ngayvaolam, "YYYY-MM-DD").isValid()?moment(nhanVienHS.nv_ngayvaolam,'YYYY-MM-DD').format('DD - MM - YYYY'):''}
             </p>
           </div>
         </div>

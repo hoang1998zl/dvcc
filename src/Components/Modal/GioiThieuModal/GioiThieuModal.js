@@ -133,7 +133,7 @@ function GioiThieuModal() {
       </div>
       <div className='w-full flex flex-col gap-2'>
         <p className='font-bold text-gray-400'>
-          Ngày vào làm
+          Ngày thử việc
         </p>
         <DatePicker
           className='w-full'
@@ -142,6 +142,20 @@ function GioiThieuModal() {
           onChange={(date, dateString) => {
             let value = dateString ? moment(dateString, 'DD-MM-YYYY').format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
             changeInput('nv_ngayvaolam',value);
+          }}
+        />
+      </div>
+      <div className='w-full flex flex-col gap-2'>
+        <p className='font-bold text-gray-400'>
+          Ngày làm chính thức
+        </p>
+        <DatePicker
+          className='w-full'
+          value={dayjs(nhanVienUpdated?.nv_ngaylvchinhthuc, "YYYY-MM-DD").isValid()?dayjs(nhanVienUpdated?.nv_ngaylvchinhthuc, "YYYY-MM-DD"):''}
+          format={'DD-MM-YYYY'}
+          onChange={(date, dateString) => {
+            let value = dateString ? moment(dateString, 'DD-MM-YYYY').format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
+            changeInput('nv_ngaylvchinhthuc',value);
           }}
         />
       </div>

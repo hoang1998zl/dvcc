@@ -170,7 +170,7 @@ export default function HoSoHopDong() {
       </div>
       <div className='w-full flex'>
         <span>
-          Ngày hết hạn:
+          Ngày hết hạn HĐ:
         </span>
         <div className='ml-3 font-medium'>
           <DatePicker
