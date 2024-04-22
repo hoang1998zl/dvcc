@@ -508,13 +508,16 @@ export default function PhongBan() {
       className='w-full'
     >
       <div
-        className='w-full h-10 flex items-center border-b border-orange-400 sticky top-0 left-0 z-10 bg-white'
+        className='w-full h-10 flex justify-between items-center border-b border-orange-400 sticky top-0 left-0 z-10 bg-white'
       >
         <h1
           className='text-xl font-bold text-orange-400'
         >
           Phòng Ban
         </h1>
+        <p title="Tạo nhân viên bằng file excel" className='text-green-500 text-xl cursor-pointer'>
+          <i class="fa-solid fa-upload"></i>
+        </p>
       </div>
       <div
         id='searchPhongBan'

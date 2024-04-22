@@ -10,7 +10,7 @@ export default function Lich() {
     }
   return (
     // xem file NS.css
-    <div id='lich' className='w-full p-4 pr-0'>
+    <div id='lich' className='w-full pl-4'>
         <div className='rounded-lg shadow-lg bg-white p-4'>
             <div>
                 <Calendar fullscreen={false} onChange={onPanelChange} />

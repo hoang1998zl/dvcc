@@ -75,7 +75,7 @@ export default function HoatDongTrenApp() {
           {renderTab()}
         </div>
       </div>
-      <div className='w-full overflow-x-auto'>
+      <div className='w-full overflow-x-auto customScrollbar'>
         {renderContent()}
       </div>
     </div>

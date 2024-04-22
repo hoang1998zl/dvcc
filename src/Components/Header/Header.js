@@ -118,19 +118,22 @@ export default function Header() {
     >
 
       <div className='py-1.5 flex h-full items-center gap-x-2 ps-2 lg:ps-10'>
-        <img
-          className='object-cover h-full'
-          src={logo}
-          alt=""
-        />
-        <form className='hidden lg:block lg:w-64 h-full relative py-0.5'>
+        <a className='h-full' href='http://labortracking.vn'>
+          <img
+            className='object-cover h-full'
+            src={logo}
+            alt=""
+          />
+        </a>
+        
+        {/* <form className='hidden lg:block lg:w-64 h-full relative py-0.5'>
           <input
             type="text"
             className='w-full h-full ps-10 pe-2 rounded-md focus:outline-none bg-gray-200'
             placeholder='Tìm kiếm'
           />
           <i className='fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-600'></i>
-        </form>
+        </form> */}
       </div>
 
 

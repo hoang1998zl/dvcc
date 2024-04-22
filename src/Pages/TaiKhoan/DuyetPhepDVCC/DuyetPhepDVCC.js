@@ -143,7 +143,7 @@ export default function DuyetPhepDVCC() {
           </div>
           <div className='p-2 py-4 border border-gray-300 rounded-lg mr-2'>
             <div className='w-max p-1 aspect-square border border-gray-300 rounded mx-auto items-center text-4xl text-sky-400'>
-              <FaPlane />
+              <FaPlane className='-rotate-45' />
             </div>
             <h1 className='font-bold text-center mt-2'>
               Duyệt công tác
