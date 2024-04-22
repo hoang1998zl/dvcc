@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../issets/img/logo_orange.jpg'
 
 import { IoCube } from "react-icons/io5";
-import { FaArrowUpRightDots, FaGear, FaUser } from "react-icons/fa6";
+import { FaArrowUpRightDots, FaGear, FaRegCalendarCheck, FaUser } from "react-icons/fa6";
 import { LuClock3 } from "react-icons/lu";
 import { FaLocationDot } from "react-icons/fa6";
 
@@ -27,13 +27,13 @@ export default function Header() {
   useEffect(() => {
     // cái này để load số thông báo trên duyệt app
     dvccService.getTotal(token).then((res) => {
-        let total = 0;
-        total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa;
-        dispatch(setNewNoti(total));
+      let total = 0;
+      total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa;
+      dispatch(setNewNoti(total));
     })
-        .catch((err) => {
-            console.log(err);
-        });
+      .catch((err) => {
+        console.log(err);
+      });
   }, [])
 
   const menu = [
@@ -72,6 +72,11 @@ export default function Header() {
       menu_name: "Tài Khoản",
       menu_icon: <FaLocationDot />,
     },
+    // {
+    //   menu_id: 7,
+    //   menu_name: "Bảng Lương",
+    //   menu_icon: <FaRegCalendarCheck />,
+    // },
   ];
 
   const renderMenuHeader = () => {
@@ -101,11 +106,11 @@ export default function Header() {
             {item.menu_name}
           </span>
           {
-                            item.menu_id == 4 &&
-                            <div className={`p-0.5 min-w-[15px] aspect-square rounded-full bg-red-500 absolute top-0 right-1/4 text-white flex justify-center items-center text-[0.6rem]`}>
-                                {newNoti}
-                            </div>
-                        }
+            item.menu_id == 4 &&
+            <div className={`p-0.5 min-w-[15px] aspect-square rounded-full bg-red-500 absolute top-0 right-1/4 text-white flex justify-center items-center text-[0.6rem]`}>
+              {newNoti}
+            </div>
+          }
         </li>
       )
     })
