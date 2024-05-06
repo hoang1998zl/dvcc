@@ -193,6 +193,18 @@ function GioiThieuModal() {
           ]}
         />
       </div>
+      <div className='w-full flex flex-col gap-2'>
+        <p className='font-bold text-gray-400'>
+          Email
+        </p>
+        <Input
+          className='w-full'
+          value={nhanVienUpdated?.nv_email}
+          onChange={(e) => {
+            changeInput('nv_email',e.target.value);
+          }}
+        />
+      </div>
     </div>
   )
 }

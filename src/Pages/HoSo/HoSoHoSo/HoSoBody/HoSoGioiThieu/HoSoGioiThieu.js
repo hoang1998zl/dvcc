@@ -151,7 +151,7 @@ function HoSoGioiThieu() {
             </p>
           </div>
         </div>
-        <div className='flex items-center gap-4 text-gray-400 md:col-span-2'>
+        <div className='flex items-center gap-4 text-gray-400'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
             <i className="fa-solid fa-location-dot"></i>
           </div>
@@ -160,7 +160,20 @@ function HoSoGioiThieu() {
               Địa chỉ tạm trú
             </p>
             <p className='font-bold text-black'>
-              {nhanVienHS.nv_diachitamtru}
+              {nhanVienHS?.nv_diachitamtru}
+            </p>
+          </div>
+        </div>
+        <div className='flex items-center gap-4 text-gray-400'>
+          <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
+            <i className="fa-solid fa-envelope"></i>
+          </div>
+          <div className='flex-1'>
+            <p className='font-semibold text-base'>
+              Email
+            </p>
+            <p className='font-bold text-black'>
+              {nhanVienHS?.nv_email}
             </p>
           </div>
         </div>
