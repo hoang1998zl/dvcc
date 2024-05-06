@@ -317,7 +317,7 @@ export default function HoSoHeader() {
                   {nv?.nv_name}
                 </strong>
                 <span>
-                  (ID: <span>{nv?.nv_order}</span>)
+                  (ID: <span>{nv?.nv_code}</span>)
                 </span>
               </h1>
               <p className='flex flex-wrap gap-x-1'>

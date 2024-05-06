@@ -165,9 +165,9 @@ function GioiThieuModal() {
         </p>
         <Input
           className='w-full'
-          value={nhanVienUpdated?.nv_order}
+          value={nhanVienUpdated?.nv_code}
           onChange={(e) => {
-            changeInput('nv_order',e.target.value);
+            changeInput('nv_code',e.target.value);
           }}
         />
       </div>
