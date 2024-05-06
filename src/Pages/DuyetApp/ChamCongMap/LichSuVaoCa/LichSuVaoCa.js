@@ -90,8 +90,8 @@ export default function LichSuVaoCa() {
     })
   }
   return (
-    <div
-      className='w-full overflow-x-auto'
+    <div style={{maxHeight:"400px"}}
+      className='w-full overflow-x-auto customScrollbar'
     >
       <table className='customTable min-w-full w-max text-center' >
         <thead>

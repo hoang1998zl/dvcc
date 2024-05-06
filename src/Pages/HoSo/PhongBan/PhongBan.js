@@ -515,9 +515,9 @@ export default function PhongBan() {
         >
           Phòng Ban
         </h1>
-        <p title="Tạo nhân viên bằng file excel" className='text-green-500 text-xl cursor-pointer'>
+        {/* <p title="Tạo nhân viên bằng file excel" className='text-green-500 text-xl cursor-pointer'>
           <i class="fa-solid fa-upload"></i>
-        </p>
+        </p> */}
       </div>
       <div
         id='searchPhongBan'

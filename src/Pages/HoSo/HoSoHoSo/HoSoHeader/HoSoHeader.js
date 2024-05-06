@@ -339,7 +339,7 @@ export default function HoSoHeader() {
                     <li>
                       <button
                         type="button"
-                        onClick={() => window.open(nv?.nv_cv)}
+                        onClick={() => nv?.nv_cv?window.open(nv?.nv_cv):""}
                         className='w-full px-2 py-1 rounded border border-transparent hover:bg-orange-100 hover:border-orange-400 text-left'
                       >
                         Tải Xuống CV

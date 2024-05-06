@@ -80,7 +80,7 @@ export default function ViTriNhanVien() {
           </div>
         </div>
       </div>
-      <div className='overflow-x-auto lg:col-span-3'>
+      <div style={{maxHeight:"400px"}} className='overflow-x-auto lg:col-span-3 overflow-y-scroll customScrollbar'>
         <table className='customTable  w-max min-w-full'>
           <thead>
             <th>
