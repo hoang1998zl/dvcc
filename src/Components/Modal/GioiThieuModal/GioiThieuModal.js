@@ -83,7 +83,7 @@ function GioiThieuModal() {
           }}
         />
       </div>
-      <div className='w-full flex flex-col gap-2'>
+      {/* <div className='w-full flex flex-col gap-2'>
         <p className='font-bold text-gray-400'>
           Học vấn
         </p>
@@ -94,7 +94,7 @@ function GioiThieuModal() {
             changeInput('nv_hocvan',e.target.value);
           }}
         />
-      </div>
+      </div> */}
       <div className='w-full flex flex-col gap-2'>
         <p className='font-bold text-gray-400'>
           Liên hệ
@@ -107,21 +107,21 @@ function GioiThieuModal() {
           }}
         />
       </div>
-      <div className='w-full flex flex-col gap-2 md:col-span-2'>
+      <div className='w-full flex flex-col gap-2'>
         <p className='font-bold text-gray-400'>
-          Địa chỉ thường trú
+          Số CMND/CCCD
         </p>
         <Input
           className='w-full'
-          value={nhanVienUpdated?.nv_diachithuongtru}
+          value={nhanVienUpdated?.nv_cmnd_number}
           onChange={(e) => {
-            changeInput('nv_diachithuongtru',e.target.value);
+            changeInput('nv_cmnd_number',e.target.value);
           }}
         />
       </div>
       <div className='w-full flex flex-col gap-2 md:col-span-2'>
         <p className='font-bold text-gray-400'>
-          Địa chỉ tạm trú
+          Nơi ở hiện tại
         </p>
         <Input
           className='w-full'
@@ -171,7 +171,7 @@ function GioiThieuModal() {
           }}
         />
       </div>
-      <div className='w-full flex flex-col gap-2'>
+      {/* <div className='w-full flex flex-col gap-2'>
         <p className='font-bold text-gray-400'>
           Loại Nhân Viên
         </p>
@@ -192,7 +192,7 @@ function GioiThieuModal() {
             }
           ]}
         />
-      </div>
+      </div> */}
       <div className='w-full flex flex-col gap-2'>
         <p className='font-bold text-gray-400'>
           Email

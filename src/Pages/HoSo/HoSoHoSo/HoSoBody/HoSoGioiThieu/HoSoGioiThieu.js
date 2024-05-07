@@ -79,11 +79,16 @@ function HoSoGioiThieu() {
           </div>
           <div className='flex-1'>
             <p className='font-semibold text-base'>
-              Học vấn
+              CV
             </p>
-            <p className='font-bold text-black'>
-              {nhanVienHS.nv_hocvan}
-            </p>
+            {
+              nhanVienHS?.nv_cv ? 
+              <a href={nhanVienHS?.nv_cv} target='_blank' className='font-bold text-black'>
+                Tải Xuống
+              </a>
+            : ""
+            }
+            
           </div>
         </div>
         <div className='flex items-center gap-4 text-gray-400'>
@@ -105,14 +110,14 @@ function HoSoGioiThieu() {
           </div>
           <div className='flex-1'>
             <p className='font-semibold text-base'>
-              Địa chỉ thường trú
+              Số CMND/CCCD
             </p>
             <p className='font-bold text-black'>
-              {nhanVienHS.nv_diachithuongtru}
+              {nhanVienHS.nv_cmnd_number}
             </p>
           </div>
         </div>
-        <div className='flex items-center gap-4 text-gray-400'>
+        {/* <div className='flex items-center gap-4 text-gray-400'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
             <i className="fa-solid fa-user"></i>
           </div>
@@ -124,7 +129,7 @@ function HoSoGioiThieu() {
               {nhanVienHS?.is_parttime === 0 ? "Full-time": "Part-time"}
             </p>
           </div>
-        </div>
+        </div> */}
         <div className='flex items-center gap-4 text-gray-400'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
             <i className="fa-solid fa-clock"></i>
@@ -157,7 +162,7 @@ function HoSoGioiThieu() {
           </div>
           <div className='flex-1'>
             <p className='font-semibold text-base'>
-              Địa chỉ tạm trú
+              Nơi ở hiện tại
             </p>
             <p className='font-bold text-black'>
               {nhanVienHS?.nv_diachitamtru}
