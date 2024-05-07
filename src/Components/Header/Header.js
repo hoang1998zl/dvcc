@@ -43,6 +43,21 @@ export default function Header() {
       menu_icon: <FaArrowUpRightDots />,
     },
     {
+      menu_id: 2,
+      menu_name: "Cấu Hình",
+      menu_icon: <FaGear />,
+    },
+    {
+      menu_id: 3,
+      menu_name: "Hồ Sơ",
+      menu_icon: <FaUser />,
+    },
+    {
+      menu_id: 6,
+      menu_name: "Tài Khoản",
+      menu_icon: <FaLocationDot />,
+    },
+    {
       menu_id: 5,
       menu_name: "Chấm Công",
       menu_icon: (
@@ -56,21 +71,6 @@ export default function Header() {
       menu_id: 4,
       menu_name: "Duyệt App",
       menu_icon: <IoCube />,
-    },
-    {
-      menu_id: 3,
-      menu_name: "Hồ Sơ",
-      menu_icon: <FaUser />,
-    },
-    {
-      menu_id: 2,
-      menu_name: "Cấu Hình",
-      menu_icon: <FaGear />,
-    },
-    {
-      menu_id: 6,
-      menu_name: "Tài Khoản",
-      menu_icon: <FaLocationDot />,
     },
     // {
     //   menu_id: 7,
