@@ -105,43 +105,109 @@ export default function ThoiGianChamCong() {
         console.log(err);
       });
   }
-  const renderCaLamViec = () => {
-    return gioLamViec?.theoCa?.map((ca, index) => {
-      return (
-        <div
-          key={index}
-          className='w-full flex justify-center items-center gap-2 text-gray-800'
-        >
-          <FaRegClock
-            className='text-gray-300 text-2xl'
-          />
-          <div className='flex-1'>
-            <p
-              className='text-gray-700 line-clamp-1 text-sm'
-            >
-              {ca?.name}
-            </p>
-            <p
-              className='font-bold line-clamp-1 -mt-1'
-            >
-              {moment(ca?.gio_bat_dau, "HH:mm:ss").format("HH:mm")} - {moment(ca?.gio_ket_thuc, "HH:mm:ss").format("HH:mm")}
-            </p>
-          </div>
-          <Switch
-            name="theoCa"
-            checked={ca?.ca_status}
-            onChange={(e) => {
-              handleDeleteCaLamViec(e, ca?.id);
-            }}
-            style={{
-              backgroundColor: ca?.ca_status ? "orange" : "gray"
-            }}
-          />
-        </div>
-      );
-    })
-  };
+  // const renderCaLamViec = () => {
+  //   return gioLamViec?.theoCa?.map((ca, index) => {
+  //     return (
+  //       <div
+  //         key={index}
+  //         className='w-full flex justify-center items-center gap-2 text-gray-800'
+  //       >
+  //         <FaRegClock
+  //           className='text-gray-300 text-2xl'
+  //         />
+  //         <div className='flex-1'>
+  //           <p
+  //             className='text-gray-700 line-clamp-1 text-sm'
+  //           >
+  //             {ca?.name}
+  //           </p>
+  //           <p
+  //             className='font-bold line-clamp-1 -mt-1'
+  //           >
+  //             {moment(ca?.gio_bat_dau, "HH:mm:ss").format("HH:mm")} - {moment(ca?.gio_ket_thuc, "HH:mm:ss").format("HH:mm")}
+  //           </p>
+  //         </div>
+  //         <Switch
+  //           name="theoCa"
+  //           checked={ca?.ca_status}
+  //           onChange={(e) => {
+  //             handleDeleteCaLamViec(e, ca?.id);
+  //           }}
+  //           style={{
+  //             backgroundColor: ca?.ca_status ? "orange" : "gray"
+  //           }}
+  //         />
+  //       </div>
+  //     );
+  //   })
+  // };
 
+  const renderCaLamViec = () => {
+    return gioLamViec?.theoCa?.map((ca,index) => {
+      return <tr key={index}>
+        <td>
+          <Switch
+               name="theoCa"
+               checked={ca?.ca_status}
+               onChange={(e) => {
+                 handleDeleteCaLamViec(e, ca?.id);
+               }}
+               style={{
+                 backgroundColor: ca?.ca_status ? "orange" : "gray"
+               }}
+             />
+        </td>
+        <td>
+          <p className='text-gray-700 line-clamp-1 text-sm'>{ca?.name}</p>
+          <p
+            className='font-bold line-clamp-1 -mt-1'
+            >
+                      {
+                        ca?.gio_bat_dau
+                          ? moment(ca?.gio_bat_dau, "HH:mm:ss").format("HH:mm")
+                          : '00:00:00'
+                      }
+                      <span className='mx-2'>-</span>
+                      {
+                        ca?.gio_ket_thuc
+                          ? moment(ca?.gio_ket_thuc, "HH:mm:ss").format("HH:mm")
+                          : '00:00:00'
+                      }
+                      <span className='mx-2'> | </span>
+                      {
+                        ca?.gio_cong_chuan
+                          ? ca?.gio_cong_chuan + "h/ngày"
+                          : ''
+                      }
+          </p>
+        </td>
+        <td>
+          <p className='text-transparent line-clamp-1 text-sm'>aaa</p>
+          <p
+            className='font-bold line-clamp-1 -mt-1'
+            >
+                        {
+                          ca?.tang_ca_vao
+                            ? moment(ca?.tang_ca_vao, "HH:mm:ss").format("HH:mm")
+                            : '00:00:00'
+                        }
+                        <span className='mx-2'>-</span>
+                        {
+                          ca?.tang_ca_ra
+                            ? moment(ca?.tang_ca_ra, "HH:mm:ss").format("HH:mm")
+                            : '00:00:00'
+                        }
+                        <span className='mx-2'> | </span>
+                      {
+                        ca?.tang_ca_gio_cong
+                          ? ca?.tang_ca_gio_cong + "h/ngày"
+                          : ''
+                      }
+          </p>
+        </td>
+      </tr>
+    })
+  }
   let renderCaLamViecTable = () => {
     return gioLamViec.theoCa?.map((ca, index) => {
       return <tr className='cursor-pointer' key={index}>
@@ -217,7 +283,7 @@ export default function ThoiGianChamCong() {
         </strong>
       </h1>
 
-      <div className='w-full h-full grid grid-cols-1 lg:grid-cols-2'>
+      {/* <div className='w-full h-full grid grid-cols-1 lg:grid-cols-2'>
 
         <div className='self-center w-full flex flex-col items-center gap-4 px-4'>
           <div className='w-full flex justify-start lg:justify-center items-center gap-2 text-gray-800'>
@@ -280,8 +346,74 @@ export default function ThoiGianChamCong() {
           {renderCaLamViec()}
         </div>
 
-      </div>
-
+      </div> */}
+      <table className='customTable w-full'>
+        <thead>
+          <th></th>
+          <th>Giờ Làm Việc</th>
+          <th>Tăng Ca</th>
+        </thead>
+        <tbody>
+          {
+            gioLamViec?.hanhChinh ?
+              <tr>
+                <td></td>
+                <td>
+                  <p className='text-gray-700 line-clamp-1 text-sm'>{gioLamViec?.hanhChinh?.name}</p>
+                  <p
+                      className='font-bold line-clamp-1 -mt-1'
+                    >
+                      {
+                        gioLamViec.hanhChinh?.gio_bat_dau
+                          ? moment(gioLamViec.hanhChinh?.gio_bat_dau, "HH:mm:ss").format("HH:mm")
+                          : '00:00:00'
+                      }
+                      <span className='mx-2'>-</span>
+                      {
+                        gioLamViec.hanhChinh?.gio_ket_thuc
+                          ? moment(gioLamViec.hanhChinh?.gio_ket_thuc, "HH:mm:ss").format("HH:mm")
+                          : '00:00:00'
+                      }
+                      <span className='mx-2'> | </span>
+                      {
+                        gioLamViec.hanhChinh?.gio_cong_chuan
+                          ? gioLamViec.hanhChinh?.gio_cong_chuan + "h/ngày"
+                          : ''
+                      }
+                  </p>
+                </td>
+                <td>
+                    <p className='text-transparent line-clamp-1 text-sm'>aaa</p>
+                    <p
+                        className='font-bold line-clamp-1 -mt-1'
+                      >
+                        {
+                          gioLamViec.hanhChinh?.tang_ca_vao
+                            ? moment(gioLamViec.hanhChinh?.tang_ca_vao, "HH:mm:ss").format("HH:mm")
+                            : '00:00:00'
+                        }
+                        <span className='mx-2'>-</span>
+                        {
+                          gioLamViec.hanhChinh?.tang_ca_ra
+                            ? moment(gioLamViec.hanhChinh?.tang_ca_ra, "HH:mm:ss").format("HH:mm")
+                            : '00:00:00'
+                        }
+                        <span className='mx-2'> | </span>
+                      {
+                        gioLamViec.hanhChinh?.tang_ca_gio_cong
+                          ? gioLamViec.hanhChinh?.tang_ca_gio_cong + "h/ngày"
+                          : ''
+                      }
+                  </p>
+                </td>
+              </tr>
+            : ""
+          }
+          {
+            renderCaLamViec()
+          }
+        </tbody>
+      </table>
       <button
         type="button"
         onClick={() => setIsModalOpen(true)}
