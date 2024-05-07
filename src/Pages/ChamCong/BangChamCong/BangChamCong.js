@@ -135,7 +135,12 @@ export default function BangChamCong() {
                 <td>{ngayCong?.tong_P}</td>
                 <td>{ngayCong?.tong_khongphep}</td>
                 <td>{Number(ngayCong?.tong_P) + Number(ngayCong?.tong_khongphep)}</td>
-                <td><input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="phep_dauthang" className='w-full bg-transparent text-center' type="text" value={ngayCong?.phep_dauthang ? ngayCong.phep_dauthang : ""} /></td>
+                <td>
+                    {year + "-" + month == moment().format("YYYY-MM") ? 
+                        <input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="phep_dauthang" className='w-full bg-transparent text-center' type="text" value={ngayCong?.phep_dauthang ? ngayCong.phep_dauthang : ""} />
+                    :ngayCong?.phep_dauthang
+                    }
+                </td>
                 <td>{ngayCong?.phep_congthem}</td>
                 <td>{ngayCong?.phep_conlai}</td>
             </tr>
