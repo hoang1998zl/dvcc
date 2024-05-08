@@ -31,6 +31,9 @@ export default function ThoiGianChamCong() {
     setIsModalOpen(false);
   };
   let handleCreateUpdateGioCong = (e, id) => {
+    if(e.target.value == ""){
+      return
+    }
     let data = {
       id
     };
@@ -269,6 +272,41 @@ export default function ThoiGianChamCong() {
             value={ca.gio_cong_chuan ? ca.gio_cong_chuan : ""}
           />Giờ/Ngày
         </td>
+        <td className='text-center'>
+          <input
+            onChange={(e) => changeInput(e, index, ca?.id ? ca.id : 0)}
+            onKeyDown={(e) => { (e.key == "Enter") && handleCreateUpdateGioCong(e, ca?.id ? ca.id : 0) }}
+            className='w-full text-center bg-transparent focus:outline-none px-2 py-1'
+            type="time"
+            name='theoCa'
+            id='tang_ca_vao'
+            value={ca?.tang_ca_vao}
+          />
+        </td>
+        <td className='text-center'>
+          <input
+            onChange={(e) => changeInput(e, index, ca?.id ? ca.id : 0)}
+            onKeyDown={(e) => { (e.key == "Enter") && handleCreateUpdateGioCong(e, ca?.id ? ca.id : 0) }}
+            className='w-full text-center bg-transparent focus:outline-none px-2 py-1'
+            type="time"
+            name='theoCa'
+            id='tang_ca_ra'
+            value={ca?.tang_ca_ra}
+          />
+        </td>
+        <td className='text-center'>
+          <input
+            onChange={(e) => changeInput(e, index, ca?.id ? ca.id : 0)}
+            onKeyDown={(e) => {
+              (e.key == "Enter") && handleCreateUpdateGioCong(e, ca?.id ? ca.id : 0)
+            }}
+            type="text"
+            className='text-center w-11 focus:outline-none focus:border-b-[1px] focus:border-black bg-transparent'
+            name='theoCa'
+            id="tang_ca_gio_cong"
+            value={ca.tang_ca_gio_cong ? ca.tang_ca_gio_cong : ""}
+          />Giờ/Ngày
+        </td>
       </tr >
     })
   }
@@ -430,6 +468,9 @@ export default function ThoiGianChamCong() {
               <th className='text-center'>Giờ vào</th>
               <th className='text-center'>Giờ ra</th>
               <th className='text-center'>Giờ công chuẩn</th>
+              <th className='text-center'>Tăng ca vào</th>
+              <th className='text-center'>Tăng Ca ra</th>
+              <th className='text-center'>Giờ công tăng ca</th>
             </thead>
             <tbody>
               <tr>
@@ -456,10 +497,6 @@ export default function ThoiGianChamCong() {
                     type="text" className='text-center w-11 focus:outline-none focus:border-b-[1px] focus:border-black bg-transparent'
                     name='hanhChinh' id="gio_cong_chuan" value={gioLamViec.hanhChinh?.gio_cong_chuan ? gioLamViec.hanhChinh?.gio_cong_chuan : ""} />Giờ/Ngày
                 </td>
-              </tr>
-              <tr>
-                <td><i className='fa-solid fa-arrow-up-right-dots text-orange-400 text-xl'></i></td>
-                <td className='text-left'><p className='px-2'>Tăng Ca</p></td>
                 <td>
                   <input
                     onChange={(e) => changeInput(e, 0, gioLamViec.hanhChinh?.id ? gioLamViec.hanhChinh.id : 0)}
@@ -514,6 +551,9 @@ export default function ThoiGianChamCong() {
                 <td>
                   {/* <input onChange={(e) => changeInput(e, 0, gioLamViec.hanhChinh?.id ? gioLamViec.hanhChinh.id : 0)} onKeyDown={(e) => { (e.key == "Enter") && handleCreateUpdateGioCong(e, gioLamViec.hanhChinh?.id ? gioLamViec.hanhChinh.id : 0) }} type="time" className='text-center w-full rounded focus-within:outline-none px-2 bg-transparent' name='hanhChinh' id='gio_ket_thuc' value={gioLamViec.hanhChinh?.gio_ket_thuc ? gioLamViec.hanhChinh?.gio_ket_thuc : ""} /> */}
                 </td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
               </tr>
             </tbody>
