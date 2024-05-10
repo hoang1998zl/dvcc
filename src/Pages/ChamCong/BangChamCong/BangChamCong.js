@@ -791,6 +791,66 @@ export default function BangChamCong() {
         }
     }
 
+    let renderLichSuVaoCa = () => {
+        return anhChamCong?.vao?.map((vao,index) => {
+            return <div className='w-full mb-2 grid gap-4' style={{ gridTemplateColumns: 'auto 1fr' }}>
+            <img
+                className='w-20 h-20 rounded-full object-cover border cursor-pointer'
+                src={vao.hinhanh ? vao?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'}
+                alt=""
+                onClick={() => {
+                    handlePreviewImage(true, vao?.hinhanh ? vao?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png')
+                }}
+            />
+            <div className='self-center text-left'>
+                <ul className='text-left'>
+                    <li>
+                        Vào ca: <strong className='text-sky-400'>{vao?.thoi_gian ? moment(vao?.thoi_gian).format("HH:mm") : ""}</strong>
+                    </li>
+                    <li>
+                        Địa điểm: <strong className='text-sky-400'>{vao?.dvcc_chi_nhanh?.chi_nhanh_name}</strong>
+                    </li>
+                    <li>
+                        Khoảng cách: <strong className='text-sky-400'>
+                            {vao?.lat && vao?.dvcc_chi_nhanh ? tinhKhoangCach({ latitude: vao?.lat, longitude:vao?.lng }, { latitude: vao?.dvcc_chi_nhanh?.latitude, longitude: vao?.dvcc_chi_nhanh?.longitude }) + "m"
+                                : ""}
+                        </strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        })
+    }
+    let renderLichSuRaCa = () => {
+        return anhChamCong?.ra?.map((ra,index) => {
+            return <div className='w-full mb-2 grid gap-4' style={{ gridTemplateColumns: 'auto 1fr' }}>
+            <img
+                className='w-20 h-20 rounded-full object-cover border cursor-pointer'
+                src={ra.hinhanh ? ra?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'}
+                alt=""
+                onClick={() => {
+                    handlePreviewImage(true, ra?.hinhanh ? ra?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png')
+                }}
+            />
+            <div className='self-center text-left'>
+                <ul className='text-left'>
+                    <li>
+                        Vào ca: <strong className='text-sky-400'>{ra?.thoi_gian ? moment(ra?.thoi_gian).format("HH:mm") : ""}</strong>
+                    </li>
+                    <li>
+                        Địa điểm: <strong className='text-sky-400'>{ra?.dvcc_chi_nhanh?.chi_nhanh_name}</strong>
+                    </li>
+                    <li>
+                        Khoảng cách: <strong className='text-sky-400'>
+                            {ra?.lat && ra?.dvcc_chi_nhanh ? tinhKhoangCach({ latitude: ra?.lat, longitude:ra?.lng }, { latitude: ra?.dvcc_chi_nhanh?.latitude, longitude: ra?.dvcc_chi_nhanh?.longitude }) + "m"
+                                : ""}
+                        </strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        })
+    }
     return (
         <div className='w-full'>
             <div className='w-full p-2 lg:p-4 bg-white rounded-lg'>
@@ -810,121 +870,16 @@ export default function BangChamCong() {
             >
                 <div className='w-auto relative z-10 text-sm'>
                     <div className='w-full h-full bg-white rounded-lg shadow-md p-2 lg:p-4 pr-0'>
-                        <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-1rem)] pe-4 overflow-y-auto text-center'>
+                        <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-1rem)] pe-4 overflow-y-auto customScrollbar text-center'>
                             <h1 className='uppercase font-bold text-lg'>
                                 {anhChamCong?.vao[0]?.ns_nhanvien?.nv_name}</h1>
-                            <p>(Ảnh xác nhận)</p>
+                                <p>{anhChamCong?.vao[0]?.thoi_gian ? moment(anhChamCong?.vao[0]?.thoi_gian).format("DD/MM/YYYY"): ''}</p>
                             <div className='w-full grid grid-cols-2 gap-2 mt-4'>
-
-                                <div className='w-full mb-2 grid gap-4' style={{ gridTemplateColumns: 'auto 1fr' }}>
-                                    <img
-                                        className='w-20 h-20 rounded-full object-cover border cursor-pointer'
-                                        src={anhChamCong?.vao[0]?.hinhanh ? anhChamCong?.vao[0]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'}
-                                        alt=""
-                                        onClick={() => {
-                                            handlePreviewImage(true, anhChamCong?.vao[0]?.hinhanh ? anhChamCong?.vao[0]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png')
-                                        }}
-                                    />
-                                    <div className='self-center text-left'>
-                                        <h1 className='ps-4 uppercase font-semibold text-orange-400'>Ca chính</h1>
-                                        <ul className='text-left'>
-                                            <li>
-                                                Vào ca: <strong className='text-sky-400'>{anhChamCong?.vao[0]?.thoi_gian ? moment(anhChamCong?.vao[0]?.thoi_gian).format("HH:mm") : ""}</strong>
-                                            </li>
-                                            <li>
-                                                Địa điểm: <strong className='text-sky-400'>{anhChamCong?.vao[0]?.dvcc_chi_nhanh?.chi_nhanh_name}</strong>
-                                            </li>
-                                            <li>
-                                                Khoảng cách: <strong className='text-sky-400'>
-                                                    {anhChamCong?.vao[0]?.lat && anhChamCong?.vao[0]?.dvcc_chi_nhanh ? tinhKhoangCach({ latitude: anhChamCong?.vao[0]?.lat, longitude: anhChamCong?.vao[0]?.lng }, { latitude: anhChamCong?.vao[0]?.dvcc_chi_nhanh?.latitude, longitude: anhChamCong?.vao[0]?.dvcc_chi_nhanh?.longitude }) + "m"
-                                                        : ""}
-                                                </strong>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div>
+                                    {renderLichSuVaoCa()}
                                 </div>
-                                <div className='w-full mb-2 grid gap-4' style={{ gridTemplateColumns: 'auto 1fr' }}>
-                                    <img
-                                        className='w-20 h-20 rounded-full object-cover border cursor-pointer'
-                                        src={anhChamCong?.vao[1]?.hinhanh ? anhChamCong?.vao[1]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'}
-                                        alt=""
-                                        onClick={() => {
-                                            handlePreviewImage(true, anhChamCong?.vao[1]?.hinhanh ? anhChamCong?.vao[1]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png')
-                                        }}
-                                    />
-                                    <div className='h-full flex flex-col justify-between'>
-                                        <h1 className='ps-4 uppercase font-semibold text-orange-400'>Ca phụ</h1>
-                                        <ul className='text-left'>
-                                            <li>
-                                                Vào ca: <strong className='text-sky-400'>{anhChamCong?.vao[1]?.thoi_gian ? moment(anhChamCong?.vao[1]?.thoi_gian).format("HH:mm") : ""} </strong>
-                                            </li>
-                                            <li>
-                                                Địa điểm: <strong className='text-sky-400'>{anhChamCong?.vao[1]?.dvcc_chi_nhanh?.chi_nhanh_name}</strong>
-                                            </li>
-                                            <li>
-                                                Khoảng cách: <strong className='text-sky-400'>
-                                                    {anhChamCong?.vao[1]?.lat && anhChamCong?.vao[1]?.dvcc_chi_nhanh ? tinhKhoangCach({ latitude: anhChamCong?.vao[1]?.lat, longitude: anhChamCong?.vao[1]?.lng }, { latitude: anhChamCong?.vao[1]?.dvcc_chi_nhanh?.latitude, longitude: anhChamCong?.vao[1]?.dvcc_chi_nhanh?.longitude }) + "m"
-                                                        : ""}
-                                                </strong>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='w-full grid grid-cols-2 gap-2 mt-4'>
-                                <div className='w-full mb-2 grid gap-4' style={{ gridTemplateColumns: 'auto 1fr' }}>
-                                    <img
-                                        className='w-20 h-20 rounded-full object-cover border cursor-pointer'
-                                        src={anhChamCong?.ra[0]?.hinhanh ? anhChamCong?.ra[0]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'}
-                                        alt=""
-                                        onClick={() => {
-                                            handlePreviewImage(true, anhChamCong?.ra[0]?.hinhanh ? anhChamCong?.ra[0]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png')
-                                        }}
-                                    />
-                                    <div className='self-center text-left'>
-                                        <h1 className='ps-4 uppercase font-semibold text-orange-400'>Ca chính</h1>
-                                        <ul className='text-left'>
-                                            <li>
-                                                Ra ca: <strong className='text-sky-400'>{anhChamCong?.ra[0]?.thoi_gian ? moment(anhChamCong?.ra[0]?.thoi_gian).format("HH:mm") : ""}</strong>
-                                            </li>
-                                            <li>
-                                                Địa điểm: <strong className='text-sky-400'>{anhChamCong?.ra[0]?.dvcc_chi_nhanh?.chi_nhanh_name}</strong>
-                                            </li>
-                                            <li>
-                                                Khoảng cách: <strong className='text-sky-400'>
-                                                    {anhChamCong?.ra[0]?.lat && anhChamCong?.ra[0]?.dvcc_chi_nhanh ? tinhKhoangCach({ latitude: anhChamCong?.ra[0]?.lat, longitude: anhChamCong?.ra[0]?.lng }, { latitude: anhChamCong?.ra[0]?.dvcc_chi_nhanh?.latitude, longitude: anhChamCong?.ra[0]?.dvcc_chi_nhanh?.longitude }) + "m"
-                                                        : ""}
-                                                </strong>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className='w-full mb-2 grid gap-4' style={{ gridTemplateColumns: 'auto 1fr' }}>
-                                    <img
-                                        className='w-20 h-20 rounded-full object-cover border cursor-pointer'
-                                        src={anhChamCong?.ra[1]?.hinhanh ? anhChamCong?.ra[1]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png'}
-                                        alt=""
-                                        onClick={() => {
-                                            handlePreviewImage(true, anhChamCong?.ra[1]?.hinhanh ? anhChamCong?.ra[1]?.hinhanh : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png')
-                                        }}
-                                    />
-                                    <div className='h-full flex flex-col justify-between'>
-                                        <h1 className='ps-4 uppercase font-semibold text-orange-400'>Ca phụ</h1>
-                                        <ul className='text-left'>
-                                            <li>
-                                                Ra ca: <strong className='text-sky-400'>{anhChamCong?.ra[1]?.thoi_gian ? moment(anhChamCong?.ra[1]?.thoi_gian).format("HH:mm") : ""} </strong>
-                                            </li>
-                                            <li>
-                                                Địa điểm: <strong className='text-sky-400'>{anhChamCong?.ra[1]?.dvcc_chi_nhanh?.chi_nhanh_name}</strong>
-                                            </li>
-                                            <li>
-                                                Khoảng cách: <strong className='text-sky-400'>
-                                                    {anhChamCong?.ra[1]?.lat && anhChamCong?.ra[1]?.dvcc_chi_nhanh ? tinhKhoangCach({ latitude: anhChamCong?.ra[1]?.lat, longitude: anhChamCong?.ra[1]?.lng }, { latitude: anhChamCong?.ra[1]?.dvcc_chi_nhanh?.latitude, longitude: anhChamCong?.ra[1]?.dvcc_chi_nhanh?.longitude }) + "m"
-                                                        : ""}
-                                                </strong>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div>
+                                    {renderLichSuRaCa()}
                                 </div>
                             </div>
                             <Modal

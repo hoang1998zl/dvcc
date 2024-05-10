@@ -152,7 +152,7 @@ export default function BangChamCongMenu() {
                                     </div>
                                 </div>
                                 <div className='relative'>
-                                    <button
+                                    {/* <button
                                         type="button"
                                         className="h-7 px-4 rounded bg-white text-orange-400 uppercase font-semibold mb-0.5 hover:mb-0 focus:outline-none"
                                         style={{
@@ -170,7 +170,7 @@ export default function BangChamCongMenu() {
                                         }}
                                     >
                                         Tính tăng ca
-                                    </button>
+                                    </button> */}
                                     <div className={`absolute top-[calc(100%+10px)] right-0 w-[40rem] z-50 transition-all delay-750 duration-300 ease-linear ${isOpenQuyUoc_1 == true ? 'block h-auto opacity-100' : 'hidden h-0 opacity-0'}`}>
                                         <QuyUocTangCa />
                                     </div>
