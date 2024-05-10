@@ -131,6 +131,7 @@ export default function BangChamCong() {
 
                 <td>{ngayCong?.tong_cong}</td>
                 <td>{ngayCong?.tong_ngaylamviec}</td>
+                <td>{ngayCong?.tong_giocong}</td>
                 <td>{ngayCong?.tong_L}</td>
                 <td>{ngayCong?.tong_P}</td>
                 <td>{ngayCong?.tong_khongphep}</td>
@@ -997,6 +998,9 @@ export default function BangChamCong() {
                                     Ngày làm việc
                                 </th>
                                 <th>
+                                    Tổng giờ công
+                                </th>
+                                <th>
                                     Nghỉ Lễ
                                 </th>
                                 <th>
@@ -1076,6 +1080,9 @@ export default function BangChamCong() {
                                 Ngày làm việc
                             </th>
                             <th>
+                                Tổng giờ công
+                            </th>
+                            <th>
                                 Nghỉ Lễ
                             </th>
                             <th>
@@ -1114,6 +1121,7 @@ export default function BangChamCong() {
                                     <td>{item?.ngay_chuan}</td>
                                     <td>{item?.tong_cong}</td>
                                     <td>{item?.tong_ngaylamviec}</td>
+                                    <td>{item?.tong_giocong}</td>
                                     <td>{item?.tong_L}</td>
                                     <td>{item?.tong_P}</td>
                                     <td>{item?.tong_khongphep}</td>
