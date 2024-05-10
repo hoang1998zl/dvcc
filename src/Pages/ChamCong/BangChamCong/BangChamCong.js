@@ -288,7 +288,8 @@ export default function BangChamCong() {
                         onChange={(e) => {
                             changeInput(e, indexNote?.ind, indexNote?.ngayCong?.luong_id)
                         }}
-                        value={indexNote?.ngayCong == undefined ? "" : indexNote?.ngayCong[indexNote?.noteIndex]}
+                        // value={indexNote?.ngayCong == undefined ? "" : indexNote?.ngayCong[indexNote?.noteIndex]}
+                        value={indexNote?.ngayCong[indexNote?.noteIndex] ? indexNote?.ngayCong[indexNote?.noteIndex] : ""}
                         rows={3}
                     ></textarea>
                 </div>
