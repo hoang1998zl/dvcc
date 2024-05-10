@@ -53,6 +53,9 @@ export default function LichSuVaoCa() {
   }
   const renderContent = () => {
     return dinhViList.map((dinhVi,index) => {
+      if(dinhVi?.loai == "TD"){{
+        return;
+      }}
       return (
         <>
           <tr className='addRow notHover'>
