@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import BangChamCong from './BangChamCong/BangChamCong'
 import { useSelector } from 'react-redux';
+import BangCongParttime from './BangCongParttime/BangCongParttime';
 // import ChamCongDetail from './ChamCongDetail/ChamCongDetail';
 // import BaoCaoChamCong from './BaoCaoChamCong/BaoCaoChamCong';
 
 export default function ChamCong() {
 
   const { mainHeight } = useSelector(state => state.PageSlice);
+
+  let chamCong = useSelector(state => state.ChamCongSlice.chamCong);
 
   const [BangChamCongHeight, setBangChamCongHeight] = useState(0);
 
@@ -32,7 +35,10 @@ export default function ChamCong() {
       //   height: `calc(${mainHeight}px - 3rem)`,
       // }}
     >
-      <BangChamCong />
+      {
+        chamCong == 0 ? <BangChamCong /> : <BangCongParttime></BangCongParttime>
+      }
+      
       {/* <div
         className='w-full flex gap-4'
         style={{

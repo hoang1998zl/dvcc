@@ -4,7 +4,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { localStorageService } from '../../../../services/localStorageService';
 import { useDispatch, useSelector } from 'react-redux';
 import { chamCongService } from '../../../../services/chamCongService';
-import { setDanhMuc, setMonth, setYear } from '../../../../Redux-toolkit/reducer/ChamCongSlice';
+import { setChamCong, setDanhMuc, setMonth, setYear } from '../../../../Redux-toolkit/reducer/ChamCongSlice';
 import moment from 'moment';
 import NhatKyChinhSua from '../NhatKyChinhSua/NhatKyChinhSua';
 import BangCongGuide from '../BangCongGuide/BangCongGuide';
@@ -18,6 +18,7 @@ export default function BangChamCongMenu() {
     let dispatch = useDispatch();
     let danhmuc_id = useSelector(state => state.ChamCongSlice.danhmuc_id);
     let month = useSelector(state => state.ChamCongSlice.month);
+    let chamCong = useSelector(state => state.ChamCongSlice.chamCong);
     let year = useSelector(state => state.ChamCongSlice.year);
     let [pbList, setPbList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -124,6 +125,23 @@ export default function BangChamCongMenu() {
           value={year}
           onChange={(e) => dispatch(setYear(e))}
           options={renderOptYear()}
+        />
+      </div>
+      <div>
+        <Select
+          className='text-center w-40'
+          onChange={(e)=>dispatch(setChamCong(e))}
+          value={chamCong}
+          options={[
+            {
+              value: 0,
+              label: "Ca cố định"
+            },
+            {
+              value: 1,
+              label: "Đăng ký - duyệt ca"
+            }
+          ]}
         />
       </div>
       <div className='flex items-center gap-4 text-black font-normal text-sm'>
