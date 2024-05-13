@@ -835,7 +835,7 @@ export default function BangChamCong() {
             <div className='self-center text-left'>
                 <ul className='text-left'>
                     <li>
-                        Vào ca: <strong className='text-sky-400'>{ra?.thoi_gian ? moment(ra?.thoi_gian).format("HH:mm") : ""}</strong>
+                        Ra ca: <strong className='text-sky-400'>{ra?.thoi_gian ? moment(ra?.thoi_gian).format("HH:mm") : ""}</strong>
                     </li>
                     <li>
                         Địa điểm: <strong className='text-sky-400'>{ra?.dvcc_chi_nhanh?.chi_nhanh_name}</strong>

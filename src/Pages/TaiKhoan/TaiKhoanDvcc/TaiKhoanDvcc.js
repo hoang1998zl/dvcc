@@ -316,7 +316,7 @@ return (
             </div>
             <div>
                 <p>
-                  Loại nhân viên:
+                  Hình thức chấm công:
                 </p>
                 <Select
                 className='w-full'
@@ -325,11 +325,11 @@ return (
                 options={[
                   {
                     value: 0,
-                    label: "Full-time"
+                    label: "Ca làm việc cố định "
                   },
                   {
                     value: 1,
-                    label: "Part-time"
+                    label: "Đăng ký ca - duyệt ca"
                   }
                 ]}
                 />
