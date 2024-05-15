@@ -196,5 +196,25 @@ export const  chamCongService = {
                 token
             }
         })
+    },
+    layBangCongParttime: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/bang-cong/get/bang-cong-pt",
+            method: "POST",
+            data,
+            headers:{
+                token
+            }
+        })
+    },
+    layChiTietNgayCongPt: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/bang-cong/get/chi-tiet-ngay-cong-pt",
+            method: "POST",
+            data,
+            headers:{
+                token
+            }
+        })
     }
 }
