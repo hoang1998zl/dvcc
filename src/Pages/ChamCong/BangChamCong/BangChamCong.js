@@ -935,7 +935,7 @@ export default function BangChamCong() {
                             </button>
                         </DownloadTableExcel>
                     </div>
-                    <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-4rem)] overflow-auto'>
+                    <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-4rem)] overflow-auto customScrollbar'>
                         <table className='customTable w-max min-w-full lg:w-full text-center'>
                             <thead className='text-[12px]'>
                                 <th>

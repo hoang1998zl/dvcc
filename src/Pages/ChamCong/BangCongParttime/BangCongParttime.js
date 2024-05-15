@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import BangChamCongMenu from '../BangChamCong/BangChamCongMenu/BangChamCongMenu';
 import moment from 'moment/moment';
 import { useSelector } from 'react-redux';
@@ -7,9 +7,12 @@ import { chamCongService } from '../../../services/chamCongService';
 import { localStorageService } from '../../../services/localStorageService';
 import { Modal } from 'antd';
 import { getPreciseDistance } from 'geolib';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+import icon_excel from '../../../issets/img/icon/excel.png'
 
 export default function BangCongParttime() {
     let token = localStorageService.getItem("token");
+    const tableRef = useRef(null);
     let sunIndex = [];
     let satIndex = [];
     let day = 0;
@@ -250,6 +253,43 @@ export default function BangCongParttime() {
             </div>
         })
     }
+    const renderTongGioCong = (ngayCong) => {
+        let tongNgayCong = 0;
+        let tongGioCong = 0;
+        ngayCong?.map((item,index) => {
+            if(item !== ""){
+                tongNgayCong++;
+                tongGioCong+= Number(item);
+            }
+        })
+        return <>
+            <td>{tongNgayCong}</td>
+            <td>{tongGioCong}</td>
+        </>
+    }
+    const renderBaoBao = () => {
+        return bangCong?.map((item,index) => {
+            return <tr key={index}>
+                <td>{item?.nhanVien?.nv_name}</td>
+                {renderTongGioCong(item?.ngayCong)}
+            </tr>
+        })
+    }
+    const renderBangCongExcel = () => {
+        return bangCong?.map((item,index) => {
+            return <tr key={index}>
+                <td>{item?.nhanVien?.nv_name}</td>
+                {
+                    item?.ngayCong?.map((ngayCong,ind) => {
+                        return <td className='text-center' key={ind}>{ngayCong}</td>
+                    })
+                }
+                {
+                    renderTongGioCong(item?.ngayCong)
+                }
+            </tr>
+        })
+    }
   return (
     <div className='w-full'>
         <div className='w-full p-2 lg:p-4 bg-white rounded-lg'>
@@ -290,7 +330,7 @@ export default function BangCongParttime() {
                 gridTemplateColumns: 'auto 1fr',
             }}>
             <div className='w-auto relative z-10 text-sm'>
-                    <div className='w-full h-full bg-white rounded-lg shadow-md p-2 lg:p-4 pr-0'>
+                <div className='w-full h-full bg-white rounded-lg shadow-md p-2 lg:p-4 pr-0'>
                         <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-1rem)] pe-4 overflow-y-auto customScrollbar text-center'>
                             <h1 className='uppercase font-bold text-lg'>
                                 {ngayCong[0]?.ns_nhanvien?.nv_name}</h1>
@@ -321,8 +361,85 @@ export default function BangCongParttime() {
                                 </div>
                             </Modal>
                         </div>
+                </div>
+            </div>
+            <div id='BaoCaoChamCong' className='w-full h-full p-2 lg:p-4 bg-white rounded-lg'>
+                    <div className='w-full h-10 mb-2 px-2 lg:px-4 flex items-center gap-2 lg:gap-4 bg-orange-400 rounded'>
+                        <h1 className='flex-1 text-left text-lg text-white font-semibold uppercase'>
+                            Báo cáo chấm công
+                        </h1>
+
+                        <DownloadTableExcel
+                            filename={`BangCongTheoCa-${month}-${year}`} sheet="sheet1"
+                            currentTableRef={tableRef.current}>
+                            <button
+                                type="button"
+                                className="w-7 h-7 p-1 rounded bg-white border mb-0.5 hover:mb-0 focus:outline-none"
+                                style={{
+                                    boxShadow: 'rgba(0, 0, 0, 0.4) 0px 3px 8px'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.target.style.boxShadow = 'none';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.boxShadow = 'rgba(0, 0, 0, 0.4) 0px 3px 8px';
+                                }}
+                            >
+                                <img
+                                    className='w-full h-full object-contain'
+                                    src={icon_excel}
+                                    alt=""
+                                />
+                            </button>
+                        </DownloadTableExcel>
                     </div>
-            </div>    
+                    <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-4rem)] overflow-auto customScrollbar'>
+                        <table className='customTable w-max min-w-full lg:w-full text-center'>
+                            <thead className='text-[12px]'>
+                                <th>
+                                    <div class="flex items-center">
+                                        {/* <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg> */}
+                                        <p class="flex-1">Nhân viên</p>
+                                    </div>
+                                </th>
+                                <th>
+                                    Ngày làm việc
+                                </th>
+                                <th>
+                                    Tổng giờ công
+                                </th>
+                            </thead>
+                            <tbody>
+                                {renderBaoBao()}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>    
+        </div>
+        {/* bảng để xuất excel */}
+        <div className='hidden'>
+            <table ref={tableRef} className='w-full'>
+                    <thead>
+                        <tr className='text-orange-400'>
+                            <td id={`-1-1`} className='sticky left-0 top-0 z-40'>
+                                <p>
+                                    Nhân viên
+                                </p>
+                                {renderSide(-1, -1)}
+                            </td>
+                            {renderDay_()}
+                            <td>
+                                Ngày làm việc
+                            </td>
+                            <td>
+                                Tổng giờ công
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {renderBangCongExcel()}
+                    </tbody>
+            </table>
         </div>
     </div>
   )
