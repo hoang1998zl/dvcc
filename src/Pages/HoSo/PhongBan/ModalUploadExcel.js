@@ -1,37 +1,34 @@
 import React from 'react'
 
 import { InboxOutlined } from '@ant-design/icons';
-import { message, Modal, Upload } from 'antd';
+import { Modal, Upload } from 'antd';
 import { FaDownload, FaRegCircleXmark } from 'react-icons/fa6';
 import { FaCheckCircle } from 'react-icons/fa';
+import { localStorageService } from '../../../services/localStorageService';
 
 const { Dragger } = Upload;
 
-const props = {
-  name: 'file',
-  multiple: true,
-  action: '', //api upload
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-};
 
 function ModalUploadExcel({
   showModal,
   handleOk,
   handleCancel,
+  setFile
 }) {
+
+  const props = {
+    name: 'file',
+    headers: {
+      'Content-type': 'multipart/form-data',
+      'Authorization': localStorageService.getItem("token"),
+    },
+    beforeUpload: (file) => {
+      return false;
+    },
+    onChange(info) {
+      setFile(info);
+    },
+  };
 
   return (
     <Modal
@@ -49,7 +46,7 @@ function ModalUploadExcel({
 
           <div className='flex-1 w-full flex flex-col justify-center items-center gap-4'>
             <a
-              href="/"
+              href="https://apihr.weos.vn/public/excel/employee-data-file-example.xlsx"
               className='w-max flex justify-center items-center gap-2 px-10 py-2 rounded bg-slate-100 border border-gray-600 text-gray-800 cursor-pointer'
             >
               <FaDownload />
@@ -63,7 +60,7 @@ function ModalUploadExcel({
           </h1>
 
           <div className='flex-1 w-full flex flex-col justify-center items-center gap-4'>
-            <Dragger {...props} className='w-full'>
+            <Dragger {...props} multiple="false" maxCount={1} className='w-full'>
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>

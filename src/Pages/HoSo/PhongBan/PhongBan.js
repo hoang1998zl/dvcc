@@ -8,10 +8,11 @@ import { setCurrentNhanVien } from '../../../Redux-toolkit/reducer/UserSlice';
 import { chamCongService } from '../../../services/chamCongService';
 import { localStorageService } from '../../../services/localStorageService';
 import { toast } from 'react-toastify';
-import { Popconfirm } from 'antd';
+import { Popconfirm, message } from 'antd';
 import CharacterRepalce from '../../../GlobalFunction/CharacterReplace'
 import ModalUploadExcel from './ModalUploadExcel';
 import ModalShowDataUpload from './ModalShowDataUpload';
+import axios from 'axios';
 
 export default function PhongBan() {
 
@@ -506,22 +507,53 @@ export default function PhongBan() {
 
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
+  const [file, setFile] = useState(null);
+  const [dataUploadFile, setDataUploadFile] = useState(null);
 
   const handleOk = () => {
     setShowModal(false);
-    setShowModal1(true);
+    const formData = new FormData();
+    formData.append("excelFile", file.file);
+
+    axios.post('https://labortracking.vn/api/v1/employees/import-data', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': token
+      }
+    }).then((res) => {
+      toast.success(res.data.message);
+      setTimeout(() => {
+        setShowModal1(true);
+        setDataUploadFile(res.data);
+      }, 1000);
+    })
   };
 
   const handleOk1 = () => {
     setShowModal1(false);
+    axios.post('https://labortracking.vn/api/v1/employees/save-data', null, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    }).then((res) => {
+      toast({
+        type: res.data.status,
+        message: res.data.message,
+      });
+    })
   };
 
   const handleCancel = () => {
     setShowModal(false);
+    setFile(null);
+    setDataUploadFile(null);
   };
 
   const handleCancel1 = () => {
     setShowModal1(false);
+    setFile(null);
+    setDataUploadFile(null);
   };
 
   return (
@@ -551,12 +583,14 @@ export default function PhongBan() {
           showModal={showModal}
           handleOk={handleOk}
           handleCancel={handleCancel}
+          setFile={setFile}
         />
 
         <ModalShowDataUpload
           showModal={showModal1}
           handleOk={handleOk1}
           handleCancel={handleCancel1}
+          dataUploadFile={dataUploadFile}
         />
       </div>
       <div
