@@ -208,5 +208,34 @@ export const dvccService = {
                 token
                }
            })
+    },
+    getLLV: (token) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/lay-llv-pt",
+            method: "GET",
+            headers:{
+                token
+               }
+           })
+    },
+    duyetLLV: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/duyet-llv",
+            method: "PUT",
+            data,
+            headers:{
+                token
+               }
+           })
+    },
+    tuChoiLLV: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/tu-choi-llv",
+            method: "PUT",
+            data,
+            headers:{
+                token
+               }
+           })
     }
 }
