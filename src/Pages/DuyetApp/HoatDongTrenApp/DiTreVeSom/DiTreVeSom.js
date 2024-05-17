@@ -56,7 +56,7 @@ export default function DiTreVeSom() {
       }
     }
     setSomTreList(array);
-}
+  }
   let handleDuyet = (id,type) => {
     let data = {id};
     if(type === "diTre"){

@@ -150,7 +150,6 @@ export default function TaiKhoanDvcc() {
             nv_chinhanh: [],
             nv_calamviec: nv?.nv_calamviec ? nv.nv_calamviec : null,
             nv_calamviec2: nv?.nv_calamviec2 ? nv?.nv_calamviec2 : null,
-            
             nv_anhchamcong: nv?.nv_anhchamcong ? nv.nv_anhchamcong : 0,
             is_saler: nv?.is_saler ? nv.is_saler : 0,
             is_parttime: nv?.is_parttime

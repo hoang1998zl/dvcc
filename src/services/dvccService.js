@@ -246,5 +246,15 @@ export const dvccService = {
                 token
                }
            })
+    },
+    themCaLamViec: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/them-ca-lam-viec",
+            method: "POST",
+            data,
+            headers:{
+                token
+               }
+           })
     }
 }
