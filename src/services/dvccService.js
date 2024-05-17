@@ -237,5 +237,14 @@ export const dvccService = {
                 token
                }
            })
+    },
+    getNhanVienPT: (token) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/lay-nv-pt",
+            method: "GET",
+            headers:{
+                token
+               }
+           })
     }
 }

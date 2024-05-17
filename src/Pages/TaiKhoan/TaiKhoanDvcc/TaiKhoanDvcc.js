@@ -49,9 +49,6 @@ export default function TaiKhoanDvcc() {
         nv_chinhanh: [],
         nv_calamviec: null,
         nv_calamviec2: null,
-        nv_nguoiduyet_ditre: null,
-        nv_nguoiduyet_congtac: null,
-        nv_nguoiduyet_phep: null,
         nv_anhchamcong: 0,
     })
     useEffect(() => {
@@ -128,15 +125,7 @@ export default function TaiKhoanDvcc() {
         if (!baseFormat.nv_calamviec) {
           baseFormat.nv_calamviec = caLamViec[0]?.id ? caLamViec[0].id : null
         }
-        if (!baseFormat.nv_nguoiduyet_ditre) {
-          baseFormat.nv_nguoiduyet_ditre = diTreList[0]?.nv_id ? diTreList[0].nv_id : null
-        }
-        if (!baseFormat.nv_nguoiduyet_phep) {
-          baseFormat.nv_nguoiduyet_phep = nghiPhepList[0]?.nv_id ? nghiPhepList[0].nv_id : null
-        }
-        if (!baseFormat.nv_nguoiduyet_congtac) {
-          baseFormat.nv_nguoiduyet_congtac = congTacList[0]?.nv_id ? congTacList[0].nv_id : null
-        }
+        
         nhanVienService.createDvcc(token, baseFormat).then((res) => {
           setReload(Date.now());
           dispatch(setReloadMany(Date.now()));
@@ -161,9 +150,7 @@ export default function TaiKhoanDvcc() {
             nv_chinhanh: [],
             nv_calamviec: nv?.nv_calamviec ? nv.nv_calamviec : null,
             nv_calamviec2: nv?.nv_calamviec2 ? nv?.nv_calamviec2 : null,
-            nv_nguoiduyet_ditre: nv?.nv_nguoiduyet_ditre ? nv.nv_nguoiduyet_ditre : null,
-            nv_nguoiduyet_congtac: nv?.nv_nguoiduyet_congtac ? nv.nv_nguoiduyet_congtac : null,
-            nv_nguoiduyet_phep: nv?.nv_nguoiduyet_phep ? nv.nv_nguoiduyet_phep : null,
+            
             nv_anhchamcong: nv?.nv_anhchamcong ? nv.nv_anhchamcong : 0,
             is_saler: nv?.is_saler ? nv.is_saler : 0,
             is_parttime: nv?.is_parttime

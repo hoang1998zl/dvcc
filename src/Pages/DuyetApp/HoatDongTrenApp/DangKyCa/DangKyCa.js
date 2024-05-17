@@ -3,9 +3,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { localStorageService } from '../../../../services/localStorageService';
 import { useSelector } from 'react-redux';
 import { dvccService } from '../../../../services/dvccService';
-import { Pagination, Popconfirm } from 'antd';
+import { Pagination, Popconfirm, Select } from 'antd';
 import { toast } from 'react-toastify';
+import CharacterRepalce from '../../../../GlobalFunction/CharacterReplace';
 
+const filterOption = (input, option) =>
+    CharacterRepalce((option?.label ?? '').toLowerCase()).includes(CharacterRepalce(input.toLowerCase()));
 export default function DangKyCa() {
     moment.locale("vi");
     let focusRef = useRef("");
@@ -13,9 +16,17 @@ export default function DangKyCa() {
     let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
     let [LLVList,setLLVList] = useState([]);
     let [LLVListClone,setLLVListClone] = useState([]);
+    let [NVList,setNVList] = useState([]);
     let [reload,setReload] = useState(0);
     let [totalPage,setTotalPage] = useState(0);
     let [current,setCurrent] = useState(0);
+    let [baseFormat,setBaseFormat] = useState({
+        nv_id_array: [],
+        ca_lam_viec_id: null,
+        ghi_chu: null,
+        diadiem: null,
+        ngay: moment().format("YYYY-MM-DD")
+    })
     useEffect(() => {
         dvccService.getLLV(token).then((res) => {
                 setLLVList(res.data?.content);
@@ -24,11 +35,26 @@ export default function DangKyCa() {
               })
               .catch((err) => {
                console.log(err);
-              });
+            });
+        dvccService.getNhanVienPT(token).then((res) => {
+            setNVList(res.data.content);
+        }).catch((err) => {
+            console.log(err);
+            })
         },[reload,reloadMany])
         let changePage = (page) => {
             setCurrent(page - 1);
             focusRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+        let renderSelectNV = () => {
+            let array = [];
+            NVList?.map((nv) => {
+            array.push({
+                value: nv?.nv_id,
+                label: <p>{nv?.nv_name}</p>
+            })
+            })
+            return array;
         }
         let handleDuyetLLV = (id) => {
             let data = {id};
@@ -63,6 +89,11 @@ export default function DangKyCa() {
                     autoClose: 2000
                     });
                 });
+        }
+        let changeBaseFormat = (value,field) => {
+            let clone = {...baseFormat};
+            clone[field] = value;
+            setBaseFormat(clone);
         }
         let renderStatus = (status,id) => {
             switch (status){
@@ -188,6 +219,32 @@ export default function DangKyCa() {
                 </thead>
                 <tbody>
                     {renderLLV()}
+                    <tr>
+                        <td className='text-center'><i className='fa-solid fa-plus text-lg text-orange-400'></i></td>
+                        <td>
+                            <Select
+                                className='w-full'
+                                options={renderSelectNV()}
+                                onChange={(e) => changeBaseFormat(e, "nv_id_array")}
+                                optionFilterProp="children"
+                                value={baseFormat?.nv_id_array}
+                                mode='multiple'
+                                filterOption={filterOption}
+                                showSearch
+                                placeholder={<p className=' text-base'>Chọn Nhân Viên</p>} />
+                        </td>
+                        <td>
+                            <Select
+                                className='w-full'
+                                options={[]}
+                                // onChange={(e) => changeBaseFormat(e, "nv_id_array")}
+                                optionFilterProp="children"
+                                value={baseFormat?.ca_lam_viec_id}
+                                filterOption={filterOption}
+                                showSearch
+                                placeholder={<p className=' text-base'>Chọn Ca Làm Việc</p>} />
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <Pagination onChange={changePage} style={{width: "100%", marginTop: "1rem"}} pageSize={4} defaultCurrent={1} total={totalPage} />
