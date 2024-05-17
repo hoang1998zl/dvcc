@@ -4,72 +4,71 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { FaRegCircleXmark } from 'react-icons/fa6';
 
 
-const json = {
-  "status": "success",
-  "message": "Vui lòng xem trước dữ liệu",
-  "employeesData": [
-    {
-      "ma_nhan_vien": 1,
-      "phong_ban": "ACC",
-      "chuc_vu": "AM",
-      "gioi_tinh": "M",
-      "ho_ten": "Hoàng Huy Cảnh",
-      "ngay_sinh": "1978-04-01",
-      "so_cmtcccd": "064078001828",
-      "ngay_cap": "2021-04-29",
-      "noi_cap": "Cục cảnh sát ",
-      "noi_o_hien_tai": "200 đường số 9, Quận 7, TPHCM",
-      "lien_he": "0938056558",
-      "email": "laptrinhanbinh@gmail.com",
-      "thoi_gian_thu_viec": "2009-06-19",
-      "thoi_gian_ky_hop_dong": "2009-06-19"
-    },
-    {
-      "ma_nhan_vien": 2,
-      "phong_ban": "ACC",
-      "chuc_vu": "Staff",
-      "gioi_tinh": "F",
-      "ho_ten": "Nguyễn Bùi Thu Thảo",
-      "ngay_sinh": "2019-09-03",
-      "so_cmtcccd": "941327015622",
-      "ngay_cap": "2021-04-30",
-      "noi_cap": "Cục cảnh sát ",
-      "noi_o_hien_tai": "32/11 Phạm văn chiêu, Gò vấp, TP.HCM",
-      "lien_he": "0938056559",
-      "email": null,
-      "thoi_gian_thu_viec": "2009-07-06",
-      "thoi_gian_ky_hop_dong": "2009-07-06"
-    },
-    {
-      "ma_nhan_vien": 3,
-      "phong_ban": "ADM",
-      "chuc_vu": "SV",
-      "gioi_tinh": "F",
-      "ho_ten": "Lương Thị  Linh",
-      "ngay_sinh": "2012-10-15",
-      "so_cmtcccd": "930864782346",
-      "ngay_cap": "2021-05-01",
-      "noi_cap": "Cục cảnh sát ",
-      "noi_o_hien_tai": "96 An Dương Vương, Quận 5, TP.HCM",
-      "lien_he": "0938056560",
-      "email": null,
-      "thoi_gian_thu_viec": "2010-04-05",
-      "thoi_gian_ky_hop_dong": "2010-04-05"
-    }
-  ]
-}
+// const json = {
+//   "status": "success",
+//   "message": "Vui lòng xem trước dữ liệu",
+//   "employeesData": [
+//     {
+//       "ma_nhan_vien": 1,
+//       "phong_ban": "ACC",
+//       "chuc_vu": "AM",
+//       "gioi_tinh": "M",
+//       "ho_ten": "Hoàng Huy Cảnh",
+//       "ngay_sinh": "1978-04-01",
+//       "so_cmtcccd": "064078001828",
+//       "ngay_cap": "2021-04-29",
+//       "noi_cap": "Cục cảnh sát ",
+//       "noi_o_hien_tai": "200 đường số 9, Quận 7, TPHCM",
+//       "lien_he": "0938056558",
+//       "email": "laptrinhanbinh@gmail.com",
+//       "thoi_gian_thu_viec": "2009-06-19",
+//       "thoi_gian_ky_hop_dong": "2009-06-19"
+//     },
+//     {
+//       "ma_nhan_vien": 2,
+//       "phong_ban": "ACC",
+//       "chuc_vu": "Staff",
+//       "gioi_tinh": "F",
+//       "ho_ten": "Nguyễn Bùi Thu Thảo",
+//       "ngay_sinh": "2019-09-03",
+//       "so_cmtcccd": "941327015622",
+//       "ngay_cap": "2021-04-30",
+//       "noi_cap": "Cục cảnh sát ",
+//       "noi_o_hien_tai": "32/11 Phạm văn chiêu, Gò vấp, TP.HCM",
+//       "lien_he": "0938056559",
+//       "email": null,
+//       "thoi_gian_thu_viec": "2009-07-06",
+//       "thoi_gian_ky_hop_dong": "2009-07-06"
+//     },
+//     {
+//       "ma_nhan_vien": 3,
+//       "phong_ban": "ADM",
+//       "chuc_vu": "SV",
+//       "gioi_tinh": "F",
+//       "ho_ten": "Lương Thị  Linh",
+//       "ngay_sinh": "2012-10-15",
+//       "so_cmtcccd": "930864782346",
+//       "ngay_cap": "2021-05-01",
+//       "noi_cap": "Cục cảnh sát ",
+//       "noi_o_hien_tai": "96 An Dương Vương, Quận 5, TP.HCM",
+//       "lien_he": "0938056560",
+//       "email": null,
+//       "thoi_gian_thu_viec": "2010-04-05",
+//       "thoi_gian_ky_hop_dong": "2010-04-05"
+//     }
+//   ]
+// }
 
 export default function ModalShowDataUpload({
   showModal,
   handleOk,
   handleCancel,
+  dataUploadFile
 }) {
 
   const renderData = () => {
-    !json && alert('Upload file thất bại');
-    json?.employeesData.length === 0 && alert('Không có dữ liệu trong file');
 
-    return json.employeesData.map((item, index) => {
+    return dataUploadFile?.employeesData?.map((item, index) => {
       return (
         <tr key={index}>
           <td className='p-2 border'>
@@ -127,7 +126,7 @@ export default function ModalShowDataUpload({
       footer={false}
     >
       <h1 className='mt-5 mb-4 uppercase text-orange-500 text-2xl text-center font-bold'>
-        {json?.message}
+        {dataUploadFile?.message}
       </h1>
       <div className='w-full overflow-auto py-2'>
         <table className='w-max min-w-full'>
