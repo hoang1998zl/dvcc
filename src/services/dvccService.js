@@ -256,5 +256,25 @@ export const dvccService = {
                 token
                }
            })
+    },
+    layLLVUser: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/lay-llv-user",
+            method: "POST",
+            data,
+            headers:{
+                token
+               }
+           })
+    },
+    huyCaLamViec: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/huy-ca-lam-viec",
+            method: "POST",
+            data,
+            headers:{
+                token
+               }
+           })
     }
 }

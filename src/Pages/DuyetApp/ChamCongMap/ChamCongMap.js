@@ -10,6 +10,7 @@ import { Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNam, setNamKT, setNgay, setNgayKT, setNhanVien, setThang, setThangKT } from "../../../Redux-toolkit/reducer/DuyetAppSlice"
 import LichSuTangCa from './LichSuTangCa/LichSuTangCa';
+import LichLamViec from './LichLamViec/LichLamViec';
 
 const filterOption = (input, option) => CharacterReplace(option?.label ?? '').includes(CharacterReplace(input));
 export default function ChamCongMap() {
@@ -124,10 +125,10 @@ export default function ChamCongMap() {
       id: 5,
       name: 'Lịch sử tăng ca'
     },
-    // {
-    //   id: 6,
-    //   name: 'LS đăng ký ca (Parttime)'
-    // },
+    {
+      id: 6,
+      name: 'Lịch làm việc'
+    },
   ];
   const [currentTab, setCurrentTab] = useState(1);
   const renderTab = () => {
@@ -157,6 +158,8 @@ export default function ChamCongMap() {
         return <LichSuNghiPhep />
       case 5:
         return <LichSuTangCa />
+      case 6:
+        return <LichLamViec />
       default:
         return <ViTriNhanVien />
     }
@@ -214,7 +217,7 @@ export default function ChamCongMap() {
         </div>
         <div className='w-full border border-gray-300 rounded-lg p-2'>
           <div className='w-full overflow-x-auto'>
-            <div className='w-max lg:w-full p-1 border border-orange-400 rounded-full mb-2 flex lg:grid grid-cols-5 gap-2'>
+            <div className='w-max lg:w-full p-1 border border-orange-400 rounded-full mb-2 flex lg:grid grid-cols-6 gap-2'>
               {renderTab()}
             </div>
           </div>

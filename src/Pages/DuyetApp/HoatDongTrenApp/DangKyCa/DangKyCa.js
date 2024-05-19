@@ -3,11 +3,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { localStorageService } from '../../../../services/localStorageService';
 import { useSelector } from 'react-redux';
 import { dvccService } from '../../../../services/dvccService';
-import { Input, Pagination, Popconfirm, Select } from 'antd';
+import { DatePicker, Input, Pagination, Popconfirm, Select } from 'antd';
 import { toast } from 'react-toastify';
 import CharacterRepalce from '../../../../GlobalFunction/CharacterReplace';
 import { cauHinhChungService } from '../../../../services/cauHinhChungService';
 import { chiNhanhService } from '../../../../services/chiNhanhService';
+import dayjs from 'dayjs';
 
 const filterOption = (input, option) =>
     CharacterRepalce((option?.label ?? '').toLowerCase()).includes(CharacterRepalce(input.toLowerCase()));
@@ -360,7 +361,17 @@ export default function DangKyCa() {
                                 type='text' value={baseFormat?.ghi_chu}>
                             </Input>
                         </td>
-                        <td></td>
+                        <td>
+                          <DatePicker
+                            className='w-full'
+                            value={dayjs(baseFormat?.ngay, "YYYY-MM-DD").isValid()?dayjs(baseFormat?.ngay, "YYYY-MM-DD"):''}
+                            format={'DD-MM-YYYY'}
+                            onChange={(date, dateString) => {
+                              let value = dateString ? moment(dateString, 'DD-MM-YYYY').format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
+                              changeBaseFormat(value,'ngay');
+                            }}
+                          />
+                        </td>
                         <td>
                             <button
                                 type="button"
