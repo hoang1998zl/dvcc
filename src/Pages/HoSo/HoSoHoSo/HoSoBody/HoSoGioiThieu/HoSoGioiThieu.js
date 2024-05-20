@@ -9,22 +9,24 @@ import { localStorageService } from '../../../../../services/localStorageService
 function HoSoGioiThieu() {
 
   const dispatch = useDispatch();
-  let [nhanVienHS,setNhanVienHS] = useState({});
+  let [nhanVienHS, setNhanVienHS] = useState({});
   let token = localStorageService.getItem('token');
   const { currentNhanVien } = useSelector(state => state.UserSlice);
   let reloadHS = useSelector(state => state.HoSoNhanVienSlice.reloadHS);
 
-  useEffect(()=>{
-    if(!currentNhanVien){
+  useEffect(() => {
+    if (!currentNhanVien) {
       return;
     }
-    nhanVienService.getNhanVienTheoId(token, currentNhanVien).then((res) => {
-      setNhanVienHS(res.data?.content);
-    })
-      .catch((err) => {
-        console.log(err);
-      });
-  },[currentNhanVien,reloadHS])
+    nhanVienService
+      .getNhanVienTheoId(token, currentNhanVien)
+      .then((res) => {
+        setNhanVienHS(res.data?.content);
+      })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+  }, [currentNhanVien, reloadHS, token])
 
   return (
     <div className='w-full bg-white rounded-lg shadow-lg p-4 text-left'>
@@ -56,7 +58,7 @@ function HoSoGioiThieu() {
               Ngày sinh
             </p>
             <p className='font-bold text-black'>
-              {dayjs(nhanVienHS.nv_ngaysinh, "YYYY-MM-DD").isValid()?moment(nhanVienHS.nv_ngaysinh,'YYYY-MM-DD').format('DD - MM - YYYY'):''}
+              {dayjs(nhanVienHS.nv_ngaysinh, "YYYY-MM-DD").isValid() ? moment(nhanVienHS.nv_ngaysinh, 'YYYY-MM-DD').format('DD - MM - YYYY') : ''}
             </p>
           </div>
         </div>
@@ -69,7 +71,7 @@ function HoSoGioiThieu() {
               Giới tính
             </p>
             <p className='font-bold text-black'>
-              {nhanVienHS.nv_gender==1?'Nam':(nhanVienHS.nv_gender==0?'Nữ':'Khác')}
+              {nhanVienHS.nv_gender === 1 ? 'Nam' : (nhanVienHS.nv_gender === 0 ? 'Nữ' : 'Khác')}
             </p>
           </div>
         </div>
@@ -82,13 +84,15 @@ function HoSoGioiThieu() {
               CV
             </p>
             {
-              nhanVienHS?.nv_cv ? 
-              <a href={nhanVienHS?.nv_cv} target='_blank' className='font-bold text-black'>
-                Tải Xuống
-              </a>
-            : ""
+              nhanVienHS?.nv_cv ?
+                <a href={nhanVienHS?.nv_cv} target='_blank' rel="noreferrer" className='font-bold text-black'>
+                  Tải Xuống
+                </a>
+                : <p className='font-bold text-black cursor-pointer' onClick={() => { alert("Không tìm thấy hồ sơ !!!") }}>
+                  Tải Xuống
+                </p>
             }
-            
+
           </div>
         </div>
         <div className='flex items-center gap-4 text-gray-400'>
@@ -139,7 +143,7 @@ function HoSoGioiThieu() {
               Ngày thử việc
             </p>
             <p className='font-bold text-black'>
-              {dayjs(nhanVienHS.nv_ngayvaolam, "YYYY-MM-DD").isValid()?moment(nhanVienHS.nv_ngayvaolam,'YYYY-MM-DD').format('DD - MM - YYYY'):''}
+              {dayjs(nhanVienHS.nv_ngayvaolam, "YYYY-MM-DD").isValid() ? moment(nhanVienHS.nv_ngayvaolam, 'YYYY-MM-DD').format('DD - MM - YYYY') : ''}
             </p>
           </div>
         </div>
@@ -152,7 +156,7 @@ function HoSoGioiThieu() {
               Ngày làm chính thức
             </p>
             <p className='font-bold text-black'>
-              {dayjs(nhanVienHS.nv_ngaylvchinhthuc, "YYYY-MM-DD").isValid()?moment(nhanVienHS.nv_ngaylvchinhthuc,'YYYY-MM-DD').format('DD - MM - YYYY'):''}
+              {dayjs(nhanVienHS.nv_ngaylvchinhthuc, "YYYY-MM-DD").isValid() ? moment(nhanVienHS.nv_ngaylvchinhthuc, 'YYYY-MM-DD').format('DD - MM - YYYY') : ''}
             </p>
           </div>
         </div>
