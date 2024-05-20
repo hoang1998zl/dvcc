@@ -5,6 +5,7 @@ import moment from 'moment';
 import dayjs from 'dayjs';
 import { nhanVienService } from '../../../../../services/nhanVienService';
 import { localStorageService } from '../../../../../services/localStorageService';
+import { toast } from 'react-toastify';
 
 function HoSoGioiThieu() {
 
@@ -88,7 +89,7 @@ function HoSoGioiThieu() {
                 <a href={nhanVienHS?.nv_cv} target='_blank' rel="noreferrer" className='font-bold text-black'>
                   Tải Xuống
                 </a>
-                : <p className='font-bold text-black cursor-pointer' onClick={() => { alert("Không tìm thấy hồ sơ !!!") }}>
+                : <p className='font-bold text-black cursor-pointer' onClick={() => { toast.error('Không tìm thấy CV') }}>
                   Tải Xuống
                 </p>
             }
