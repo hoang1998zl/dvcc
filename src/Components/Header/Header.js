@@ -44,7 +44,7 @@ export default function Header() {
     },
     {
       menu_id: 2,
-      menu_name: "Cấu Hình",
+      menu_name: "Thiết lập",
       menu_icon: <FaGear />,
     },
     {
