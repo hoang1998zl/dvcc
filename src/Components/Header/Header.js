@@ -28,7 +28,7 @@ export default function Header() {
     // cái này để load số thông báo trên duyệt app
     dvccService.getTotal(token).then((res) => {
       let total = 0;
-      total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa;
+      total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa + res.data?.content?.dangKyCa;
       dispatch(setNewNoti(total));
     })
       .catch((err) => {

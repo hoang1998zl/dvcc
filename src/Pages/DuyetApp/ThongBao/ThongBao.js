@@ -38,7 +38,7 @@ export default function ThongBao({
     dvccService.getTotal(token).then((res) => {
             setThongBao(res.data.content);
             let total = 0;
-            total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa;
+            total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa + res.data?.content?.dangKyCa;
             dispatch(setNewNoti(total));
           })
           .catch((err) => {
@@ -125,6 +125,17 @@ export default function ThongBao({
                       hiện có <strong className='text-sky-400'>{thongBao?.tangCa}</strong> đơn xin tăng ca mới cần duyệt
                     </p>
                   </li>
+                  <li onClick={() => {
+                    dispatch(setTabApp(4));
+                    dispatch(setReloadMany(Date.now()));
+                  }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
+                    <div className='w-7 text-xl text-center text-green-500'>
+                      <i className="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <p className='w-full flex-1 line-clamp-2'>
+                      hiện có <strong className='text-sky-400'>{thongBao?.dangKyCa}</strong> ca đăng ký mới cần duyệt
+                    </p>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -193,6 +204,17 @@ export default function ThongBao({
                     hiện có <strong className='text-sky-400'>{thongBao?.tangCa}</strong> đơn xin tăng ca mới cần duyệt
                   </p>
                 </li>
+                <li onClick={() => {
+                    dispatch(setTabApp(4));
+                    dispatch(setReloadMany(Date.now()));
+                  }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
+                    <div className='w-7 text-xl text-center text-green-500'>
+                      <i className="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <p className='w-full flex-1 line-clamp-2'>
+                      hiện có <strong className='text-sky-400'>{thongBao?.dangKyCa}</strong> ca đăng ký mới cần duyệt
+                    </p>
+                  </li>
               </ul>
             </div>
           </div>
