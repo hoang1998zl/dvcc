@@ -153,6 +153,8 @@ export default function DangKyCa() {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000
                     });
+                console.log(err);
+                
             })
         }
         let handleDuyetLLV = (id) => {
