@@ -100,7 +100,7 @@ export default function ThongBao({
                       <i className="fa-solid fa-person-walking-luggage"></i>
                     </div>
                     <p className='w-full flex-1 line-clamp-2'>
-                      hiện có <strong className='text-sky-400'>{thongBao?.congTac}</strong> đơn lịch đăng ký công tác mới cần duyệt
+                      hiện có <strong className='text-sky-400'>{thongBao?.congTac}</strong> lịch đăng ký công tác mới cần duyệt
                     </p>
                   </li>
                   <li onClick={() => {
@@ -179,7 +179,7 @@ export default function ThongBao({
                     <i className="fa-solid fa-person-walking-luggage"></i>
                   </div>
                   <p className='w-full flex-1 line-clamp-2'>
-                    hiện có <strong className='text-sky-400'>{thongBao?.congTac}</strong> đơn lịch đăng ký công tác mới cần duyệt
+                    hiện có <strong className='text-sky-400'>{thongBao?.congTac}</strong> lịch đăng ký công tác mới cần duyệt
                   </p>
                 </li>
                 <li onClick={() => {
