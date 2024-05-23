@@ -10,6 +10,7 @@ import NhatKyChinhSua from '../NhatKyChinhSua/NhatKyChinhSua';
 import BangCongGuide from '../BangCongGuide/BangCongGuide';
 import QuyUocNgayCongChuan from './QuyUocNgayCongChuan/QuyUocNgayCongChuan';
 import QuyUocTangCa from './QuyUocTangCa/QuyUocTangCa';
+import { values } from 'lodash';
 
 const filterOption = (input, option) =>
         (option?.key ?? '').toLowerCase().includes(input.toLowerCase());
@@ -50,7 +51,11 @@ export default function BangChamCongMenu() {
       dispatch(setDanhMuc(e));
     }
     let renderOption = () => {
-      let array = [];
+      let array = [{
+        value: -1,
+        label: <p className='text-black'>Tất Cả</p>,
+        key: -1
+      }];
       pbList.map((pb) => {
           let item = {
               value: pb?.danhmuc_id,

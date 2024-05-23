@@ -14,19 +14,11 @@ export default function BangCongGuide() {
       value: "L",
     },
     {
-      title: 'Tăng ca làm 2 ngày',
-      value: "2",
-    },
-    {
       title: "Nghỉ có phép",
       value: "P",
     },
     {
-      title: "0.5 công",
-      value: "0.5",
-    },
-    {
-      title: "Làm nữa ngày_Nghỉ nữa ngày có phép",
+      title: "Làm nửa ngày_Nghỉ nửa ngày có phép",
       value: "0.5_0.5P",
     },
     {
@@ -34,11 +26,7 @@ export default function BangCongGuide() {
       value: "K",
     },
     {
-      title: "Làm việc 1.5 công",
-      value: "1.5",
-    },
-    {
-      title: "Làm nữa ngày_Nghỉ nữa ngày không phép",
+      title: "Làm nửa ngày_Nghỉ nửa ngày không phép",
       value: "0.5P_0.5K",
     }
   ]
