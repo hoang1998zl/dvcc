@@ -218,7 +218,7 @@ export default function LichLamViec() {
                     </th>
                     <th>
                         <button onClick={() => setOpenMenu(!openMenu)} type="button" class="text-orange-400 cursor-pointer text-xl relative">
-                            <i class="fa-solid fa-print"></i>
+                            <i className="fa-solid fa-print"></i>
                             {openMenu && <div onMouseLeave={() => setOpenMenu(false)} className='absolute rounded bg-white p-2 shadow-md w-64 z-10 top-0 right-full text-black text-base font-normal'>
                                 <p onClick={handlePrint} className='hover:bg-orange-300 py-1 rounded'>In Lịch Làm Việc</p>
                                 <p onClick={showModal} className='hover:bg-orange-300 py-1 rounded'>Xem Lịch Làm Tất Cả Nhân Viên</p>
@@ -227,7 +227,13 @@ export default function LichLamViec() {
                     </th>
                 </thead>
                 <tbody>
-                    {renderLLV()}
+                    {
+                        duyetAppSlice.nv_id == -1 ? <div>
+                            <p className='text-lg font-normal'>Để xem tất cả lịch làm bấm vào nút <span className='text-orange-400 text-xl'><i className="fa-solid fa-print"></i></span> chọn Xem Lịch Làm Tất Cả Nhân Viên </p>
+                        </div>
+                        : renderLLV()
+                    }
+                    
                 </tbody>
             </table>
             <Pagination onChange={changePage} style={{width: "100%", marginTop: "1rem"}} pageSize={10} defaultCurrent={1} total={totalPage} />

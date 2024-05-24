@@ -42,27 +42,47 @@ export default function ViTriNhanVien() {
           onClick={()=> {setToaDo({lat: item?.lat,lng: item?.lng})}}
         >
           <td>
-            {moment(item?.thoi_gian).format("HH:mm:ss DD/MM/YYYY")}
+            <div className='flex gap-2 items-center py-2'>
+              <img
+                className='w-10 h-10 rounded-full'
+                src={item?.ns_nhanvien?.nv_avatar}
+                alt=""
+              />
+              <p className='w-max flex-1 text-left'>
+                <strong>{item?.ns_nhanvien?.nv_name} </strong>
+              </p>
+            </div>
           </td>
           <td>
-            {item?.dvcc_chi_nhanh?.chi_nhanh_name}
+            {moment(item?.thoi_gian).format("HH:mm:ss DD/MM/YYYY")}
           </td>
+          {/* <td>
+            {item?.dvcc_chi_nhanh?.chi_nhanh_name}
+          </td> */}
         </tr>
       )
     })
   }
-  let handleSort = (type) => {
+  let handleSort = (type,value) => {
     let array = [...dinhViList];
-    if(type === "az"){
-      array = array.sort((a,b) => a?.thoi_gian > b?.thoi_gian ? 1 : -1);
+    if(value == "thoigian"){
+      if(type === "az"){
+        array = array.sort((a,b) => a?.thoi_gian > b?.thoi_gian ? 1 : -1);
+      }else{
+        array = array.sort((a,b) => a?.thoi_gian > b?.thoi_gian ? -1 : 1)
+      }
     }else{
-      array = array.sort((a,b) => a?.thoi_gian > b?.thoi_gian ? -1 : 1)
+      if(type === "az"){
+        array = array.sort((a,b) => a?.ns_nhanvien?.nv_name > b?.ns_nhanvien?.nv_name ? 1 : -1);
+      }else{
+        array = array.sort((a,b) => a?.ns_nhanvien?.nv_name > b?.ns_nhanvien?.nv_name ? -1 : 1)
+      }
     }
     setDinhViList(array);
   }
   return (
-    <div className='w-full grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-4'>
-      <div className='w-full h-64 rounded-lg shadow-md'>
+    <div className='w-full grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4'>
+      <div className='w-full h-72 rounded-lg shadow-md'>
         <div className='w-full h-full relative border border-red-400 rounded-lg'>
           <iframe
             title='map'
@@ -80,19 +100,28 @@ export default function ViTriNhanVien() {
           </div>
         </div>
       </div>
-      <div style={{maxHeight:"400px"}} className='overflow-x-auto lg:col-span-3 overflow-y-scroll customScrollbar'>
+      <div style={{maxHeight:"400px"}} className='overflow-x-auto lg:col-span-2 overflow-y-scroll customScrollbar'>
         <table className='customTable  w-max min-w-full'>
           <thead>
             <th>
               <div className='flex items-center'>
-                <svg onClick={() => handleSort("za")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 3a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 16m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 16v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
+                <svg onClick={() => handleSort("az","nhanvien")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+                <p className='flex-1 mx-2'>
+                  Nhân Viên
+                </p>
+                <svg onClick={() => handleSort("za","nhanvien")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 10h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+              </div>
+            </th>
+            <th>
+              <div className='flex items-center'>
+                <svg onClick={() => handleSort("za","thoigian")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 3a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 16m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 16v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
                 <p className='flex-1 mx-2'>
                   Thời gian
                 </p>
-                <svg onClick={() => handleSort("az")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 14a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 5v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
+                <svg onClick={() => handleSort("az","thoigian")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 14a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 5v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
               </div>
             </th>
-            <th>Địa điểm</th>
+            {/* <th>Địa điểm</th> */}
           </thead>
           <tbody>
             {renderContent()}

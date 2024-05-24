@@ -81,11 +81,14 @@ export default function ChamCongMap() {
     })
   }
   let renderNvOptions = () => {
-    let array = [];
+    let array = [{
+      value: -1,
+      label: "Tất Cả"
+    }];
     NVList.map((user) => {
       let item = {
         value: user?.nv_id,
-        label: user?.nv_name
+        label: user?.nv_name,
       }
       array.push(item);
     })
@@ -168,26 +171,12 @@ export default function ChamCongMap() {
   return (
     <div className='w-full bg-white rounded-lg p-2 lg:p-4'>
       <div className='lg:col-span-3 px-4 pb-4 rounded-lg shadow-md'>
-        {/* <h1 className='w-full leading-10 text-lg mb-2 text-orange-400 bg-orange-100 rounded uppercase'>
-          Báo cáo tổng hợp
-        </h1> */}
         <div
           className='w-full flex flex-col lg:flex-row items-center gap-2 mb-2'
         >
           <div className='relative flex-1 w-full'>
             <Select value={duyetAppSlice.nv_id} filterOption={filterOption} options={renderNvOptions()} showSearch onChange={changeNhanVien} className="w-full bg-transparent rounded focus:outline-none" placeholder="Chọn Nhân Viên">
             </Select>
-            {/* <input
-              type='text'
-              placeholder='Nhập tên nhân viên'
-              className='min-w-0 w-full h-9 pl-10 pr-4 bg-slate-100 rounded-full focus:outline-none'
-            /> */}
-            {/* <button
-              type="button"
-              className='absolute left-4 top-1/2 -translate-y-1/2 text-gray-600'
-            >
-              <i className='fa-solid fa-magnifying-glass'></i>
-            </button> */}
           </div>
           <div className='flex flex-col lg:flex-row items-center gap-2'>
             <div className='flex items-center gap-2'>

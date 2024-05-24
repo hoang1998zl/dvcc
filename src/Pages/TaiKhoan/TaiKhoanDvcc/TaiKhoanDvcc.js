@@ -280,7 +280,7 @@ return (
             </div>
             <div>
                 <p>
-                Giờ làm việc:
+                Ca Sáng:
                 </p>
                 <Select
                 className='w-full'
@@ -291,7 +291,7 @@ return (
             </div>
             <div>
                 <p>
-                Ca trực phụ:
+                Ca Chiều:
                 </p>
                 <Select
                 className='w-full'
