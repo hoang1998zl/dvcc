@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNam, setNamKT, setNgay, setNgayKT, setNhanVien, setThang, setThangKT } from "../../../Redux-toolkit/reducer/DuyetAppSlice"
 import LichSuTangCa from './LichSuTangCa/LichSuTangCa';
 import LichLamViec from './LichLamViec/LichLamViec';
+import LichSuDiTre from './LichSuDiTre/LichSuDiTre';
+import LichSuVeSom from './LichSuVeSom/LichSuVeSom';
 
 const filterOption = (input, option) => CharacterReplace(option?.label ?? '').includes(CharacterReplace(input));
 export default function ChamCongMap() {
@@ -117,16 +119,24 @@ export default function ChamCongMap() {
       name: 'Lịch sử vào ca'
     },
     {
+      id: 7,
+      name: 'Xin đi trễ'
+    },
+    {
+      id: 8,
+      name: 'Xin về sớm'
+    },
+    {
       id: 4,
-      name: 'Lịch sử nghỉ phép'
+      name: 'Xin nghỉ phép'
     },
     {
       id: 3,
-      name: 'Lịch sử công tác'
+      name: 'Xin công tác'
     },
     {
       id: 5,
-      name: 'Lịch sử tăng ca'
+      name: 'Xin tăng ca'
     },
     {
       id: 6,
@@ -163,6 +173,10 @@ export default function ChamCongMap() {
         return <LichSuTangCa />
       case 6:
         return <LichLamViec />
+      case 7:
+        return <LichSuDiTre />
+      case 8:
+        return <LichSuVeSom />
       default:
         return <ViTriNhanVien />
     }
@@ -206,7 +220,7 @@ export default function ChamCongMap() {
         </div>
         <div className='w-full border border-gray-300 rounded-lg p-2'>
           <div className='w-full overflow-x-auto'>
-            <div className='w-max lg:w-full p-1 border border-orange-400 rounded-full mb-2 flex lg:grid grid-cols-6 gap-2'>
+            <div className='w-max lg:w-full p-1 border border-orange-400 rounded-full mb-2 flex lg:grid grid-cols-8 gap-2'>
               {renderTab()}
             </div>
           </div>

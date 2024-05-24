@@ -276,5 +276,25 @@ export const dvccService = {
                 token
                }
            })
+    },
+    getDiTreUser: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/lay-di-tre-theo-user",
+            method: "POST",
+            data,
+            headers:{
+                token
+               }
+           })
+    },
+    getVeSomUser: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/lay-ve-som-theo-user",
+            method: "POST",
+            data,
+            headers:{
+                token
+               }
+           })
     }
 }
