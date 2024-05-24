@@ -85,7 +85,7 @@ function HoSoGioiThieu() {
               Mã số thuế (cá nhân):
             </p>
             <p className='font-bold text-black'>
-              {/* {nhanVienHS?.nv_email} */}
+              {nhanVienHS?.nv_mst}
             </p>
           </div>
         </div>
@@ -209,7 +209,7 @@ function HoSoGioiThieu() {
               Sổ BHXH
             </p>
             <p className='font-bold text-black'>
-              {/* {nhanVienHS?.nv_email} */}
+              {nhanVienHS?.nv_masobhxh}
             </p>
           </div>
         </div>

@@ -29,9 +29,9 @@ export default function HOC({ Component }) {
           })
           .catch((err) => {
             if(window.confirm("phiên đăng hập đã hết hạn!")){
-              window.location.href = "https://weos.vn";
+              window.location.href = "https://labortracking.vn";
             }else{
-              window.location.href = "https://weos.vn";
+              window.location.href = "https://labortracking.vn";
             }
           });
   },[])

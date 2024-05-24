@@ -205,6 +205,30 @@ function GioiThieuModal() {
           }}
         />
       </div>
+      <div className='w-full flex flex-col gap-2'>
+        <p className='font-bold text-gray-400'>
+          Sổ BHXH
+        </p>
+        <Input
+          className='w-full'
+          value={nhanVienUpdated?.nv_masobhxh}
+          onChange={(e) => {
+            changeInput('nv_masobhxh',e.target.value);
+          }}
+        />
+      </div>
+      <div className='w-full flex flex-col gap-2'>
+        <p className='font-bold text-gray-400'>
+          Mã Số Thuế
+        </p>
+        <Input
+          className='w-full'
+          value={nhanVienUpdated?.nv_mst}
+          onChange={(e) => {
+            changeInput('nv_mst',e.target.value);
+          }}
+        />
+      </div>
     </div>
   )
 }
