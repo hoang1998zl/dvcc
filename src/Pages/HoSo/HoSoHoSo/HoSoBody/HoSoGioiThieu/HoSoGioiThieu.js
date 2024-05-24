@@ -33,7 +33,7 @@ function HoSoGioiThieu() {
     <div className='w-full bg-white rounded-lg shadow-lg p-4 text-left'>
       <div className='w-full flex justify-between items-center'>
         <h1 className='flex-1 text-orange-400 font-bold text-lg'>
-          Giới thiệu
+          Thông tin chung
         </h1>
         <button
           type="button"
@@ -73,6 +73,19 @@ function HoSoGioiThieu() {
             </p>
             <p className='font-bold text-black'>
               {nhanVienHS.nv_gender === 1 ? 'Nam' : (nhanVienHS.nv_gender === 0 ? 'Nữ' : 'Khác')}
+            </p>
+          </div>
+        </div>
+        <div className='flex items-center gap-4 text-gray-400'>
+          <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
+            <i class="fa-solid fa-address-card"></i>
+          </div>
+          <div className='flex-1'>
+            <p className='font-semibold text-base'>
+              Mã số thuế (cá nhân):
+            </p>
+            <p className='font-bold text-black'>
+              {/* {nhanVienHS?.nv_email} */}
             </p>
           </div>
         </div>
@@ -187,9 +200,22 @@ function HoSoGioiThieu() {
             </p>
           </div>
         </div>
+        <div className='flex items-center gap-4 text-gray-400'>
+          <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
+            <i class="fa-solid fa-address-card"></i>
+          </div>
+          <div className='flex-1'>
+            <p className='font-semibold text-base'>
+              Sổ BHXH
+            </p>
+            <p className='font-bold text-black'>
+              {/* {nhanVienHS?.nv_email} */}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
-export default HoSoGioiThieu
+export default HoSoGioiThieu  
