@@ -97,7 +97,7 @@ export default function DangKyCa() {
             NVList?.map((nv) => {
             array.push({
                 value: nv?.nv_id,
-                label: <p>{nv?.nv_name}</p>
+                label: nv?.nv_name
             })
             })
             return array;
@@ -117,7 +117,7 @@ export default function DangKyCa() {
             chiNhanh?.map((item) => {
               array.push({
                 value: item?.chi_nhanh_id,
-                label: <p>{item?.chi_nhanh_name}</p>
+                label: item?.chi_nhanh_name
               })
             })
             return array;
@@ -342,7 +342,7 @@ export default function DangKyCa() {
                                 optionFilterProp="children"
                                 value={baseFormat?.ca_lam_viec_id}
                                 filterOption={filterOption}
-                                showSearch
+                                // showSearch
                                 placeholder={<p className=' text-base'>Chọn Ca Làm Việc</p>} />
                         </td>
                         <td>
