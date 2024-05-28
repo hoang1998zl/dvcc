@@ -1,4 +1,4 @@
-import moment from 'moment/moment';
+import moment, { months } from 'moment/moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { chamCongService } from '../../../services/chamCongService';
 import { useDispatch, useSelector } from 'react-redux';
@@ -140,12 +140,17 @@ export default function BangChamCong() {
                 <td>{Number(ngayCong?.gio_nghile) + Number(ngayCong?.gio_nghiphep)}</td>
                 <td>{Number(ngayCong.tong_giocong) + Number(ngayCong?.gio_nghile) + Number(ngayCong?.gio_nghiphep)}</td>
                 <td>
-                    {year + "-" + month == moment().format("YYYY-MM") ? 
+                    {year + "-" + month >= moment().subtract(1,"month").format("YYYY-MM") ? 
                         <input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="phep_dauthang" className='w-full bg-transparent text-center' type="text" value={ngayCong?.phep_dauthang ? ngayCong.phep_dauthang : ""} />
                     :ngayCong?.phep_dauthang
                     }
                 </td>
-                <td>{ngayCong?.phep_congthem}</td>
+                <td>
+                    {year + "-" + month >= moment().subtract(1,"month").format("YYYY-MM") ? 
+                        <input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="phep_congthem" className='w-full bg-transparent text-center' type="text" value={ngayCong?.phep_congthem ? ngayCong.phep_congthem : ""} />
+                        :ngayCong?.phep_congthem
+                    }
+                </td>
                 <td>{ngayCong?.phep_conlai}</td>
             </tr>
         })
