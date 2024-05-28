@@ -133,9 +133,12 @@ export default function BangChamCong() {
                 <td>{ngayCong?.tong_ngaylamviec}</td>
                 <td>{ngayCong?.tong_giocong}</td>
                 <td>{ngayCong?.tong_L}</td>
+                <td>{ngayCong?.gio_nghile}</td>
                 <td>{ngayCong?.tong_P}</td>
+                <td>{ngayCong?.gio_nghiphep}</td>
                 <td>{ngayCong?.tong_khongphep}</td>
-                <td>{Number(ngayCong?.tong_P) + Number(ngayCong?.tong_khongphep)}</td>
+                <td>{Number(ngayCong?.gio_nghile) + Number(ngayCong?.gio_nghiphep)}</td>
+                <td>{Number(ngayCong.tong_giocong) + Number(ngayCong?.gio_nghile) + Number(ngayCong?.gio_nghiphep)}</td>
                 <td>
                     {year + "-" + month == moment().format("YYYY-MM") ? 
                         <input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="phep_dauthang" className='w-full bg-transparent text-center' type="text" value={ngayCong?.phep_dauthang ? ngayCong.phep_dauthang : ""} />
@@ -954,19 +957,28 @@ export default function BangChamCong() {
                                     Ngày làm việc
                                 </th>
                                 <th>
-                                    Tổng giờ công
+                                    Giờ công
                                 </th>
                                 <th>
-                                    Nghỉ Lễ
+                                    Ngày Nghỉ Lễ
                                 </th>
                                 <th>
-                                    Nghỉ Phép
+                                    Giờ Nghỉ Lễ
+                                </th>
+                                <th>
+                                    Ngày Nghỉ Phép
+                                </th>
+                                <th>
+                                    Giờ Nghỉ Phép
                                 </th>
                                 <th>
                                     Nghỉ Không Phép
                                 </th>
                                 <th>
-                                    Tổng Nghỉ
+                                    Tổng Giờ Nghỉ
+                                </th>
+                                <th>
+                                    Tổng Giờ Công
                                 </th>
                                 <th>
                                     Phép Tháng Trước
@@ -1036,19 +1048,28 @@ export default function BangChamCong() {
                                 Ngày làm việc
                             </th>
                             <th>
-                                Tổng giờ công
+                                Giờ công
                             </th>
                             <th>
-                                Nghỉ Lễ
+                                Ngày Nghỉ Lễ
                             </th>
                             <th>
-                                Nghỉ Phép
+                                Giờ Nghỉ Lễ
+                            </th>
+                            <th>
+                                Ngày Nghỉ Phép
+                            </th>
+                            <th>
+                                Giờ Nghỉ Phép
                             </th>
                             <th>
                                 Nghỉ Không Phép
                             </th>
                             <th>
-                                Tổng Nghỉ
+                                Giờ Công Nghỉ
+                            </th>
+                            <th>
+                                Tổng Giờ Công
                             </th>
                             <th>
                                 Phép Tháng Trước
@@ -1079,9 +1100,12 @@ export default function BangChamCong() {
                                     <td>{item?.tong_ngaylamviec}</td>
                                     <td>{item?.tong_giocong}</td>
                                     <td>{item?.tong_L}</td>
+                                    <td>{item?.gio_nghile}</td>
                                     <td>{item?.tong_P}</td>
+                                    <td>{item?.gio_nghiphep}</td>
                                     <td>{item?.tong_khongphep}</td>
-                                    <td>{Number(item?.tong_P) + Number(item?.tong_khongphep)}</td>
+                                    <td>{Number(item?.gio_nghile) + Number(item?.gio_nghiphep)}</td>
+                                    <td>{Number(item?.tong_giocong) + Number(item?.gio_nghile) + Number(item?.gio_nghiphep)}</td>
                                     <td>{item?.phep_dauthang}</td>
                                     <td>{item?.phep_congthem}</td>
                                     <td>{item?.phep_conlai}</td>
