@@ -193,10 +193,10 @@ export default function LichSuCongTac() {
       </td>
       <td>
         <p>
-          Từ ngày: {moment(congTac?.ngay_bat_dau).format("ddd")}, <b>{moment(congTac?.ngay_bat_dau).format("DD/MM/YYYY")}</b>
+          Ngày: {moment(congTac?.ngay_bat_dau).format("ddd")}, <b>{moment(congTac?.ngay_bat_dau).format("DD/MM/YYYY")}</b>
         </p>
         <p>
-          Đến ngày: {moment(congTac?.ngay_ket_thuc).format("ddd")}, <b>{moment(congTac?.ngay_ket_thuc).format("DD/MM/YYYY")}</b>
+          Từ: <b>{congTac?.gio_bat_dau}</b> đến <b>{congTac?.gio_ket_thuc}</b>
         </p>
         <p>Nơi Công Tác: {congTac?.noi_cong_tac}</p>
       </td>
