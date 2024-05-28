@@ -4,6 +4,7 @@ import HoSoCCCD from './HoSoCCCD/HoSoCCCD'
 import HoSoGPLX from './HoSoGPLX/HoSoGPLX'
 import HoSoHopDong from './HoSoHopDong/HoSoHopDong'
 import HoSoChungChi from './HoSoChungChi/HoSoChungChi'
+import LoTrinhPhatTrien from './LoTrinhPhatTrien/LoTrinhPhatTrien'
 import ModalComponent from '../../../../Components/Modal/ModalComponent'
 
 
@@ -16,10 +17,11 @@ export default function HoSoBody() {
         <HoSoGioiThieu />
         <HoSoCCCD />
         <HoSoGPLX />
+        <HoSoChungChi />
       </div>
       <div className='flex flex-col gap-4'>
         <HoSoHopDong />
-        <HoSoChungChi />
+        <LoTrinhPhatTrien />
       </div>
       <ModalComponent></ModalComponent>
     </div>

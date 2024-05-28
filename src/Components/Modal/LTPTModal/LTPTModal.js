@@ -1,22 +1,34 @@
 import { DatePicker, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setnhanVienUpdated } from '../../../Redux-toolkit/reducer/HoSoNhanVienSlice';
 import moment from 'moment';
 import dayjs from 'dayjs';
+import { localStorageService } from '../../../services/localStorageService';
+import { nhanVienService } from '../../../services/nhanVienService';
+import { toast } from 'react-toastify';
+import { setReloadHS } from '../../../Redux-toolkit/reducer/HoSoNhanVienSlice';
 
 function LTPTModal() {
-  let dispatch = useDispatch();
-  let nhanVienHS = useSelector(state => state.HoSoNhanVienSlice.nhanVienHS);
-  let nhanVienUpdated = useSelector(state => state.HoSoNhanVienSlice.nhanVienUpdated);
+  const dispatch = useDispatch();
+  const [nhanVienUpdated,setNhanVienUpdated] = useState({});
+  const token = localStorageService.getItem('token');
+  const { currentNhanVien } = useSelector(state => state.UserSlice);
+  const reloadHS = useSelector(state => state.HoSoNhanVienSlice.reloadHS);
   let [year,setYear] = useState(moment().format('YYYY'));
   const [addQTTT, setAddQTTT] = useState(false);
   const [addQTCT, setAddQTCT] = useState(false);
   useEffect(() => {
-    dispatch(setnhanVienUpdated(nhanVienHS));
-    setAddQTTT(false);
-    setAddQTCT(false);
-  }, [nhanVienHS]);
+    if (!currentNhanVien) {
+      return;
+    }
+    nhanVienService
+      .getNhanVienTheoId(token, currentNhanVien)
+      .then((res) => {
+        setNhanVienUpdated(res.data?.content);
+        setAddQTTT(false);
+        setAddQTCT(false);
+      })
+  }, [currentNhanVien, reloadHS, token]);
   const changeInput = (idx,field,value) => {
     let cloneLTPT = [...nhanVienUpdated.ns_nhanvien_lotrinhphattrien];
     let update = cloneLTPT.map((item,index) => {
@@ -27,7 +39,7 @@ function LTPTModal() {
     })
     let clone = {...nhanVienUpdated};
     clone.ns_nhanvien_lotrinhphattrien = update;
-    dispatch(setnhanVienUpdated(clone));
+    setNhanVienUpdated(clone);
   }
   const [newRecord, setNewRecord] = useState({})
   const resetNewRecord = () => {
@@ -55,9 +67,24 @@ function LTPTModal() {
     } else {
       clone.ns_nhanvien_lotrinhphattrien = [clone2];
     }
-    dispatch(setnhanVienUpdated(clone));
+    setNhanVienUpdated(clone);
     setAddQTTT(false);
     setAddQTCT(false);
+  }
+  let uploadLTPT = (e,id) => {
+    nhanVienService.updateLTPT(token,id,e.target.files[0]).then((res) => {
+      toast.success("Cập nhật thành công!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+      });
+      dispatch(setReloadHS(Date.now()));
+    }).catch((err) => {
+      toast.error("Cập nhật thất bại!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+      });
+      console.log(err);
+    })
   }
   const render = (type) => {
     return nhanVienUpdated?.ns_nhanvien_lotrinhphattrien?.map((item, index)=>{
@@ -95,18 +122,30 @@ function LTPTModal() {
               />
             </div>
             {type===2?
-                  (<div className='flex items-center gap-2 md:col-span-2'>
-                    <p className='w-[120px]'>
-                      Nội dung công tác:
-                    </p>
-                    <Input
-                      className='w-full flex-1'
-                      value={item.note}
-                      onChange={(e)=>{
-                        changeInput(index,'note',e.target.value);
-                      }}
-                    />
-                  </div>):''
+              (<div className='flex items-center gap-2 md:col-span-2'>
+                <p className='w-[120px]'>
+                  Nội dung công tác:
+                </p>
+                <Input
+                  className='w-full flex-1'
+                  value={item.note}
+                  onChange={(e)=>{
+                    changeInput(index,'note',e.target.value);
+                  }}
+                />
+              </div>):''
+            }
+            {item.id>0?
+              (<div className='flex items-center gap-2 md:col-span-2'>
+                <p className='w-[500px]'>
+                  <strong>Quyết định {type===1?'bổ nhiệm vị trí công tác':'điều chuyển nơi công tác'}:</strong>
+                </p>
+                <button type="button" class="w-full flex-1 px-2 py-1 rounded border hover:bg-orange-100 hover:border-orange-400">
+                  <label class="w-full block rounded-md font-normal text-center cursor-pointer">
+                    <input type="file" className="hidden" onChange={(e)=>{uploadLTPT(e,item.id)}}/>Cập nhật
+                  </label>
+                </button>
+              </div>):''
             }
           </div>
         </>
@@ -168,7 +207,7 @@ function LTPTModal() {
               <div className='flex justify-end'>
                 <button
                   type='button'
-                  className='w-[80px] px-6 py-1 rounded bg-orange-400 text-white flex justify-center items-center gap-4 font-bold'
+                  className='w-[80px] px-6 py-1 rounded bg-orange-400 text-white flex justify-center items-center gap-4 font-bold mt-2'
                   onClick={() => {
                     handleAddRecord(1);
                   }}
@@ -186,6 +225,7 @@ function LTPTModal() {
           className='px-6 py-1 mt-4 rounded bg-orange-400 text-white font-bold flex justify-center items-center gap-4'
           onClick={() => {
             resetNewRecord();
+            setAddQTCT(false);
             setAddQTTT(true);
           }}
         >
@@ -243,7 +283,7 @@ function LTPTModal() {
               <div className='flex justify-end'>
                 <button
                   type='button'
-                  className='w-[80px] px-6 py-1 rounded bg-orange-400 text-white flex justify-center items-center gap-4 font-bold'
+                  className='w-[80px] px-6 py-1 rounded bg-orange-400 text-white flex justify-center items-center gap-4 font-bold mt-2'
                   onClick={() => {
                     handleAddRecord(2);
                   }}
@@ -261,6 +301,7 @@ function LTPTModal() {
           className='px-6 py-1 mt-4 rounded bg-orange-400 text-white font-bold flex justify-center items-center gap-4'
           onClick={() => {
             resetNewRecord();
+            setAddQTTT(false);
             setAddQTCT(true);
           }}
         >

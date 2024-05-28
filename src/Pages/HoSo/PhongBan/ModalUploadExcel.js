@@ -50,13 +50,13 @@ function ModalUploadExcel({
               className='w-max flex justify-center items-center gap-2 px-10 py-2 rounded bg-slate-100 border border-gray-600 text-gray-800 cursor-pointer'
             >
               <FaDownload />
-              <span>Download</span>
+              <span>Tải xuống</span>
             </a>
           </div>
         </div>
         <div className='w-full h-full p-4 flex flex-col justify-center items-center gap-y-5'>
           <h1 className='uppercase font-bold text-2xl text-sky-400'>
-            Upload dữ liệu
+            Tải dữ liệu lên
           </h1>
 
           <div className='flex-1 w-full flex flex-col justify-center items-center gap-4'>
@@ -64,7 +64,7 @@ function ModalUploadExcel({
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
+              <p className="ant-upload-text">Bấm vào hoặc kéo thả file vào khu vực này để tải lên</p>
             </Dragger>
           </div>
         </div>

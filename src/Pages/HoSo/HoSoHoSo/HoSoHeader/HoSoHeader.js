@@ -1,5 +1,5 @@
 import { DatePicker, Popconfirm, Popover, Select } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { localStorageService } from '../../../../services/localStorageService';
 import { nhanVienService } from '../../../../services/nhanVienService';
@@ -9,11 +9,14 @@ import dayjs from 'dayjs';
 import moment from 'moment/moment';
 import { setCurrentPhongBan } from '../../../../Redux-toolkit/reducer/PhongBanSlice';
 import { setCurrentNhanVien } from '../../../../Redux-toolkit/reducer/UserSlice';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 export default function HoSoHeader() {
   let dispatch = useDispatch();
+  const tableRef = useRef(null);
   let token = localStorageService.getItem('token');
   const { currentNhanVien } = useSelector(state => state.UserSlice);
+  const reloadHS = useSelector(state => state.HoSoNhanVienSlice.reloadHS);
   let [nv,setNv] = useState({});
   let [phongBan, setPhongBan] = useState([]);
   let [reload,setReload] = useState();
@@ -34,21 +37,22 @@ export default function HoSoHeader() {
     if(!currentNhanVien){
       return;
     }
-    nhanVienService.getNhanVienTheoId(token, currentNhanVien).then((res) => {
-      let clone = { ...dieuChuyen };
-      clone.danhmuc_id = res.data?.content?.danhmuc_id;
-      setDieuChuyen(clone);
-      setNv(res.data?.content);
-    })
-      .catch((err) => {
-        console.log(err);
-      });
     chamCongService.getPhongBan(token).then((res) => {
       setPhongBan(res.data.content);
     }).catch((err) => {
       console.log(err);
     })
-  },[reload,currentNhanVien])
+    nhanVienService.getNhanVienTheoId(token, currentNhanVien).then((res) => {
+      let clone = { ...dieuChuyen };
+      clone.danhmuc_id = res.data?.content?.danhmuc_id;
+      setDieuChuyen(clone);
+      setNv(res.data?.content);
+      renderTableToExport(res.data?.content);
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[reload,currentNhanVien,reloadHS])
   const handleOpenChangeDieuChuyen = (newOpen) => {
     setOpenDieuChuyen(newOpen);
   };
@@ -137,6 +141,57 @@ export default function HoSoHeader() {
           autoClose: 2000
         });
       });
+  }
+  const addColumn = (field,value) => {
+    const tdField = document.createElement('th');
+    tdField.textContent = field;
+    tableRef.current.children[0].children[0].appendChild(tdField);
+    const tdValue = document.createElement('td');
+    tdValue.textContent = value;
+    tableRef.current.children[1].children[0].appendChild(tdValue);
+  }
+  const renderTableToExport = (dataNV) => {
+    tableRef.current.children[0].children[0].innerHTML = '';
+    tableRef.current.children[1].children[0].innerHTML = '';
+    addColumn('Mã nhân viên',dataNV?.nv_code);
+    addColumn('Phòng ban',dataNV?.ns_danhmuc_phongban.danhmuc_name);
+    addColumn('Chức vụ',dataNV?.nv_chucvunew);
+    addColumn('Giới tính',dataNV?.nv_gender == 1 ? 'Nam' : (dataNV?.nv_gender== 0 ? 'Nữ' : 'Khác'));
+    addColumn('Họ tên',dataNV?.nv_name);
+    addColumn('Ngày sinh',dayjs(dataNV?.nv_ngaysinh, "YYYY-MM-DD").isValid() ? moment(dataNV?.nv_ngaysinh, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
+    addColumn('Số CMT/CCCD',dataNV?.nv_cmnd_number);
+    addColumn('Ngày cấp',dayjs(dataNV?.nv_cmnd_ngaycap, "YYYY-MM-DD").isValid() ? moment(dataNV?.nv_cmnd_ngaycap, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
+    addColumn('Nơi cấp',dataNV?.nv_cmnd_noicap);
+    addColumn('Nơi ở hiện tại',dataNV?.nv_diachitamtru);
+    addColumn('Liên hệ',dataNV?.nv_sdt_lienhe);
+    addColumn('Email',dataNV?.nv_email);
+    addColumn('Thời gian thử việc',dayjs(dataNV?.nv_ngayvaolam, "YYYY-MM-DD").isValid() ? moment(dataNV?.nv_ngayvaolam, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
+    addColumn('Thời gian ký hợp đồng',dayjs(dataNV?.nv_ngaylvchinhthuc, "YYYY-MM-DD").isValid() ? moment(dataNV?.nv_ngaylvchinhthuc, 'YYYY-MM-DD').format('DD-MM-YYYY') : '');
+    addColumn('BHXH',dataNV?.nv_masobhxh);
+    addColumn('MST',dataNV?.nv_mst);
+    addColumn('Hợp đồng lao động',dataNV?.nv_hopdong);
+    addColumn('Ảnh CCCD mặt trước',dataNV?.nv_cmnd_truoc);
+    addColumn('Ảnh CCCD mặt sau',dataNV?.nv_cmnd_sau);
+    addColumn('Ảnh GPLX mặt trước',dataNV?.nv_gplx_truoc);
+    addColumn('Ảnh GPLX mặt sau',dataNV?.nv_gplx_sau);
+    const tdField1 = document.createElement('th');
+    tdField1.rowSpan = '2';
+    tdField1.textContent = 'Quá trình thăng tiến';
+    tableRef.current.children[0].children[0].appendChild(tdField1);
+    dataNV?.ns_nhanvien_lotrinhphattrien?.map((item)=>{
+      if(item.type==1){
+        addColumn(dayjs(item?.date, "YYYY-MM-DD").isValid() ? moment(item?.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : 'Chưa cập nhật thời gian',item?.file_path?item?.file_path:'Chưa tải lên quyết định bổ nhiệm vị trí công tác');
+      }
+    })
+    const tdField2 = document.createElement('th');
+    tdField2.rowSpan = '2';
+    tdField2.textContent = 'Quá trình công tác';
+    tableRef.current.children[0].children[0].appendChild(tdField2);
+    dataNV?.ns_nhanvien_lotrinhphattrien?.map((item)=>{
+      if(item.type==2){
+        addColumn(dayjs(item?.date, "YYYY-MM-DD").isValid() ? moment(item?.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : 'Chưa cập nhật thời gian',item?.file_path?item?.file_path:'Chưa tải lên quyết định điều chuyển nơi công tác');
+      }
+    })
   }
   let renderDieuChuyen = () => {
     return <div>
@@ -331,6 +386,18 @@ export default function HoSoHeader() {
             </div>
           </div>
           <div className='flex flex-col md:flex-row gap-2'>
+            <DownloadTableExcel
+              filename={`Hồ sơ nhân sự - ${nv?.nv_name}`} sheet="sheet1"
+              currentTableRef={tableRef.current}
+            >
+              <button
+                type="button"
+                className='w-40 px-4 py-1 rounded-md bg-orange-400 hover:bg-orange-500 text-white flex justify-center items-center gap-2'
+              >
+                <i className='fa-solid fa-download'></i>
+                Hồ sơ nhân sự
+              </button>
+            </DownloadTableExcel>
             <Popover
                 arrow={false}
                 placement='right'
@@ -375,7 +442,7 @@ export default function HoSoHeader() {
                 >
                   <i className='fa-solid fa-download'></i>
                   <span>
-                    Hồ Sơ
+                    CV nhân sự
                   </span>
                 </button>
             </Popover>
@@ -412,6 +479,12 @@ export default function HoSoHeader() {
             </Popover>
           </div>
         </div>
+      </div>
+      <div className='hidden'>
+        <table ref={tableRef} className='min-w-full relative'>
+          <thead><tr></tr></thead>
+          <tbody><tr></tr></tbody>
+        </table>
       </div>
     </div>
   )

@@ -412,4 +412,20 @@ export const  nhanVienService = {
             }
         });
     },
+    updateLTPT: (token,id,files) => {
+        const formData = new FormData();
+        formData.append("nv_ltpt", files);
+        let ltpt = {
+            id
+        }
+        formData.append("ltpt",JSON.stringify(ltpt));
+        return axios({
+            url: BASE_URL + "api/nhan-vien/cap-nhat-ltpt",
+            method: "POST",
+            data: formData,
+            headers: {
+                token
+            }
+        });
+    },
 }
