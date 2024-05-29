@@ -13,6 +13,7 @@ import LichSuTangCa from './LichSuTangCa/LichSuTangCa';
 import LichLamViec from './LichLamViec/LichLamViec';
 import LichSuDiTre from './LichSuDiTre/LichSuDiTre';
 import LichSuVeSom from './LichSuVeSom/LichSuVeSom';
+import LichSuNghiKhac from './LichSuNghiKhac/LichSuNghiKhac';
 
 const filterOption = (input, option) => CharacterReplace(option?.label ?? '').includes(CharacterReplace(input));
 export default function ChamCongMap() {
@@ -139,6 +140,10 @@ export default function ChamCongMap() {
       name: 'Xin tăng ca'
     },
     {
+      id: 9,
+      name: 'Xin nghỉ khác'
+    },
+    {
       id: 6,
       name: 'Lịch làm việc'
     },
@@ -177,6 +182,8 @@ export default function ChamCongMap() {
         return <LichSuDiTre />
       case 8:
         return <LichSuVeSom />
+      case 9:
+        return <LichSuNghiKhac />
       default:
         return <ViTriNhanVien />
     }
@@ -220,7 +227,7 @@ export default function ChamCongMap() {
         </div>
         <div className='w-full border border-gray-300 rounded-lg p-2'>
           <div className='w-full overflow-x-auto'>
-            <div className='w-max lg:w-full p-1 border border-orange-400 rounded-full mb-2 flex lg:grid grid-cols-8 gap-2'>
+            <div className='w-max lg:w-full p-1 border border-orange-400 rounded-full mb-2 flex lg:grid grid-cols-9 gap-2'>
               {renderTab()}
             </div>
           </div>

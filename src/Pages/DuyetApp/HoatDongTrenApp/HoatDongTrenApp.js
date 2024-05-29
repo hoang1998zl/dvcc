@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTabApp } from '../../../Redux-toolkit/reducer/ChamCongSlice';
 import Tangca from './TangCa/Tangca';
 import DangKyCa from './DangKyCa/DangKyCa';
+import NghiKhac from './NghiKhac/NghiKhac';
 
 export default function HoatDongTrenApp() {
   let dispatch = useDispatch();
@@ -27,6 +28,10 @@ export default function HoatDongTrenApp() {
     {
       id: 5,
       name: 'Tăng Ca'
+    },
+    {
+      id: 6,
+      name: 'Nghỉ Khác'
     },
     {
       id: 4,
@@ -61,6 +66,8 @@ export default function HoatDongTrenApp() {
         return <DangKyCa />
       case 5:
         return <Tangca />
+      case 6:
+        return <NghiKhac />
       default:
         return <NghiPhep />
     }
@@ -74,7 +81,7 @@ export default function HoatDongTrenApp() {
       <div
         className='w-full flex justify-between items-center gap-4 mb-4'
       >
-        <div className='flex-1 p-1 rounded-full border border-orange-400 grid grid-cols-5'>
+        <div className='flex-1 p-1 rounded-full border border-orange-400 grid grid-cols-6'>
           {renderTab()}
         </div>
       </div>

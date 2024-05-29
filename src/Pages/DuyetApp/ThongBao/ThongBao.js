@@ -74,8 +74,8 @@ export default function ThongBao({
                     dispatch(setTabApp(2));
                     dispatch(setReloadMany(Date.now()));
                   }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
-                    <div className='w-7 text-xl text-center text-sky-400'>
-                      <i className="fa-regular fa-calendar-days"></i>
+                    <div className='w-7 text-xl text-center text-red-500'>
+                      <i className="fa-solid fa-person-swimming"></i>
                     </div>
                     <p className='w-full flex-1 line-clamp-2'>
                       hiện có <strong className='text-sky-400'>{thongBao?.nghiPhep}</strong> đơn nghỉ phép mới cần duyệt
@@ -107,7 +107,7 @@ export default function ThongBao({
                     dispatch(setTabApp(1));
                     dispatch(setReloadMany(Date.now()));
                   }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
-                    <div className='w-7 text-xl text-center text-blue-600'>
+                    <div className='w-7 text-xl text-center text-purple-500'>
                       <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i>
                     </div>
                     <p className='w-full flex-1 line-clamp-2'>
@@ -118,11 +118,22 @@ export default function ThongBao({
                     dispatch(setTabApp(5));
                     dispatch(setReloadMany(Date.now()));
                   }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
-                    <div className='w-7 text-xl text-center text-blue-600'>
+                    <div className='w-7 text-xl text-center text-orange-500'>
                       <i className="fa-solid fa-chart-mixed"></i>
                     </div>
                     <p className='w-full flex-1 line-clamp-2'>
                       hiện có <strong className='text-sky-400'>{thongBao?.tangCa}</strong> đơn xin tăng ca mới cần duyệt
+                    </p>
+                  </li>
+                  <li onClick={() => {
+                    dispatch(setTabApp(6));
+                    dispatch(setReloadMany(Date.now()));
+                  }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
+                    <div className='w-7 text-xl text-center text-yellow-600'>
+                      <i className="fa-solid fa-mug-hot"></i>
+                    </div>
+                    <p className='w-full flex-1 line-clamp-2'>
+                      hiện có <strong className='text-sky-400'>{thongBao?.nghiKhac}</strong> đơn xin nghỉ khác mới cần duyệt
                     </p>
                   </li>
                   <li onClick={() => {
@@ -147,14 +158,14 @@ export default function ThongBao({
             >
               <span className='flex-1 text-left'>Thông báo</span>
             </div>
-            <div className='w-full mt-2 max-h-[40vh] overflow-y-auto'>
+            <div className='w-full mt-2 max-h-[50vh] overflow-y-auto'>
               <ul className='w-full text-left'>
                 <li onClick={() => {
                     dispatch(setTabApp(2));
                     dispatch(setReloadMany(Date.now()));
                   }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
-                  <div className='w-7 text-xl text-center text-sky-400'>
-                    <i className="fa-regular fa-calendar-days"></i>
+                  <div className='w-7 text-xl text-center text-red-500'>
+                    <i className="fa-solid fa-person-swimming"></i>
                   </div>
                   <p className='w-full flex-1 line-clamp-2'>
                     hiện có <strong className='text-sky-400'>{thongBao?.nghiPhep}</strong> đơn nghỉ phép mới cần duyệt
@@ -186,7 +197,7 @@ export default function ThongBao({
                     dispatch(setTabApp(1));
                     dispatch(setReloadMany(Date.now()));
                   }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
-                  <div className='w-7 text-xl text-center text-blue-600'>
+                  <div className='w-7 text-xl text-center text-purple-500'>
                     <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i>
                   </div>
                   <p className='w-full flex-1 line-clamp-2'>
@@ -197,11 +208,22 @@ export default function ThongBao({
                     dispatch(setTabApp(5));
                     dispatch(setReloadMany(Date.now()));
                   }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
-                  <div className='w-7 text-xl text-center text-yellow-400'>
+                  <div className='w-7 text-xl text-center text-orange-500'>
                     <i class="fa-solid fa-arrow-up-right-dots"></i>
                   </div>
                   <p className='w-full flex-1 line-clamp-2'>
                     hiện có <strong className='text-sky-400'>{thongBao?.tangCa}</strong> đơn xin tăng ca mới cần duyệt
+                  </p>
+                </li>
+                <li onClick={() => {
+                    dispatch(setTabApp(6));
+                    dispatch(setReloadMany(Date.now()));
+                  }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
+                  <div className='w-7 text-xl text-center text-yellow-400'>
+                    <i className="fa-solid fa-mug-hot"></i>
+                  </div>
+                  <p className='w-full flex-1 line-clamp-2'>
+                    hiện có <strong className='text-sky-400'>{thongBao?.nghiKhac}</strong> đơn xin nghỉ khác mới cần duyệt
                   </p>
                 </li>
                 <li onClick={() => {

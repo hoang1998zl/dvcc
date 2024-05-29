@@ -296,5 +296,44 @@ export const dvccService = {
                 token
                }
            })
-    }
+    },
+    getNghiKhac: (token) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/lay-nghi-khac",
+            method: "GET",
+            headers:{
+                token
+               }
+           })
+    },
+    duyetNghiKhac: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/duyet-nghi-khac",
+            method: "PUT",
+            data,
+            headers:{
+                token
+               }
+           })
+    },
+    tuChoiNghiKhac: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/tu-choi-nghi-khac",
+            method: "PUT",
+            data,
+            headers:{
+                token
+               }
+           })
+    },
+    getnghiKhacUser: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/dvcc/lay-nghi-khac-user",
+            method: "POST",
+            data,
+            headers:{
+                token
+               }
+           })
+    },
 }

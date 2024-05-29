@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaPersonRunning, FaPersonSwimming, FaPersonWalkingLuggage, FaPlane } from "react-icons/fa6";
+import { FaPersonRunning, FaPersonSwimming, FaPersonWalkingLuggage, FaPlane, FaMugHot   } from "react-icons/fa6";
 import { LuClock3 } from "react-icons/lu";
 import { localStorageService } from '../../../services/localStorageService';
 import { useSelector } from 'react-redux';
@@ -51,6 +51,11 @@ export default function BaoCaoSoPhep() {
                 format.name = "Tăng ca";
                 format.background = "bg-orange-100";
                 break;
+        case 6: format.icon = <FaMugHot  />;
+                format.color = "text-yellow-500";
+                format.name = "Nghỉ Khác";
+                format.background = "bg-yellow-100";
+                break;
       }
       return (
         <div
@@ -80,7 +85,7 @@ export default function BaoCaoSoPhep() {
   return (
     <div
     id='BaoCaoSoPhep'
-      className='w-full lg:grid lg:grid-cols-5 gap-4'
+      className='w-full lg:grid lg:grid-cols-6 gap-4'
     >
       {renderBaoCao()}
     </div>
