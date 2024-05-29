@@ -149,7 +149,7 @@ export default function HoSoHeader() {
     tdField.textContent = field;
     tableRef.current.children[0].children[0].appendChild(tdField);
     const tdValue = document.createElement('td');
-    tdValue.textContent = value;
+    tdValue.textContent = isNaN(value)?value:'\''+value;
     tableRef.current.children[1].children[0].appendChild(tdValue);
   }
   const renderTableToExport = (dataNV) => {
