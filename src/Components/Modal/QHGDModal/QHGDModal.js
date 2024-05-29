@@ -69,9 +69,9 @@ function QHGDModal() {
       clone.ns_nhanvien_family = cloneFamily;
       dispatch(setnhanVienUpdated(clone));
     }
-    let id = nhanVienUpdated.ns_nhanvien_family[idx].nv_id;
+    let id = nhanVienUpdated.ns_nhanvien_family[idx].id;
     if(id > 0){
-      nhanVienService.deleteQHGD(token, id).then((res) => {
+      nhanVienService.deleteQHGD(token, {id}).then((res) => {
         removeUpdatedRecord(idx);
         toast.success("Xóa thành công!!!", {
           position: toast.POSITION.TOP_RIGHT,

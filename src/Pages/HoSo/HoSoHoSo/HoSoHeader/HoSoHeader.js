@@ -10,6 +10,7 @@ import moment from 'moment/moment';
 import { setCurrentPhongBan } from '../../../../Redux-toolkit/reducer/PhongBanSlice';
 import { setCurrentNhanVien } from '../../../../Redux-toolkit/reducer/UserSlice';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { setNhanVienHS } from '../../../../Redux-toolkit/reducer/HoSoNhanVienSlice';
 
 export default function HoSoHeader() {
   let dispatch = useDispatch();
@@ -47,6 +48,7 @@ export default function HoSoHeader() {
       clone.danhmuc_id = res.data?.content?.danhmuc_id;
       setDieuChuyen(clone);
       setNv(res.data?.content);
+      dispatch(setNhanVienHS(res.data.content));
       renderTableToExport(res.data?.content);
     })
       .catch((err) => {

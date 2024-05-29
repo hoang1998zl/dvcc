@@ -3,9 +3,9 @@ import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCloseModalSlice } from './ModalSlice';
 import GioiThieuModal from './GioiThieuModal/GioiThieuModal';
-// import QHGDModal from './QHGDModal/QHGDModal';
+import QHGDModal from './QHGDModal/QHGDModal';
 import LTPTModal from './LTPTModal/LTPTModal';
-// import BHXHModal from './BHXHModal/BHXHModal';
+import BHXHModal from './BHXHModal/BHXHModal';
 import { setReloadHS, setnhanVienUpdated } from '../../Redux-toolkit/reducer/HoSoNhanVienSlice';
 import { nhanVienService } from '../../services/nhanVienService';
 import { toast } from 'react-toastify';
@@ -28,12 +28,12 @@ function ModalComponent() {
     switch (type) {
       case 'GioiThieuModal':
         return <GioiThieuModal />
-      // case 'QHGDModal':
-      //   return <QHGDModal />
+      case 'QHGDModal':
+        return <QHGDModal />
       case 'LTPTModal':
         return <LTPTModal />
-      // case 'BHXHModal':
-      //   return <BHXHModal />
+      case 'BHXHModal':
+        return <BHXHModal />
       default:
         break;
     }

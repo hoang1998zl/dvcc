@@ -3,17 +3,19 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import dayjs from 'dayjs';
-import { localStorageService } from '../../../services/localStorageService';
+import { setnhanVienUpdated } from '../../../Redux-toolkit/reducer/HoSoNhanVienSlice';
 import { nhanVienService } from '../../../services/nhanVienService';
 import { toast } from 'react-toastify';
 import { setReloadHS } from '../../../Redux-toolkit/reducer/HoSoNhanVienSlice';
+import { localStorageService } from '../../../services/localStorageService';
 
 function LTPTModal() {
   const dispatch = useDispatch();
-  const [nhanVienUpdated,setNhanVienUpdated] = useState({});
-  const token = localStorageService.getItem('token');
+  let nhanVienHS = useSelector(state => state.HoSoNhanVienSlice.nhanVienHS);
+  let nhanVienUpdated = useSelector(state => state.HoSoNhanVienSlice.nhanVienUpdated);
   const { currentNhanVien } = useSelector(state => state.UserSlice);
   const reloadHS = useSelector(state => state.HoSoNhanVienSlice.reloadHS);
+  const token = localStorageService.getItem('token');
   let [year,setYear] = useState(moment().format('YYYY'));
   const [addQTTT, setAddQTTT] = useState(false);
   const [addQTCT, setAddQTCT] = useState(false);
@@ -21,14 +23,10 @@ function LTPTModal() {
     if (!currentNhanVien) {
       return;
     }
-    nhanVienService
-      .getNhanVienTheoId(token, currentNhanVien)
-      .then((res) => {
-        setNhanVienUpdated(res.data?.content);
-        setAddQTTT(false);
-        setAddQTCT(false);
-      })
-  }, [currentNhanVien, reloadHS, token]);
+    dispatch(setnhanVienUpdated(nhanVienHS));
+    setAddQTTT(false);
+    setAddQTCT(false);
+  }, [currentNhanVien, reloadHS]);
   const changeInput = (idx,field,value) => {
     let cloneLTPT = [...nhanVienUpdated.ns_nhanvien_lotrinhphattrien];
     let update = cloneLTPT.map((item,index) => {
@@ -39,7 +37,7 @@ function LTPTModal() {
     })
     let clone = {...nhanVienUpdated};
     clone.ns_nhanvien_lotrinhphattrien = update;
-    setNhanVienUpdated(clone);
+    dispatch(setnhanVienUpdated(clone));
   }
   const [newRecord, setNewRecord] = useState({})
   const resetNewRecord = () => {
@@ -67,7 +65,7 @@ function LTPTModal() {
     } else {
       clone.ns_nhanvien_lotrinhphattrien = [clone2];
     }
-    setNhanVienUpdated(clone);
+    dispatch(setnhanVienUpdated(clone));
     setAddQTTT(false);
     setAddQTCT(false);
   }
@@ -142,7 +140,8 @@ function LTPTModal() {
                 </p>
                 <button type="button" class="w-full flex-1 px-2 py-1 rounded border hover:bg-orange-100 hover:border-orange-400">
                   <label class="w-full block rounded-md font-normal text-center cursor-pointer">
-                    <input type="file" className="hidden" onChange={(e)=>{uploadLTPT(e,item.id)}}/>Cập nhật
+                    <i className='fa-solid fa-upload'></i>
+                    <input type="file" className="hidden" onChange={(e)=>{uploadLTPT(e,item.id)}}/> Cập nhật
                   </label>
                 </button>
               </div>):''
