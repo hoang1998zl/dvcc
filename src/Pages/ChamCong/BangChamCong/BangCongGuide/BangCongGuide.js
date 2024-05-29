@@ -18,16 +18,32 @@ export default function BangCongGuide() {
       value: "P",
     },
     {
-      title: "Làm nửa ngày_Nghỉ nửa ngày có phép",
+      title: "Làm buổi sáng_chiều nghỉ có phép",
       value: "0.5_0.5P",
+    },
+    {
+      title: "Sáng nghỉ có phép_chiều đi làm",
+      value: "0.5P_0.5",
     },
     {
       title: "Nghỉ không phép",
       value: "K",
     },
     {
-      title: "Làm nửa ngày_Nghỉ nửa ngày không phép",
+      title: "Sáng nghỉ có phép_Chiều nghỉ không phép",
       value: "0.5P_0.5K",
+    },
+    {
+      title: "Sáng nghỉ không phép_Chiều nghỉ có phép",
+      value: "0.5K_0.5P",
+    },
+    {
+      title: "Sáng nghỉ không phép_Chiều đi làm",
+      value: "0.5K_0.5",
+    },
+    {
+      title: "Sáng đi làm_Chiều nghỉ không phép",
+      value: "0.5_0.5K",
     }
   ]
 
