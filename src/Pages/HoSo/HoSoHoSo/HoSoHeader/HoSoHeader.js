@@ -194,6 +194,14 @@ export default function HoSoHeader() {
         addColumn(dayjs(item?.date, "YYYY-MM-DD").isValid() ? moment(item?.date, 'YYYY-MM-DD').format('DD-MM-YYYY') : 'Chưa cập nhật thời gian',item?.file_path?item?.file_path:'Chưa tải lên quyết định điều chuyển nơi công tác');
       }
     })
+    const tdField3 = document.createElement('th');
+    tdField3.rowSpan = '2';
+    tdField3.textContent = 'Quan hệ gia đình';
+    tableRef.current.children[0].children[0].appendChild(tdField3);
+    dataNV?.ns_nhanvien_family?.map((item)=>{
+      const field = ['Cha','Mẹ','Anh','Chị','Em','Vợ','Chồng','Con'];
+      addColumn(field[item.type-1],item.name);
+    })
   }
   let renderDieuChuyen = () => {
     return <div>
