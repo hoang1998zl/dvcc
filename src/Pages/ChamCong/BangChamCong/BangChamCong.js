@@ -508,8 +508,8 @@ export default function BangChamCong() {
         }
     }
     const table = () => {
-        return (
-            <div className='w-full h-[calc(calc(100vh-3rem-1rem-1rem)/2-2rem-3rem)] overflow-auto customScrollbar'>
+        return (<>
+            <div className='w-full overflow-auto customScrollbar' style={{height:'40vh'}}>
                 <table className='ChamCongTable'>
                     <thead>
                         <tr className='text-orange-400'>
@@ -760,6 +760,12 @@ export default function BangChamCong() {
                     </tbody>
                 </table>
             </div >
+            <div className='mt-2 hover:cursor-row-resize border-t border-b border-orange-200' style={{width:'100%',height:'4px'}}
+                draggable={true}
+                onDragStart={(e) => handleStartY(e, -99, -99)}
+                onDrag={(e) => handleMoveY(e, -99, -99)}
+            ></div>
+            </>
         )
     }
     const [drag, setDrag] = useState(false);
@@ -783,7 +789,12 @@ export default function BangChamCong() {
     }
     const handleStartY = (e, row, col) => {
         let iniMouse = e.clientY;
-        let iniSize = document.getElementById(`${row}${col}`).offsetHeight;
+        let iniSize;
+        if(row==-99&&col==-99){
+            iniSize = e.target.previousElementSibling.offsetHeight;
+        } else {
+            iniSize = document.getElementById(`${row}${col}`).offsetHeight;
+        }
         setDrag({
             iniMouse: iniMouse,
             iniSize: iniSize
@@ -795,7 +806,11 @@ export default function BangChamCong() {
             let iniSize = drag.iniSize;
             let endMouse = e.clientY;
             let endSize = iniSize + (endMouse - iniMouse);
-            document.getElementById(`${row}${col}`).style.height = `${endSize}px`;
+            if(row==-99&&col==-99){
+                e.target.previousElementSibling.style.height = `${endSize}px`;
+            } else {
+                document.getElementById(`${row}${col}`).style.height = `${endSize}px`;
+            }
         }
     }
 
