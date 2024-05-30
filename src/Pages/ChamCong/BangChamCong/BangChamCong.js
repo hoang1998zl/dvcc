@@ -123,11 +123,11 @@ export default function BangChamCong() {
     }
     const renderChamCong = () => {
         return bangCong.map((ngayCong, index) => {
-            return <tr>
-                <td className='sticky left-0 z-10 bg-white cursor-pointer text-left' onClick={() => { dispatch(setNhanVien(ngayCong?.luong_nv_id)) }}>
+            return <tr className={`${currentRow == index ? 'bg-sky-200' : 'bg-white'}`}>
+                <td className={`${currentRow == index ? 'bg-sky-300' : 'bg-white'} sticky left-0 z-10 cursor-pointer text-left`} onClick={() => { dispatch(setNhanVien(ngayCong?.luong_nv_id)) }}>
                     <p className='line-clamp-1 w-full uppercase'>{ngayCong?.ns_nhanvien?.nv_name ? ngayCong?.ns_nhanvien?.nv_name : "Tên Nhân Viên"}</p>
                 </td>
-                <td className=''><input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="ngay_chuan" className='w-full bg-transparent text-center' type="text" value={ngayCong?.ngay_chuan ? ngayCong.ngay_chuan : ""} /></td>
+                <td><input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="ngay_chuan" className='w-full bg-transparent text-center' type="text" value={ngayCong?.ngay_chuan ? ngayCong.ngay_chuan : ""} /></td>
 
                 <td>{ngayCong?.tong_cong}</td>
                 <td>{ngayCong?.tong_ngaylamviec}</td>
@@ -533,7 +533,10 @@ export default function BangChamCong() {
                                 }
                                 let arraylenght = array.length
                                 return <tr
-                                    onClick={() => setCurrentRow(indexRow)}
+                                    onClick={() => {
+                                        setCurrentRow(indexRow);
+                                        document.getElementById('bcccTable').children[indexRow].scrollIntoView({ behavior: "smooth", block: "center" });
+                                    }}
                                     className={`${currentRow == indexRow ? '' : 'addRow'}`}
                                 >
                                     <td
@@ -1010,7 +1013,7 @@ export default function BangChamCong() {
                                     Phép Còn Lại
                                 </th>
                             </thead>
-                            <tbody>
+                            <tbody id='bcccTable'>
                                 {renderChamCong()}
                             </tbody>
                         </table>
