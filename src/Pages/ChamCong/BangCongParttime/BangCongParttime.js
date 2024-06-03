@@ -21,6 +21,7 @@ export default function BangCongParttime() {
     const [bangCong,setBangCong] = useState([]);
     const [ngayCong,setNgayCong] = useState([]);
     const [PreviewImage, setPreviewImage] = useState({ isOpen: false, url: '' });
+    const [currentRow, setCurrentRow] = useState(0);
     let month = useSelector(state => state.ChamCongSlice.month);
     let year = useSelector(state => state.ChamCongSlice.year);
     let danhmuc_id = useSelector(state => state.ChamCongSlice.danhmuc_id);
@@ -72,7 +73,12 @@ export default function BangCongParttime() {
     }
     const handleStartY = (e, row, col) => {
         let iniMouse = e.clientY;
-        let iniSize = document.getElementById(`${row}${col}`).offsetHeight;
+        let iniSize;
+        if(row==-99&&col==-99){
+            iniSize = e.target.previousElementSibling.offsetHeight;
+        } else {
+            iniSize = document.getElementById(`${row}${col}`).offsetHeight;
+        }
         setDrag({
             iniMouse: iniMouse,
             iniSize: iniSize
@@ -84,7 +90,11 @@ export default function BangCongParttime() {
             let iniSize = drag.iniSize;
             let endMouse = e.clientY;
             let endSize = iniSize + (endMouse - iniMouse);
-            document.getElementById(`${row}${col}`).style.height = `${endSize}px`;
+            if(row==-99&&col==-99){
+                e.target.previousElementSibling.style.height = `${endSize}px`;
+            } else {
+                document.getElementById(`${row}${col}`).style.height = `${endSize}px`;
+            }
         }
     }
     const renderSide = (indexRow, indexColumn) => {
@@ -180,8 +190,8 @@ export default function BangCongParttime() {
     }
     const renderBangCong = () => {
         return bangCong?.map((item,index) => {
-            return <tr key={index}>
-                <td>{item?.nhanVien?.nv_name}</td>
+            return <tr key={index} className={`${currentRow == index ? 'bg-sky-200' : 'bg-white'} hover:cursor-pointer`} onClick={() => { setCurrentRow(index);document.getElementById('bcccTable').children[index].scrollIntoView({ behavior: "smooth", block: "center" }); }}>
+                <td className={`${currentRow == index && 'bg-sky-300'}`}>{item?.nhanVien?.nv_name}</td>
                 {
                     item?.ngayCong?.map((ngayCong,ind) => {
                         return <td onClick={() => getChiTietNgay(ind,item?.nhanVien?.nv_id)} className='text-center cursor-pointer' key={ind}>{ngayCong}</td>
@@ -269,7 +279,7 @@ export default function BangCongParttime() {
     }
     const renderBaoBao = () => {
         return bangCong?.map((item,index) => {
-            return <tr key={index}>
+            return <tr key={index} className={`${currentRow == index ? 'bg-sky-200' : 'bg-white'}`}>
                 <td>{item?.nhanVien?.nv_name}</td>
                 {renderTongGioCong(item?.ngayCong)}
             </tr>
@@ -322,7 +332,11 @@ export default function BangCongParttime() {
                     </tbody>
                 </table>
             </div>
-            
+            <div className='mt-2 hover:cursor-row-resize border-t border-b border-orange-200' style={{width:'100%',height:'4px'}}
+                draggable={true}
+                onDragStart={(e) => handleStartY(e, -99, -99)}
+                onDrag={(e) => handleMoveY(e, -99, -99)}
+            ></div>
         </div>
         <div
             className={`w-full lg:grid gap-4 mt-4`}
@@ -409,7 +423,7 @@ export default function BangCongParttime() {
                                     Tổng giờ công
                                 </th>
                             </thead>
-                            <tbody>
+                            <tbody id='bcccTable'>
                                 {renderBaoBao()}
                             </tbody>
                         </table>
