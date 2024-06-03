@@ -147,7 +147,7 @@ export default function HoSoChungChi() {
     return chungChiList?.map((chungchi, index) => {
       if(chungchi?.bangcap_scan_file){
         return (
-          <div className='relative'>
+          <div key={index} className='relative'>
           <Image
             id={index}
             onContextMenu={(e) => {

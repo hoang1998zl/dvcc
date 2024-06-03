@@ -37,5 +37,15 @@ export const baoCaoService = {
                 token
             }
         })
+    },
+    layNhanVienOnline: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/bao-cao/lay-nv-online",
+            method: "POST",
+            data:data,
+            headers: {
+                token
+            }
+        })
     }
 }

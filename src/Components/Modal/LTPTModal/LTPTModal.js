@@ -138,8 +138,8 @@ function LTPTModal() {
                 <p className='w-[500px]'>
                   <strong>Quyết định {type===1?'bổ nhiệm vị trí công tác':'điều chuyển nơi công tác'}:</strong>
                 </p>
-                <button type="button" class="w-full flex-1 px-2 py-1 rounded border hover:bg-orange-100 hover:border-orange-400">
-                  <label class="w-full block rounded-md font-normal text-center cursor-pointer">
+                <button type="button" className="w-full flex-1 px-2 py-1 rounded border hover:bg-orange-100 hover:border-orange-400">
+                  <label className="w-full block rounded-md font-normal text-center cursor-pointer">
                     <i className='fa-solid fa-upload'></i>
                     <input type="file" className="hidden" onChange={(e)=>{uploadLTPT(e,item.id)}}/> Cập nhật
                   </label>
