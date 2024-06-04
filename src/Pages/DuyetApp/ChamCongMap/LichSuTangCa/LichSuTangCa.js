@@ -2,18 +2,22 @@ import React, { useEffect, useRef, useState } from 'react'
 import '../../../../issets/css/customTable.css'
 import { dvccService } from '../../../../services/dvccService';
 import { localStorageService } from '../../../../services/localStorageService';
-import { useSelector } from 'react-redux';
-import { Pagination, Popconfirm } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Pagination, Popconfirm } from 'antd';
 import moment from 'moment';
 import 'moment/locale/vi';
 import {  toast } from 'react-toastify';
+import { setReloadMany } from '../../../../Redux-toolkit/reducer/ChamCongSlice';
+import { isNull } from 'lodash';
 
 export default function LichSuTangCa() {
     moment.locale("vi");
+    let dispatch = useDispatch();
     let focusRef = useRef("");
     let token = localStorageService.getItem("token");
     let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
     let duyetAppSlice = useSelector((state) => state.DuyetAppSlice);
+    let [lyDoTuChoi,setLyDoTuChoi] = useState("");
     let [tangCaList,setTangCaList] = useState([]);
     let [tangCaListClone,setTangCaListClone] = useState([]);
     let [reload,setReload] = useState(0);
@@ -80,10 +84,15 @@ export default function LichSuTangCa() {
               });
             });
     }
-    let handleDuyetTangCa = (id) => {
-      let data = {id};
+    let handleDuyetTangCa = (id,index) => {
+      let data = {
+        id,
+        he_so: tangCaList[index]?.he_so,
+        gio_cong_thuan: tangCaList[index]?.gio_cong_thuan
+      };
       dvccService.duyetTangCa(token,data).then((res) => {
               setReload(Date.now());
+              dispatch(setReloadMany(Date.now()));
               toast.success("Duyệt tăng ca thành công!", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
@@ -98,9 +107,10 @@ export default function LichSuTangCa() {
             });
     }
     let handleTuChoiTangCa = (id) => {
-      let data = {id};
+      let data = {id, ly_do_tu_choi: lyDoTuChoi};
       dvccService.tuChoiTangCa(token,data).then((res) => {
               setReload(Date.now());
+              dispatch(setReloadMany(Date.now()));
               toast.success("Từ chối tăng ca thành công!", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000
@@ -114,10 +124,42 @@ export default function LichSuTangCa() {
               });
             });
     }
-    let renderStatus = (status,id,nv_id) => {
+    let changeInput = (key,value,index) => {
+      value = value.replace(/[^\d.-]/g, '');
+      if(!isNull(value) && value !== ""){
+        if(key == "gio_cong_thuan"){
+          if(Number(value <= 0)){
+            value = "0";  
+          }
+          if(isNaN(value)){
+            value = "0";
+          }
+        }
+        if(key == "he_so"){
+          if(Number(value < 1)){
+            value = "1";  
+          }
+          if(Number(value > 3)){
+            value = "3";  
+          }
+          if(isNaN(value)){
+            value = "1";
+          }
+        }
+      }
+      let clone = [...tangCaList];
+      clone[index][key] = value;
+      setTangCaList(clone);
+    }
+    let renderStatus = (status,id,nv_id,index) => {
       switch (status){
         case 1: return <div className='flex flex-wrap lg:flex-col 2xl:flex-row justify-center items-center gap-2 lg:gap-4'>
               <Popconfirm okType='danger'
+                description={<div className='flex items-center'>
+                                <p className='w-36'>Lý Do Từ Chối: </p>
+                                <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
+                              </div>}
+                onOpenChange={() => setLyDoTuChoi("")}
                 title="Xác Nhận Từ Chối Tăng Ca?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiTangCa(id)}>
                 <button
                   type="button"
@@ -127,7 +169,7 @@ export default function LichSuTangCa() {
                 </button>
               </Popconfirm>
               
-              <Popconfirm title="Xác Nhận Duyệt Tăng Ca?" okText="Duyệt" cancelText=" Huỷ" onConfirm={() => handleDuyetTangCa(id)}>
+              <Popconfirm title="Xác Nhận Duyệt Tăng Ca?" okText="Duyệt" cancelText=" Huỷ" onConfirm={() => handleDuyetTangCa(id,index)}>
                 <button
                   type="button"
                   className='min-w-[90px] px-4 py-1.5 rounded-full bg-sky-400 text-white'
@@ -201,12 +243,22 @@ export default function LichSuTangCa() {
           </p>
           {/* <p>Nơi Công Tác: {congTac?.noi_cong_tac}</p> */}
         </td>
-        {/* <td>
-          <p className='line-clamp-1'>
-            {congTac?.noi_dung_cong_tac}
-            
-          </p>
-        </td> */}
+        <td>
+          <div className='grid grid-cols-2 items-center'>
+            <div>
+              <p>Giờ Công Thuần: </p>
+            </div>
+            <div className='py-1'><Input disabled={tangCa.status == 1 ? false : true} name='gio_cong_thuan' onChange={(e) => changeInput(e.target.name,e.target.value,current*4 + index)} value={tangCa?.gio_cong_thuan} /></div>
+            <div>
+              <p>Hệ Số: </p>
+            </div>
+            <div className='py-1'><Input disabled={tangCa.status == 1 ? false : true} name='he_so' onChange={(e) => changeInput(e.target.name,e.target.value,current*4 + index)} value={tangCa?.he_so} /></div>
+            <div>
+              <p>Tổng Giờ Công: </p>
+            </div>
+            <div className='py-1'><Input disabled value={Number(tangCa?.gio_cong_thuan) * Number(tangCa?.he_so)} /></div>
+          </div>
+        </td>
         <td className='relative min-w-[230px]'>
           <p>{tangCa?.ns_nhanvien_dvcc_lich_tang_ca_nguoi_duyetTons_nhanvien?.nv_name}</p>
           {/* <span className='w-max text-xs absolute bottom-1 right-1'>
@@ -214,7 +266,7 @@ export default function LichSuTangCa() {
           </span> */}
         </td>
         <td>
-          {renderStatus(tangCa?.status,tangCa?.id,tangCa?.nguoi_duyet)}
+          {renderStatus(tangCa?.status,tangCa?.id,tangCa?.nguoi_duyet,current*4 + index)}
         </td>
       </tr>
       })
@@ -242,9 +294,9 @@ export default function LichSuTangCa() {
               <svg onClick={() => handleSort("thoigian","za")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 14a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 5v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
             </div>
           </th>
-          {/* <th>
-            Lý do
-          </th> */}
+          <th>
+          Thông Tin Giờ Công
+          </th>
           <th>
             <div className='flex items-center'>
               <svg onClick={() => handleSort("nguoiduyet","az")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>

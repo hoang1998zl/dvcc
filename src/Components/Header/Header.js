@@ -18,6 +18,7 @@ export default function Header() {
 
   const token = localStorageService.getItem("token");
   const [currentHoverMenu, setCurrentHoverMenu] = useState(0);
+  let [reload,setReload] = useState(0);
 
   const { currentMenu } = useSelector(state => state.MenuSlice);
   const { isOpenBusiness } = useSelector((state) => state.MenuSlice);
@@ -34,8 +35,13 @@ export default function Header() {
       .catch((err) => {
         console.log(err);
       });
-  }, [])
+  }, [reload])
 
+  let autoReload = () => {
+    setTimeout(() => {
+      setReload(Date.now());
+    },[60000])
+  }
   const menu = [
     {
       menu_id: 1,
@@ -163,7 +169,7 @@ export default function Header() {
           <i className='fa-solid fa-caret-down ms-1'></i>
         </span>
       </button>
-
+        {autoReload()}
     </div>
   )
 }
