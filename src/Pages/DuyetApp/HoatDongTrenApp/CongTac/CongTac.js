@@ -2,17 +2,20 @@ import React, { useEffect, useRef, useState } from 'react'
 import '../../../../issets/css/customTable.css'
 import { dvccService } from '../../../../services/dvccService';
 import { localStorageService } from '../../../../services/localStorageService';
-import { useSelector } from 'react-redux';
-import { Pagination, Popconfirm } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Pagination, Popconfirm } from 'antd';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { toast } from 'react-toastify';
+import { setReloadMany } from '../../../../Redux-toolkit/reducer/ChamCongSlice';
 
 export default function CongTac() {
   moment.locale("vi");
   let focusRef = useRef("");
+  let dispatch = useDispatch();
   let token = localStorageService.getItem("token");
   let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
+  let [lyDoTuChoi,setLyDoTuChoi] = useState("");
   let [congTacList,setCongTacList] = useState([]);
   let [congTacListClone,setCongTacListClone] = useState([]);
   let [reload,setReload] = useState(0);
@@ -78,6 +81,7 @@ export default function CongTac() {
   let handleDuyetCongTac = (id) => {
     let data = {id};
     dvccService.duyetCongTac(token,data).then((res) => {
+            dispatch(setReloadMany(Date.now()));
             setReload(Date.now());
             toast.success("Duyệt công tác thành công!", {
               position: toast.POSITION.TOP_RIGHT,
@@ -93,9 +97,10 @@ export default function CongTac() {
           });
   }
   let handleTuChoiCongTac = (id) => {
-    let data = {id};
+    let data = {id, ly_do_tu_choi: lyDoTuChoi};
     dvccService.tuChoiCongTac(token,data).then((res) => {
             setReload(Date.now());
+            dispatch(setReloadMany(Date.now()));
             toast.success("Từ Chối công tác thành công!", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 2000
@@ -112,7 +117,13 @@ export default function CongTac() {
   let renderStatus = (status,id,nv_id) => {
     switch (status){
       case 1: return <div className='flex flex-wrap lg:flex-col 2xl:flex-row justify-center items-center gap-2 lg:gap-4'>
-            <Popconfirm title="Xác Nhận Từ Chối Công Tác?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiCongTac(id)}>
+            <Popconfirm
+              description={<div className='flex items-center'>
+                            <p className='w-36'>Lý Do Từ Chối: </p>
+                            <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
+                          </div>}
+              onOpenChange={() => setLyDoTuChoi("")}
+              title="Xác Nhận Từ Chối Công Tác?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiCongTac(id)}>
               <button
                 type="button"
                 className='min-w-[90px] px-4 py-1.5 rounded-full bg-red-600 text-white'

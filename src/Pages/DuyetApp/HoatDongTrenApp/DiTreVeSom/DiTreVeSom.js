@@ -3,7 +3,7 @@ import '../../../../issets/css/customTable.css'
 import { dvccService } from '../../../../services/dvccService';
 import { localStorageService } from '../../../../services/localStorageService';
 import { useSelector } from 'react-redux';
-import { Pagination, Popconfirm } from 'antd';
+import { Input, Pagination, Popconfirm } from 'antd';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { toast } from 'react-toastify';
@@ -13,6 +13,7 @@ export default function DiTreVeSom() {
   let focusRef = useRef("");
   let token = localStorageService.getItem("token");
   let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
+  let [lyDoTuChoi,setLyDoTuChoi] = useState("");
   let [somTreList,setSomTreList] = useState([]);
   let [somTreListClone,setSomTreListClone] = useState([]);
   let [reload,setReload] = useState(0);
@@ -92,7 +93,7 @@ export default function DiTreVeSom() {
     }
   }
   let handleTuChoi = (id,type) => {
-    let data = {id};
+    let data = {id,ly_do_tu_choi: lyDoTuChoi};
     if(type === "diTre"){
       dvccService.tuChoiDiTre(token,data).then((res) => {
         setReload(Date.now());
@@ -157,7 +158,13 @@ export default function DiTreVeSom() {
   let renderStatus = (status,id,nguoiduyet,type,nhanvien) => {
     switch (status){
       case 1: return <div className='flex flex-wrap justify-center items-center gap-2 lg:gap-4'>
-            <Popconfirm title="Xác Nhận Từ Chối?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoi(id,type)}>
+            <Popconfirm title="Xác Nhận Từ Chối?" okText="Từ Chối"
+              description={<div className='flex items-center'>
+                              <p className='w-36'>Lý Do Từ Chối: </p>
+                              <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
+                            </div>}
+              onOpenChange={() => setLyDoTuChoi("")}
+              cancelText=" Huỷ" onConfirm={() => handleTuChoi(id,type)}>
               <button
                 type="button"
                 className='min-w-[90px] px-4 py-1.5 rounded-full bg-red-600 text-white'

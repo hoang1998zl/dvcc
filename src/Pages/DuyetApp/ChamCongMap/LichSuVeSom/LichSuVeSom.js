@@ -1,4 +1,4 @@
-import { Pagination, Popconfirm } from 'antd'
+import { Input, Pagination, Popconfirm } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import { localStorageService } from '../../../../services/localStorageService';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ export default function LichSuVeSom() {
   let token = localStorageService.getItem("token");
   let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
   let duyetAppSlice = useSelector((state) => state.DuyetAppSlice);
+  let [lyDoTuChoi,setLyDoTuChoi] = useState("");
   let [somTreList,setSomTreList] = useState([]);
   let [somTreListClone,setSomTreListClone] = useState([]);
   let [current,setCurrent] = useState(0);
@@ -80,7 +81,7 @@ export default function LichSuVeSom() {
     });
   }
   let handleTuChoi = (id) => {
-    let data = {id};
+    let data = {id,ly_do_tu_choi: lyDoTuChoi};
       dvccService.tuChoiVeSom(token,data).then((res) => {
         setReload(Date.now());
         dispatch(setReloadMany(Date.now()));
@@ -129,7 +130,13 @@ export default function LichSuVeSom() {
   let renderStatus = (status,id,nguoiduyet,nhanvien) => {
     switch (status){
       case 1: return <div className='flex flex-wrap justify-center items-center gap-2 lg:gap-4'>
-            <Popconfirm title="Xác Nhận Từ Chối?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoi(id)}>
+            <Popconfirm
+              description={<div className='flex items-center'>
+                            <p className='w-36'>Lý Do Từ Chối: </p>
+                            <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
+                          </div>}
+              onOpenChange={() => setLyDoTuChoi("")}
+              title="Xác Nhận Từ Chối?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoi(id)}>
               <button
                 type="button"
                 className='min-w-[90px] px-4 py-1.5 rounded-full bg-red-600 text-white'
@@ -192,7 +199,7 @@ export default function LichSuVeSom() {
   }
   let renderSomTre = () => {
     return somTreList?.slice(current*4,current*4 + 4)?.map((somTre,index) => {
-      return <tr className='addRow'>
+      return <tr key={index} className='addRow'>
           <td>{current*4 + index + 1}</td>
           <td className='relative'>
             <div className='flex gap-2 items-center py-2'>
