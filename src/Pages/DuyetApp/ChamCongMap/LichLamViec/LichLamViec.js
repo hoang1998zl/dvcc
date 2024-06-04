@@ -18,6 +18,7 @@ export default function LichLamViec() {
     let pdfRef = useRef("");
     let token = localStorageService.getItem("token");
     let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
+    let [lyDoTuChoi,setLyDoTuChoi] = useState("");
     let [openMenu,setOpenMenu] = useState(false);
     let [LLVList,setLLVList] = useState([]);
     let [LLVListClone,setLLVListClone] = useState([]);
@@ -84,7 +85,7 @@ export default function LichLamViec() {
         focusRef.current.scrollIntoView({ behavior: 'smooth' });
     }
     let handleHuyCa = (id) => {
-        dvccService.huyCaLamViec(token,{id}).then((res) => {
+        dvccService.huyCaLamViec(token,{id,ly_do_tu_choi: lyDoTuChoi}).then((res) => {
             setReload(Date.now());
             toast.success("Hủy ca thành công!", {
             position: toast.POSITION.TOP_RIGHT,
@@ -137,7 +138,13 @@ export default function LichLamViec() {
                 <p>{llv?.ns_nhanvien_dvcc_lich_lam_viec_dang_ky_nguoi_duyetTons_nhanvien?.nv_name}</p>
             </td>
             <td>
-                <Popconfirm title="Xác Nhận Hủy Ca làm Việc?" okText="Hủy Ca" cancelText="Cancel" onConfirm={() => handleHuyCa(llv?.id)}>
+                <Popconfirm
+                description={<div className='flex items-center'>
+                                <p className='w-36'>Lý Do Hủy: </p>
+                                <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
+                            </div>}
+                onOpenChange={() => setLyDoTuChoi("")}
+                title="Xác Nhận Hủy Ca làm Việc?" okType='danger' okText="Hủy Ca" cancelText="Cancel" onConfirm={() => handleHuyCa(llv?.id)}>
                     <button className='px-2 py-1 bg-red-500 text-white font-medium rounded'>Hủy Ca</button>
                 </Popconfirm>
             </td>

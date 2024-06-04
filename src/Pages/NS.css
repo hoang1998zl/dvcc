@@ -1,6 +1,10 @@
 .ant-btn-primary{
     background: #1677ff !important;
 }
+.ant-btn-dangerous{
+    background: #e53e3e !important;
+    color: white !important;
+}
 .customTable td, .customTable th {
     border: 1px solid #d1d5db;
     padding: 0.5rem;

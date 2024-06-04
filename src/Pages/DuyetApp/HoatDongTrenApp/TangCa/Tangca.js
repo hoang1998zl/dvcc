@@ -112,7 +112,8 @@ export default function Tangca() {
   let renderStatus = (status,id,nv_id) => {
     switch (status){
       case 1: return <div className='flex flex-wrap lg:flex-col 2xl:flex-row justify-center items-center gap-2 lg:gap-4'>
-            <Popconfirm title="Xác Nhận Từ Chối Tăng Ca?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiTangCa(id)}>
+            <Popconfirm okType='danger'
+              title="Xác Nhận Từ Chối Tăng Ca?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiTangCa(id)}>
               <button
                 type="button"
                 className='min-w-[90px] px-4 py-1.5 rounded-full bg-red-600 text-white'

@@ -122,7 +122,7 @@ export default function LichSuNghiKhac() {
     let renderStatus = (status,id,nv_id) => {
         switch (status){
           case 1: return <div className='flex flex-wrap lg:flex-col 2xl:flex-row justify-center items-center gap-2 lg:gap-4'>
-                <Popconfirm title="Xác Nhận Từ Chối Nghỉ Khác?"
+                <Popconfirm title="Xác Nhận Từ Chối Nghỉ Khác?" okType='danger'
                   description={<div className='flex items-center'>
                                 <p className='w-36'>Lý Do Từ Chối: </p>
                                 <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />

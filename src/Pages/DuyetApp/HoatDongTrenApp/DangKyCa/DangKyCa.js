@@ -17,6 +17,7 @@ export default function DangKyCa() {
     let focusRef = useRef("");
     let token = localStorageService.getItem("token");
     let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
+    let [lyDoTuChoi,setLyDoTuChoi] = useState("");
     let [LLVList,setLLVList] = useState([]);
     let [LLVListClone,setLLVListClone] = useState([]);
     let [NVList,setNVList] = useState([]);
@@ -175,7 +176,7 @@ export default function DangKyCa() {
                 });
         }
         let handleTuChoiLLV = (id) => {
-            let data = {id};
+            let data = {id, lyDoTuChoi};
             dvccService.tuChoiLLV(token,data).then((res) => {
                     setReload(Date.now());
                     toast.success("Từ chối ca thành công!", {
@@ -199,7 +200,13 @@ export default function DangKyCa() {
         let renderStatus = (status,id) => {
             switch (status){
               case 1: return <div className='flex flex-wrap lg:flex-col 2xl:flex-row justify-center items-center gap-2 lg:gap-4'>
-                    <Popconfirm title="Xác Nhận Từ Chối Ca làm Việc?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiLLV(id)}>
+                    <Popconfirm
+                      description={<div className='flex items-center'>
+                                    <p className='w-36'>Lý Do Từ Chối: </p>
+                                    <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
+                                  </div>}
+                      onOpenChange={() => setLyDoTuChoi("")}
+                      okType='danger' title="Xác Nhận Từ Chối Ca làm Việc?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiLLV(id)}>
                       <button
                         type="button"
                         className='min-w-[90px] px-4 py-1.5 rounded-full bg-red-600 text-white'

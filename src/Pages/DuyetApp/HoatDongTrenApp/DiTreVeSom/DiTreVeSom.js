@@ -158,7 +158,7 @@ export default function DiTreVeSom() {
   let renderStatus = (status,id,nguoiduyet,type,nhanvien) => {
     switch (status){
       case 1: return <div className='flex flex-wrap justify-center items-center gap-2 lg:gap-4'>
-            <Popconfirm title="Xác Nhận Từ Chối?" okText="Từ Chối"
+            <Popconfirm title="Xác Nhận Từ Chối?" okText="Từ Chối" okType='danger'
               description={<div className='flex items-center'>
                               <p className='w-36'>Lý Do Từ Chối: </p>
                               <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
