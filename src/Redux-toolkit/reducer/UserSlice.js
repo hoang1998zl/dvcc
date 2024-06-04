@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   currentNhanVien: null,
-  congTy: {}
+  congTy: {},
+  loading: true,
 }
 
 export const UserSlice = createSlice({
@@ -15,11 +16,14 @@ export const UserSlice = createSlice({
     setCongTy : (state,action) => {
       state.congTy = {...action.payload};
     },
+    setLoading: (state,action) => {
+      state.loading = action.payload
+    },
   },
 });
 
 export const {
-  setCurrentNhanVien,setCongTy
+  setCurrentNhanVien,setCongTy,setLoading,
 } = UserSlice.actions
 
 export default UserSlice.reducer

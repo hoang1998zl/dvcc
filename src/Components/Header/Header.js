@@ -13,6 +13,7 @@ import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/M
 import { dvccService } from '../../services/dvccService';
 import { setNewNoti } from '../../Redux-toolkit/reducer/DuyetAppSlice';
 import { localStorageService } from '../../services/localStorageService';
+import { macroLuongService } from '../../services/macroLuongService';
 import Bussiness from '../Bussiness/Bussiness';
 
 export default function Header() {
@@ -23,6 +24,7 @@ export default function Header() {
   const { currentMenu } = useSelector(state => state.MenuSlice);
   const { isOpenBusiness } = useSelector((state) => state.MenuSlice);
   let newNoti = useSelector(state => state.DuyetAppSlice.newNoti);
+  const [permission, setPermission] = useState('FREE');
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -34,6 +36,11 @@ export default function Header() {
     })
       .catch((err) => {
         console.log(err);
+      });
+      macroLuongService.getPermission(token).then((res) => {
+        setPermission(res.data.content);
+      }).catch((err) => {
+          console.log(err);
       });
   }, [])
 
@@ -147,7 +154,7 @@ export default function Header() {
         {renderMenuHeader()}
       </ul>
 
-      <button
+      {permission=='PREMIUM' && (<button
         type="button"
         onClick={() => {
           dispatch(setIsOpenBusiness(!isOpenBusiness));
@@ -163,9 +170,9 @@ export default function Header() {
           for business
           <i className='fa-solid fa-caret-down ms-1'></i>
         </span>
-      </button>
+      </button>)}
 
     </div>
-    <Bussiness/></div>
+    {permission=='PREMIUM' && (<Bussiness/>)}</div>
   )
 }

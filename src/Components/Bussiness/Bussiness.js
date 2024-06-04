@@ -6,7 +6,7 @@ import home02 from "../../issets/img/home_hover.png";
 import quanlychamcong01 from "../../issets/img/icon/quanlychamcong02.png";
 import quanlychamcong02 from "../../issets/img/icon/quanlychamcong03.png";
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
+import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
 
 export default function Bussiness() {
 
@@ -20,19 +20,17 @@ export default function Bussiness() {
   const LstApp = [
     {
       id: 1,
-      name: 'Trang Chính',
-      name_: '',
+      name: 'Macro Lương',
       icon: home01,
       icon_hover: home02,
-      link: 'http://weos.vn'
+      menuID: 7,
     },
     {
       id: 3,
-      name: 'Định Vị',
-      name_: 'Chấm Công',
+      name: 'Bảng lương',
       icon: quanlychamcong01,
       icon_hover: quanlychamcong02,
-      link: `http://id.weos.vn`
+      menuID: 8,
     },
   ];
 
@@ -40,7 +38,6 @@ export default function Bussiness() {
     return LstApp.map((item) => {
       return (
         <a
-          href={item.link}
           key={item.id}
           type='button'
           className={`flex flex-col justify-start items-center cursor-pointer text-gray-900`}
@@ -50,6 +47,7 @@ export default function Bussiness() {
           onMouseLeave={() => {
             setCurrentHoverApp(null);
           }}
+          onClick={()=>{dispatch(setCurrentMenu(item.menuID));dispatch(setIsOpenBusiness(false))}}
         >
           <div
             className={`w-12 h-12 p-1 rounded-md border flex justify-center items-center ${currentHoverApp == item.id ? 'text-orange-400' : 'text-sky-400'}`}
@@ -57,7 +55,6 @@ export default function Bussiness() {
               boxShadow: currentHoverApp == item.id ? "0px 2px 2px 0 rgba(0, 0, 0, 0.7)" : "none"
             }}
           >
-            {/* {item.icon} */}
             <img
               className='w-8 h-8 object-contain'
               src={currentHoverApp == item.id ? item.icon_hover : item.icon}
@@ -68,7 +65,6 @@ export default function Bussiness() {
             className={`mt-1 text-center ${currentHoverApp == item.id ? 'text-orange-400' : 'text-gray-900'}`}
           >
             {item.name}<br />
-            {item.name_}
           </span>
         </a>
       )

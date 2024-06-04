@@ -8,7 +8,7 @@ import DuyetAppSlice from "../reducer/DuyetAppSlice";
 import ModalSlice from "../../Components/Modal/ModalSlice";
 import HoSoNhanVienSlice from "../reducer/HoSoNhanVienSlice";
 import BaoCaoSlice from "../reducer/baoCaoSlice";
-
+import MacroLuongSlice from "../reducer/MacroLuongSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,7 +20,8 @@ const store = configureStore({
     DuyetAppSlice:DuyetAppSlice,
     ModalSlice: ModalSlice,
     HoSoNhanVienSlice:HoSoNhanVienSlice,
-    BaoCaoSlice: BaoCaoSlice
+    BaoCaoSlice: BaoCaoSlice,
+    MacroLuongSlice: MacroLuongSlice
   },
 })
 

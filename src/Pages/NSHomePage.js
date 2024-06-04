@@ -10,7 +10,8 @@ import DuyetApp from './DuyetApp/DuyetApp';
 import BaoCao from './BaoCao/BaoCao';
 import "./NS.css"
 import TaiKhoan from './TaiKhoan/TaiKhoan';
-import BangLuong from './BangLuong/BangLuong';
+import BangLuongTong from './BangLuongTong/BangLuongTong';
+import TaoBangLuong from './TaoBangLuong/TaoBangLuong';
 
 export default function NSHomePage() {
 
@@ -46,7 +47,8 @@ export default function NSHomePage() {
       case 4: return <DuyetApp />;
       case 5: return <ChamCong />;
       case 6: return <TaiKhoan />;
-      // case 7: return <BangLuong />;
+      case 7: return <TaoBangLuong />;
+      case 8: return <BangLuongTong />;
       default: return <BaoCao />;
     }
   }

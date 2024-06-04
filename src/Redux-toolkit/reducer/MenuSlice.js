@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   currentMenu: 1,
   isOpenBusiness: false,
+  CTLflag: false,
 }
 
 export const MenuSlice = createSlice({
@@ -15,12 +16,16 @@ export const MenuSlice = createSlice({
     setIsOpenBusiness: (state, action) => {
       state.isOpenBusiness = action.payload
     },
+    setCTLflag: (state, action) => {
+      state.CTLflag = action.payload
+    },
   },
 });
 
 export const {
   setCurrentMenu,
-  setIsOpenBusiness
+  setIsOpenBusiness,
+  setCTLflag,
 } = MenuSlice.actions
 
 export default MenuSlice.reducer
