@@ -20,6 +20,7 @@ export default function Header() {
 
   const token = localStorageService.getItem("token");
   const [currentHoverMenu, setCurrentHoverMenu] = useState(0);
+  let [reload,setReload] = useState(0);
 
   const { currentMenu } = useSelector(state => state.MenuSlice);
   const { isOpenBusiness } = useSelector((state) => state.MenuSlice);
@@ -31,19 +32,25 @@ export default function Header() {
     // cái này để load số thông báo trên duyệt app
     dvccService.getTotal(token).then((res) => {
       let total = 0;
-      total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa + res.data?.content?.dangKyCa;
+      total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa + res.data?.content?.dangKyCa + res.data?.content?.nghiKhac;
       dispatch(setNewNoti(total));
     })
       .catch((err) => {
         console.log(err);
       });
-      macroLuongService.getPermission(token).then((res) => {
-        setPermission(res.data.content);
-      }).catch((err) => {
-          console.log(err);
-      });
-  }, [])
-
+  }, [reload])
+  useEffect(()=>{
+    macroLuongService.getPermission(token).then((res) => {
+      setPermission(res.data.content);
+    }).catch((err) => {
+        console.log(err);
+    });
+  },[]);
+  let autoReload = () => {
+    setTimeout(() => {
+      setReload(Date.now());
+    },[60000])
+  }
   const menu = [
     {
       menu_id: 1,
@@ -171,7 +178,7 @@ export default function Header() {
           <i className='fa-solid fa-caret-down ms-1'></i>
         </span>
       </button>)}
-
+      {autoReload()}
     </div>
     {permission=='PREMIUM' && (<Bussiness/>)}</div>
   )

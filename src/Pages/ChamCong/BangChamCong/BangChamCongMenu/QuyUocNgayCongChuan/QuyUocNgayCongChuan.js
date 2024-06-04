@@ -64,8 +64,8 @@ export default function QuyUocNgayCongChuan() {
         let year = moment().add(i,'years').format("YYYY");
         array.push(year);
     }
-    return array.map((item) => {
-      return <option value={item}>{item}</option>
+    return array.map((item,index) => {
+      return <option key={index} value={item}>{item}</option>
     })
   }
   let renderContent = () => {

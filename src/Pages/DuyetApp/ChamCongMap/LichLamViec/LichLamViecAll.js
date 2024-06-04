@@ -56,8 +56,8 @@ export default function LichLamViecAll() {
   return (
     <div  className='w-full my-2'>
         <div className='text-right mr-5'>
-            <button onClick={handlePrint} type="button" class="text-orange-400 cursor-pointer text-xl relative">
-                <i class="fa-solid fa-print"></i>
+            <button onClick={handlePrint} type="button" className="text-orange-400 cursor-pointer text-xl relative">
+                <i className="fa-solid fa-print"></i>
             </button>
         </div>
         <div ref={pdfRef} className='w-full my-2'>

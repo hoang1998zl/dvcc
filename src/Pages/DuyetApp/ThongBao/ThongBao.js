@@ -38,7 +38,7 @@ export default function ThongBao({
     dvccService.getTotal(token).then((res) => {
             setThongBao(res.data.content);
             let total = 0;
-            total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa + res.data?.content?.dangKyCa;
+            total = res.data?.content?.nghiPhep + res.data?.content?.diTre + res.data?.content?.veSom + res.data?.content?.congTac + res.data?.content?.tangCa + res.data?.content?.dangKyCa + res.data?.content?.nghiKhac;
             dispatch(setNewNoti(total));
           })
           .catch((err) => {
@@ -209,7 +209,7 @@ export default function ThongBao({
                     dispatch(setReloadMany(Date.now()));
                   }} className='w-full flex gap-x-2 my-1 cursor-pointer'>
                   <div className='w-7 text-xl text-center text-orange-500'>
-                    <i class="fa-solid fa-arrow-up-right-dots"></i>
+                    <i className="fa-solid fa-arrow-up-right-dots"></i>
                   </div>
                   <p className='w-full flex-1 line-clamp-2'>
                     hiện có <strong className='text-sky-400'>{thongBao?.tangCa}</strong> đơn xin tăng ca mới cần duyệt

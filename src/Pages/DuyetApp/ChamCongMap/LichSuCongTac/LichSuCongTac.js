@@ -2,18 +2,21 @@ import React, { useEffect, useRef, useState } from 'react'
 import '../../../../issets/css/customTable.css'
 import { dvccService } from '../../../../services/dvccService';
 import { localStorageService } from '../../../../services/localStorageService';
-import { useSelector } from 'react-redux';
-import { Pagination, Popconfirm } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Pagination, Popconfirm } from 'antd';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { toast } from 'react-toastify';
+import { setReloadMany } from '../../../../Redux-toolkit/reducer/ChamCongSlice';
 
 export default function LichSuCongTac() {
   moment.locale("vi");
+  let dispatch = useDispatch();
   let focusRef = useRef("");
   let token = localStorageService.getItem("token");
   let reloadMany = useSelector(state => state.ChamCongSlice.reloadMany);
   let duyetAppSlice = useSelector((state) => state.DuyetAppSlice);
+  let [lyDoTuChoi,setLyDoTuChoi] = useState("");
   let [congTacList,setCongTacList] = useState([]);
   let [congTacListClone,setCongTacListClone] = useState([]);
   let [reload,setReload] = useState(0);
@@ -84,6 +87,7 @@ export default function LichSuCongTac() {
     let data = {id};
     dvccService.duyetCongTac(token,data).then((res) => {
             setReload(Date.now());
+            dispatch(setReloadMany(Date.now()));
             toast.success("Duyệt công tác thành công!", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 2000
@@ -98,9 +102,10 @@ export default function LichSuCongTac() {
           });
   }
   let handleTuChoiCongTac = (id) => {
-    let data = {id};
+    let data = {id, ly_do_tu_choi: lyDoTuChoi};
     dvccService.tuChoiCongTac(token,data).then((res) => {
             setReload(Date.now());
+            dispatch(setReloadMany(Date.now()));
             toast.success("Từ Chối công tác thành công!", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 2000
@@ -117,7 +122,13 @@ export default function LichSuCongTac() {
   let renderStatus = (status,id,nv_id) => {
     switch (status){
       case 1: return <div className='flex flex-wrap lg:flex-col 2xl:flex-row justify-center items-center gap-2 lg:gap-4'>
-            <Popconfirm title="Xác Nhận Từ Chối Công Tác?" okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiCongTac(id)}>
+            <Popconfirm title="Xác Nhận Từ Chối Công Tác?" okType='danger'
+              description={<div className='flex items-center'>
+                            <p className='w-36'>Lý Do Từ Chối: </p>
+                            <Input value={lyDoTuChoi} onChange={(e) => setLyDoTuChoi(e.target.value)} />
+                          </div>}
+              onOpenChange={() => setLyDoTuChoi("")}
+              okText="Từ Chối" cancelText=" Huỷ" onConfirm={() => handleTuChoiCongTac(id)}>
               <button
                 type="button"
                 className='min-w-[90px] px-4 py-1.5 rounded-full bg-red-600 text-white'
@@ -193,10 +204,10 @@ export default function LichSuCongTac() {
       </td>
       <td>
         <p>
-          Ngày: {moment(congTac?.ngay_bat_dau).format("ddd")}, <b>{moment(congTac?.ngay_bat_dau).format("DD/MM/YYYY")}</b>
+          Từ: <b>{congTac?.gio_bat_dau}</b> - {moment(congTac?.ngay_bat_dau).format("ddd")}, <b>{moment(congTac?.ngay_bat_dau).format("DD/MM/YYYY")}</b>
         </p>
         <p>
-          Từ: <b>{congTac?.gio_bat_dau}</b> đến <b>{congTac?.gio_ket_thuc}</b>
+          Đến: <b>{congTac?.gio_ket_thuc}</b> - {moment(congTac?.ngay_ket_thuc).format("ddd")}, <b>{moment(congTac?.ngay_ket_thuc).format("DD/MM/YYYY")}</b>
         </p>
         <p>Nơi Công Tác: {congTac?.noi_cong_tac}</p>
       </td>
@@ -227,18 +238,18 @@ export default function LichSuCongTac() {
         </th>
         <th>
           <div className='flex items-center'>
-            <svg onClick={() => handleSort("nhanvien","az")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+            <svg onClick={() => handleSort("nhanvien","az")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
             <p className='flex-1 mx-2'>Xin phép của nhân viên</p>
-            <svg onClick={() => handleSort("nhanvien","za")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 10h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+            <svg onClick={() => handleSort("nhanvien","za")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 10h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
           </div>
         </th>
         <th>
           <div className='flex items-center'>
-            <svg onClick={() => handleSort("thoigian","az")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 3a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 16m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 16v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
+            <svg onClick={() => handleSort("thoigian","az")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 3a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 16m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 16v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
             <p className='flex-1 mx-2'>
               Thời gian công tác
             </p>
-            <svg onClick={() => handleSort("thoigian","za")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 14a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 5v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
+            <svg onClick={() => handleSort("thoigian","za")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path><path d="M17 14a2 2 0 0 1 2 2v3a2 2 0 1 1 -4 0v-3a2 2 0 0 1 2 -2z"></path><path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 5v3a2 2 0 0 1 -2 2h-1.5"></path></svg>
           </div>
         </th>
         <th>
@@ -246,11 +257,11 @@ export default function LichSuCongTac() {
         </th>
         <th>
           <div className='flex items-center'>
-            <svg onClick={() => handleSort("nguoiduyet","az")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+            <svg onClick={() => handleSort("nguoiduyet","az")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
             <p className='flex-1 mx-2'>
               Người duyệt App
             </p>
-            <svg onClick={() => handleSort("nguoiduyet","za")} stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 10h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+            <svg onClick={() => handleSort("nguoiduyet","za")} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 10h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
           </div>
         </th>
         <th>

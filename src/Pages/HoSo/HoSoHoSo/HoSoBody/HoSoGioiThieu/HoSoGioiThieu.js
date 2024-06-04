@@ -78,7 +78,7 @@ function HoSoGioiThieu() {
         </div>
         <div className='flex items-center gap-4 text-gray-400'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
-            <i class="fa-solid fa-address-card"></i>
+            <i className="fa-solid fa-address-card"></i>
           </div>
           <div className='flex-1'>
             <p className='font-semibold text-base'>
@@ -202,7 +202,7 @@ function HoSoGioiThieu() {
         </div>
         <div className='flex items-center gap-4 text-gray-400'>
           <div className='w-12 aspect-square flex justify-center items-center text-3xl'>
-            <i class="fa-solid fa-address-card"></i>
+            <i className="fa-solid fa-address-card"></i>
           </div>
           <div className='flex-1'>
             <p className='font-semibold text-base'>

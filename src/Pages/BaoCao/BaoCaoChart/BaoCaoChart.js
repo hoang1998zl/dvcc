@@ -10,6 +10,11 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function BaoCaoChart() {
   let token = localStorageService.getItem("token");
   let ngay = useSelector((state) => state.BaoCaoSlice.ngay);
+  let [currentIndex,setCurrentIndex] = useState({
+    index: null,
+    danhmuc_id: 0
+  });
+  let [onlList,setOnlList] = useState({});
   let [baoCao,setBaoCao] = useState([]);
   let labels = [
     "Online",
@@ -29,6 +34,16 @@ export default function BaoCaoChart() {
       console.log(err);
     })
   },[ngay])
+  useEffect(() => {
+    if(currentIndex.danhmuc_id == 0){
+      return;
+    }
+    baoCaoService.layNhanVienOnline(token,{danhmuc_id: currentIndex.danhmuc_id,ngay}).then((res) => {
+      setOnlList(res.data.content);
+    }).catch((err) => {
+      console.log(err);
+    })
+  },[ngay,currentIndex])
   useEffect(() => {
     setBaoCaoSoPhepHeight(document.getElementById('BaoCaoSoPhep')?.offsetHeight);
 
@@ -58,10 +73,33 @@ export default function BaoCaoChart() {
     },
   };
 
+  let renderOnline = () => {
+    return onlList?.online?.map((online,index) => {
+      return <p key={index} className=''>- {online?.nv_name}</p>
+    })
+  }
+  let renderOffline = () => {
+    return onlList?.offline?.map((offline,index) => {
+      return <p key={index} className=''>- {offline?.nv_name}</p>
+    })
+  }
   const renderChart = () => {
     return baoCao?.map((item,index) => {
       return (
-        <div key={index} className='w-full p-4 rounded-lg shadow-lg bg-white'>
+        <div key={index}
+          onMouseEnter={() => {setCurrentIndex({danhmuc_id: item?.danhmuc_id,index})}}
+          onMouseLeave={() => {setCurrentIndex({danhmuc_id: 0,index: null})}}
+          className='w-full p-4 rounded-lg shadow-lg bg-white relative overflow-hidden'>
+          
+          <div className={`p-2 delay-500 w-full transform ${currentIndex.index == index ?"translate-y-0":"translate-y-full"} h-full
+           bg-white absolute left-0 top-0 z-50 rounded-lg transition-all duration-300`}>
+            <div className='w-full h-full overflow-y-auto customScrollbar'>
+              <h2 className='text-blue-500 font-medium'>Online: </h2>
+              {renderOnline()}
+              <h2 className='text-gray-500 font-medium'>Offline: </h2>
+              {renderOffline()}
+            </div>
+          </div> 
           <p
             className='text-xl font-bold text-orange-400'
           >

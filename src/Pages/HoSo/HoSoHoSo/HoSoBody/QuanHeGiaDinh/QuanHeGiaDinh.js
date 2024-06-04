@@ -42,9 +42,10 @@ function QuanHeGiaDinh() {
   const QHGD = ['Cha','Mẹ','Anh','Chị','Em','Vợ','Chồng','Con'];
 
   const renderListQHGD = () => {
-    return ListQHGD?.map(item => {
+    return ListQHGD?.map((item,index) => {
       return (
         <button
+        key={index}
           type="button"
           className={`font-semibold text-left px-2 py-1 rounded border ${tabNameQHGD == item.id ? 'border-orange-400 bg-orange-100 text-orange-400' : 'border-transparent bg-transparent text-black'}`}
           onClick={() => {
@@ -65,7 +66,7 @@ function QuanHeGiaDinh() {
         if(String(type).includes(String(item.type))){
           flag = 1;
           return (
-            <div className='w-full'>
+            <div key={index} className='w-full'>
               <p className='text-gray-400 font-bold flex items-center gap-2'>
                 <i className='fa-solid fa-star text-xl'></i>
                 <span>
