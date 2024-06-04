@@ -323,23 +323,12 @@ export default function BangChamCong() {
             return (
                 <tr
                     key={rowIndex}
-                    className={`${currentRow == rowIndex + state + 1 ? '' : 'addRow'} cursor-pointer`}
-                    onClick={() => { setCurrentRow(rowIndex + state + 1) }}
+                    className='addRow cursor-pointer'
                 >
-                    <td className={`${currentRow == rowIndex + state + 1 ? 'bg-sky-300' : 'bg-white'}`} style={{ padding: '0 0 0 4px' }}>
+                    <td className='bg-white' style={{ padding: '0 0 0 4px' }}>
                         <button
                             id={`btn_${rowIndex}_-1`}
                             className='line-clamp-1 w-full h-full bg-transparent rounded-none border border-transparent focus:outline-none focus:after:bg-blue-600 text-left px-1.5 py-0.5'
-                            onKeyUp={(e) => {
-                                handleKeyButton(e, state + 2, rowIndex, -1)
-                            }}
-                            onFocus={() => {
-                                document.getElementById(`btn_${rowIndex}_-1`).style.borderColor = 'blue';
-                                setCurrentRow(rowIndex);
-                            }}
-                            onBlur={() => {
-                                document.getElementById(`btn_${rowIndex}_-1`).style.borderColor = 'transparent';
-                            }}
                         >
                         </button>
                     </td>
@@ -349,28 +338,13 @@ export default function BangChamCong() {
                                 return (
                                     <td
                                         id={`${rowIndex + state + 1}${columnIndex}`}
-                                        className={`${currentRow == rowIndex + state + 1 ? 'bg-sky-200' : 'bg-red-50'} topRightPopup`}
+                                        className='bg-red-50 topRightPopup'
                                         style={{ borderRightColor: 'black' }}
                                     >
                                         <button
                                             id={`btn_${rowIndex + state + 1}_${columnIndex}`}
                                             type="button"
                                             className={`w-full h-full absolute top-0 left-0 bg-transparent rounded-none text-center border border-transparent focus:outline-none focus:after:bg-blue-600`}
-                                            onDoubleClick={() => {
-                                                handleEdit(0, rowIndex + state + 1, columnIndex)
-                                            }}
-                                            onKeyUp={(e) => {
-                                                handleKeyButton(e, array.length, rowIndex + state + 1, columnIndex)
-                                            }}
-                                            onFocus={() => {
-                                                let index = rowIndex + state + 1;
-                                                document.getElementById(`btn_${index}_${columnIndex}`).style.borderColor = 'blue';
-                                                setCurrentRow(rowIndex + state + 1);
-                                            }}
-                                            onBlur={() => {
-                                                let index = rowIndex + state + 1;
-                                                document.getElementById(`btn_${index}_${columnIndex}`).style.borderColor = 'transparent';
-                                            }}
                                         >
                                         </button>
                                         <input
@@ -379,15 +353,6 @@ export default function BangChamCong() {
                                             name={`input_${rowIndex + state + 1}_${columnIndex}`}
                                             value={''}
                                             className='min-w-0 w-full bg-transparent h-full absolute top-0 left-0 text-center hidden border border-transparent focus:outline-none'
-                                            onKeyUp={(e) => {
-                                                if (e.key == "Enter") {
-                                                    document.getElementsByName(`input_${rowIndex + state + 1}_${columnIndex}`)[0].blur();
-                                                    document.getElementById(`btn_${rowIndex + state + 1 < 6 ? rowIndex + state + 1 + 1 : rowIndex + state + 1}_${columnIndex}`).focus();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                handleEdit(1, rowIndex + state + 1, columnIndex)
-                                            }}
                                         />
                                         {renderSide(rowIndex + state + 1, columnIndex)}
                                     </td>
@@ -396,27 +361,12 @@ export default function BangChamCong() {
                                 return (
                                     <td
                                         id={`${rowIndex + state + 1}${columnIndex}`}
-                                        className={`${currentRow == rowIndex + state + 1 ? 'bg-sky-200' : 'bg-yellow-50'} topRightPopup`}
+                                        className='bg-yellow-50 topRightPopup'
                                     >
                                         <button
                                             id={`btn_${rowIndex + state + 1}_${columnIndex}`}
                                             type="button"
                                             className={`w-full h-full absolute top-0 left-0 bg-transparent rounded-none text-center border border-transparent focus:outline-none focus:after:bg-blue-600`}
-                                            onDoubleClick={() => {
-                                                handleEdit(0, rowIndex + state + 1, columnIndex)
-                                            }}
-                                            onKeyUp={(e) => {
-                                                handleKeyButton(e, array.length, rowIndex + state + 1, columnIndex)
-                                            }}
-                                            onFocus={() => {
-                                                let index = rowIndex + state + 1;
-                                                document.getElementById(`btn_${index}_${columnIndex}`).style.borderColor = 'blue';
-                                                setCurrentRow(rowIndex + state + 1);
-                                            }}
-                                            onBlur={() => {
-                                                let index = rowIndex + state + 1;
-                                                document.getElementById(`btn_${index}_${columnIndex}`).style.borderColor = 'transparent';
-                                            }}
                                         >
                                         </button>
                                         <input
@@ -425,15 +375,6 @@ export default function BangChamCong() {
                                             name={`input_${rowIndex + state + 1}_${columnIndex}`}
                                             value={''}
                                             className='min-w-0 w-full bg-transparent h-full absolute top-0 left-0 text-center hidden border border-transparent focus:outline-none'
-                                            onKeyUp={(e) => {
-                                                if (e.key == "Enter") {
-                                                    document.getElementsByName(`input_${rowIndex + state + 1}_${columnIndex}`)[0].blur();
-                                                    document.getElementById(`btn_${rowIndex + state + 1 < 6 ? rowIndex + state + 1 + 1 : rowIndex + state + 1}_${columnIndex}`).focus();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                handleEdit(1, rowIndex + state + 1, columnIndex)
-                                            }}
                                         />
                                         {renderSide(rowIndex + state + 1, columnIndex)}
                                     </td>
@@ -442,27 +383,12 @@ export default function BangChamCong() {
                                 return (
                                     <td
                                         id={`${rowIndex + state + 1}${columnIndex}`}
-                                        className={`${currentRow == rowIndex + state + 1 ? 'bg-sky-200' : ''} topRightPopup`}
+                                        className='topRightPopup'
                                     >
                                         <button
                                             id={`btn_${rowIndex + state + 1}_${columnIndex}`}
                                             type="button"
                                             className={`w-full h-full absolute top-0 left-0 bg-transparent rounded-none text-center border border-transparent focus:outline-none focus:after:bg-blue-600`}
-                                            onDoubleClick={() => {
-                                                handleEdit(0, rowIndex + state + 1, columnIndex)
-                                            }}
-                                            onKeyUp={(e) => {
-                                                handleKeyButton(e, array.length, rowIndex + state + 1, columnIndex)
-                                            }}
-                                            onFocus={() => {
-                                                let index = rowIndex + state + 1;
-                                                document.getElementById(`btn_${index}_${columnIndex}`).style.borderColor = 'blue';
-                                                setCurrentRow(rowIndex + state + 1);
-                                            }}
-                                            onBlur={() => {
-                                                let index = rowIndex + state + 1;
-                                                document.getElementById(`btn_${index}_${columnIndex}`).style.borderColor = 'transparent';
-                                            }}
                                         >
                                         </button>
                                         <input
@@ -471,15 +397,6 @@ export default function BangChamCong() {
                                             name={`input_${rowIndex + state + 1}_${columnIndex}`}
                                             value={''}
                                             className='min-w-0 w-full bg-transparent h-full absolute top-0 left-0 text-center hidden border border-transparent focus:outline-none'
-                                            onKeyUp={(e) => {
-                                                if (e.key == "Enter") {
-                                                    document.getElementsByName(`input_${rowIndex + state + 1}_${columnIndex}`)[0].blur();
-                                                    document.getElementById(`btn_${rowIndex + state + 1 < 6 ? rowIndex + state + 1 + 1 : rowIndex + state + 1}_${columnIndex}`).focus();
-                                                }
-                                            }}
-                                            onBlur={() => {
-                                                handleEdit(1, rowIndex + state + 1, columnIndex)
-                                            }}
                                         />
                                         {renderSide(rowIndex + state + 1, columnIndex)}
                                     </td>

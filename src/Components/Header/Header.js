@@ -13,6 +13,7 @@ import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/M
 import { dvccService } from '../../services/dvccService';
 import { setNewNoti } from '../../Redux-toolkit/reducer/DuyetAppSlice';
 import { localStorageService } from '../../services/localStorageService';
+import Bussiness from '../Bussiness/Bussiness';
 
 export default function Header() {
 
@@ -116,7 +117,7 @@ export default function Header() {
     })
   }
 
-  return (
+  return (<div>
     <div
       id='Header'
       className='w-full h-12 flex justify-between items-center gap-x-4 bg-white z-[100] shadow-md'
@@ -165,5 +166,6 @@ export default function Header() {
       </button>
 
     </div>
+    <Bussiness/></div>
   )
 }

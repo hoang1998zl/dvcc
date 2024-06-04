@@ -5,33 +5,17 @@ import home01 from "../../issets/img/home2.png";
 import home02 from "../../issets/img/home_hover.png";
 import quanlychamcong01 from "../../issets/img/icon/quanlychamcong02.png";
 import quanlychamcong02 from "../../issets/img/icon/quanlychamcong03.png";
-import quanlytailieu01 from "../../issets/img/icon/quanlytailieu02.png";
-import quanlytailieu02 from "../../issets/img/icon/quanlytailieu03.png";
 import { useDispatch, useSelector } from 'react-redux';
-import { KJUR } from "jsrsasign";
 import { setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
 
 export default function Bussiness() {
 
   const dispatch = useDispatch();
 
-  const dataCty = useSelector((state) => state.UserSlice.congTy);
   const isOpenBusiness = useSelector((state) => state.MenuSlice.isOpenBusiness);
 
-  const [token1, setToken1] = useState(null);
   let [currentHoverApp, setCurrentHoverApp] = useState(null);
 
-  useEffect(() => {
-    const header = { alg: "HS256", typ: "JWT" };
-    const data = { user_email: dataCty.email };
-    const secretKey = "FM06112023";
-
-    const sHeader = JSON.stringify(header);
-    const sPayload = JSON.stringify(data);
-    const sJWT = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, secretKey);
-
-    setToken1(sJWT);
-  }, [isOpenBusiness]);
 
   const LstApp = [
     {
@@ -41,14 +25,6 @@ export default function Bussiness() {
       icon: home01,
       icon_hover: home02,
       link: 'http://weos.vn'
-    },
-    {
-      id: 2,
-      name: `Chứng Thực`,
-      name_: 'Tài Liệu',
-      icon: quanlytailieu01,
-      icon_hover: quanlytailieu02,
-      link: `https://file.weos.vn/?login=${token1}`
     },
     {
       id: 3,
@@ -89,7 +65,7 @@ export default function Bussiness() {
             />
           </div>
           <span
-            className={`mt-1 ${currentHoverApp == item.id ? 'text-orange-400' : 'text-gray-900'}`}
+            className={`mt-1 text-center ${currentHoverApp == item.id ? 'text-orange-400' : 'text-gray-900'}`}
           >
             {item.name}<br />
             {item.name_}
@@ -128,41 +104,6 @@ export default function Bussiness() {
 
           <div className='grid grid-cols-3 gap-2 p-2'>
             {renderApp()}
-          </div>
-        </div>
-        <div className='w-full border rounded-lg mb-4 2xl:text-base'>
-          <h1 className='font-semibold text-[18px] lg:text-[16px] 2xl:text-[20px] text-left border-b py-5 px-4'>
-            Liên kết thương mại
-          </h1>
-
-          <div className='grid grid-cols-1 gap-y-2 2xl:gap-y-4 py-4'>
-            <button
-              type="button"
-              className='w-full flex flex-col items-start px-4 py-0.5 font-semibold text-left'
-            >
-              Lớp học hướng dẫn dùng App
-              <span className='text-gray-700 font-normal'>
-                Hướng dẫn sử dụng App định vị chấm công
-              </span>
-            </button>
-            <button
-              type="button"
-              className='w-full flex flex-col items-start px-4 py-0.5 font-semibold text-left'
-            >
-              Yêu cầu chỉnh sửa bảng lương theo ý
-              <span className='text-gray-700 font-normal'>
-                Tính theo giờ công yêu cầu
-              </span>
-            </button>
-            <button
-              type="button"
-              className='w-full flex flex-col items-start px-4 py-0.5 font-semibold text-left'
-            >
-              Đăng ký tuyển dụng giúp bạn
-              <span className='text-gray-700 font-normal'>
-                Đăng ký tuyển dụng miễn phí
-              </span>
-            </button>
           </div>
         </div>
       </div>
