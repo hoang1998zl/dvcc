@@ -183,7 +183,7 @@ export default function LichSuNghiPhep() {
           />
           <p className='w-max flex-1 text-left'>
             <strong>{phep?.ns_nhanvien_dvcc_phep_nghi_nv_idTons_nhanvien?.nv_name} </strong>
-            <span>đã xin <b>{phep?.loai_phep_nghi == 0 ? "Nghỉ Không Phép" : "Nghỉ Có Phép"}</b></span>
+            <span>đã xin <b>{phep?.loai_nghi_phep == 0 ? "Nghỉ Không Phép" : "Nghỉ Có Phép"}</b></span>
           </p>
           <p className='text-right'>
             <p className='text-orange-400 font-semibold'>{moment(phep?.thoigian).format("HH:mm")}</p>
