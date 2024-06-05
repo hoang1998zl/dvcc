@@ -145,6 +145,10 @@ export default function BangChamCongMenu() {
             {
               value: 1,
               label: "Đăng ký - duyệt ca"
+            },
+            {
+              value: 2,
+              label: "Tăng Ca"
             }
           ]}
         />

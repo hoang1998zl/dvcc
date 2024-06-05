@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BangChamCong from './BangChamCong/BangChamCong'
 import { useSelector } from 'react-redux';
 import BangCongParttime from './BangCongParttime/BangCongParttime';
+import BangCongTangCa from './BangCongTangCa/BangCongTangCa';
 // import ChamCongDetail from './ChamCongDetail/ChamCongDetail';
 // import BaoCaoChamCong from './BaoCaoChamCong/BaoCaoChamCong';
 
@@ -27,6 +28,15 @@ export default function ChamCong() {
     }
   }, [])
 
+  let renderContent = () => {
+    switch (chamCong) {
+      case 0: return <BangChamCong />
+      case 1: return <BangCongParttime></BangCongParttime>
+      case 2: return <BangCongTangCa/>
+      default: <BangChamCong />
+        break;
+    }
+  }
   return (
     <div
       id='chamCong'
@@ -36,7 +46,7 @@ export default function ChamCong() {
       // }}
     >
       {
-        chamCong == 0 ? <BangChamCong /> : <BangCongParttime></BangCongParttime>
+        renderContent()
       }
       
       {/* <div
