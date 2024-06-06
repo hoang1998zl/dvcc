@@ -208,7 +208,7 @@ export default function NghiKhac() {
             </p>
           </td>
           <td className='relative min-w-[230px]'>
-            <p>{nghiKhac?.ns_nhanvien_dvcc_nghi_khac_nv_idTons_nhanvien?.nv_name}</p>
+            <p>{nghiKhac?.ns_nhanvien_dvcc_nghi_khac_nguoi_duyetTons_nhanvien?.nv_name}</p>
             {/* <span className='w-max text-xs absolute bottom-1 right-1'>
               Đã nhận lúc <span className='border border-gray-300 rounded-full w-4 h-4 inline-block'>1</span>: 07:30 - 01/01/2023
             </span> */}
