@@ -8,6 +8,7 @@ import { localStorageService } from '../../../services/localStorageService';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import icon_excel from '../../../issets/img/icon/excel.png'
 import { isNull } from 'lodash';
+import { toast } from 'react-toastify';
 
 export default function BangCongTangCa() {
     let token = localStorageService.getItem("token");
@@ -31,7 +32,7 @@ export default function BangCongTangCa() {
         }).catch((err) => {
             console.log(err);
         })
-    },[month,year,danhmuc_id])
+    },[month,year,danhmuc_id,reload])
     let changeInput = (key,value,index) => {
         value = value.replace(/[^\d.-]/g, '');
         let clone = [...ngayCong];
@@ -62,7 +63,7 @@ export default function BangCongTangCa() {
         }  
         clone[index][key] = value;
         setNgayCong(clone);
-      }
+    }
     const getChiTietNgay = (index,nv_id) => {
         index++;
         if(index < 10){
@@ -75,6 +76,24 @@ export default function BangCongTangCa() {
         }).catch((err) => {
             console.log(err);
         })
+    }
+    let updateTangCa = (index,nv_id,time) => {
+        chamCongService.updateTangCa(token,ngayCong[index]).then((res) => {
+            setReload(Date.now());
+            toast.success("Cập nhật thành công!!!", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+        }).catch((err) => {
+            toast.error(err.response.data.content, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+            console.log(err);
+        })
+        let indexNgay = moment(time,"YYYY-MM-DD").format("DD");
+        indexNgay = Number(indexNgay) - 1;
+        getChiTietNgay(indexNgay,nv_id)
     }
     const handleOpenNhatKy = (bollean) => {
         setIsOpenNhatKy(bollean);
@@ -257,7 +276,7 @@ export default function BangCongTangCa() {
                     <div className='py-1'><Input onChange={(e) => changeInput(e.target.name,e.target.value,index)} name='tong_gio_cong' value={item?.tong_gio_cong} /></div>
                     </div>
                     <div>
-                        <button className='bg-orange-500 text-white px-2 py-1 rounded-md mt-2'>Lưu</button>
+                        <button onClick={() => updateTangCa(index,item?.nv_id,item?.ngay_bat_dau)} className='bg-orange-500 text-white px-2 py-1 rounded-md mt-2'>Lưu</button>
                     </div>
                 </div>
         })

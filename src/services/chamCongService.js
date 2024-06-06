@@ -237,4 +237,14 @@ export const  chamCongService = {
             }
         })
     },
+    updateTangCa: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/bang-cong/post/cap-nhat-tang-ca",
+            method: "POST",
+            data,
+            headers:{
+                token
+            }
+        })
+    }
 }
