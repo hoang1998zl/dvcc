@@ -14,7 +14,7 @@ export default function TaoCongThuc() {
     let dispatch = useDispatch();
     
     let [cotList, setCotList] = useState([]);
-    const regex = /[^A-Z0-9%.+\-*/()]|([+\-*/])(?=[+\-*/)])|([A-Z0-9])([(])|([)])([A-Z0-9])|([(])([*/])/g;
+    const regex = /[^A-Z0-9%^.+\-*/()]|([+\-*/^])(?=[+\-*/^%)])|([A-Z0-9])([(])|([)])([A-Z0-9])|([(])([*/])/g;
 
     const typeList = [{cot_type:1,type_name:'Lương'},{cot_type:2,type_name:'Phúc lợi'},{cot_type:5,type_name:'Tổng thu nhập'},{cot_type:3,type_name:'Khấu trừ'},{cot_type:6,type_name:'Tổng khấu trừ'},{cot_type:4,type_name:'Thông tin thêm'},/*{cot_type:7,type_name:'Thực nhận'},*/{cot_type:8,type_name:'Ẩn với nhân viên'},{cot_type:9,type_name:'Ngày'}];
     let [reloadCot, setReloadCot] = useState();
@@ -251,7 +251,7 @@ export default function TaoCongThuc() {
                     <p><span style={{ color: "red", fontWeight: "600" }}>**2.</span> Công thức bao gồm:</p>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;- Ký hiệu các Macro liên quan</p>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;- Số</p>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;- Các phép tính: cộng [+], trừ [-], nhân [*], chia [/], lũy thừa [**]</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;- Các phép tính: cộng [+], trừ [-], nhân [*], chia [/], lũy thừa [^]</p>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;- Ký hiệu phần trăm [%]</p>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;- Dấu ngoặc đơn [()]</p>
                     <p><span style={{ color: "red", fontWeight: "600" }}>**3.</span> Công thức đúng là công thức thỏa mãn điều kiện về mặt công thức toán học</p>

@@ -1,68 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-
-import home01 from "../../issets/img/home2.png";
-import home02 from "../../issets/img/home_hover.png";
-import quanlychamcong01 from "../../issets/img/icon/quanlychamcong02.png";
-import quanlychamcong02 from "../../issets/img/icon/quanlychamcong03.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
+import { GiNotebook } from "react-icons/gi";
+import { LiaMoneyCheckAltSolid } from "react-icons/lia";
 
-export default function Bussiness() {
-
+export default function Bussiness({logoutComponent}) {
   const dispatch = useDispatch();
-
   const isOpenBusiness = useSelector((state) => state.MenuSlice.isOpenBusiness);
-
-  let [currentHoverApp, setCurrentHoverApp] = useState(null);
-
-
+  const currentMenu = useSelector((state)=> state.MenuSlice.currentMenu);
   const LstApp = [
     {
-      id: 1,
       name: 'Macro Lương',
-      icon: home01,
-      icon_hover: home02,
+      icon: <GiNotebook />,
       menuID: 7,
     },
     {
-      id: 3,
       name: 'Bảng lương',
-      icon: quanlychamcong01,
-      icon_hover: quanlychamcong02,
+      icon: <LiaMoneyCheckAltSolid />,
       menuID: 8,
     },
   ];
-
   const renderApp = () => {
     return LstApp.map((item) => {
       return (
         <a
-          key={item.id}
           type='button'
-          className={`flex flex-col justify-start items-center cursor-pointer text-gray-900`}
-          onMouseEnter={() => {
-            setCurrentHoverApp(item.id);
-          }}
-          onMouseLeave={() => {
-            setCurrentHoverApp(null);
-          }}
+          className={`flex flex-col justify-start items-center cursor-pointer hover:text-orange-400 [&>*:first-child]:hover:shadow-lg [&>*:first-child]:hover:border-orange-400 ${currentMenu==item.menuID?'text-orange-400':'text-gray-500'}`}
           onClick={()=>{dispatch(setCurrentMenu(item.menuID));dispatch(setIsOpenBusiness(false))}}
         >
           <div
-            className={`w-12 h-12 p-1 rounded-md border flex justify-center items-center ${currentHoverApp == item.id ? 'text-orange-400' : 'text-sky-400'}`}
-            style={{
-              boxShadow: currentHoverApp == item.id ? "0px 2px 2px 0 rgba(0, 0, 0, 0.7)" : "none"
-            }}
+            className={`w-12 h-12 p-1 rounded-md border flex justify-center items-center text-2xl ${currentMenu==item.menuID&&'border-orange-400'}`}
           >
-            <img
-              className='w-8 h-8 object-contain'
-              src={currentHoverApp == item.id ? item.icon_hover : item.icon}
-              alt={''}
-            />
+            {item.icon}
           </div>
           <span
-            className={`mt-1 text-center ${currentHoverApp == item.id ? 'text-orange-400' : 'text-gray-900'}`}
+            className={`mt-1 text-center`}
           >
             {item.name}<br />
           </span>
@@ -77,7 +50,7 @@ export default function Bussiness() {
         onClick={() => dispatch(setIsOpenBusiness(false))}
       ></div>
       <div
-        className={`${isOpenBusiness == true ? 'w-full md:w-1/2 lg:w-1/3 2xl:w-1/5 p-4' : 'w-0 p-0'} h-[calc(100vh-4rem-1rem)] fixed top-16 right-0 overflow-y-auto rounded-lg lg:rounded-r-none bg-white transition-all delay-75 duration-100 ease-linear z-[1000]`}
+        className={`${isOpenBusiness == true ? 'w-full md:w-1/2 lg:w-1/3 2xl:w-1/5 p-4' : 'w-0 p-0'} h-[calc(100vh-4rem-1rem)] fixed top-16 right-0 overflow-y-auto rounded-lg lg:rounded-r-none bg-white transition-all delay-75 duration-100 ease-linear z-[1000] flex flex-col`}
       >
         <div className='w-full gap-x-2 flex justify-center items-end mb-6 lg:mb-6 2xl:mb-12'>
           <h1 className='text-2xl lg:text-xl 2xl:text-2xl text-left flex-1'>
@@ -95,12 +68,15 @@ export default function Bussiness() {
         </div>
         <div className='w-full border rounded-lg mb-4'>
           <h1 className='hidden lg:block font-semibold text-[18px] lg:text-[16px] 2xl:text-[20px] text-left border-b py-5 px-4'>
-            Ứng dụng liên quan
+            Ứng dụng mở rộng
           </h1>
 
-          <div className='grid grid-cols-3 gap-2 p-2'>
+          <div className='grid grid-cols-2 gap-2 p-2'>
             {renderApp()}
           </div>
+        </div>
+        <div className='flex justify-center text-3xl mt-auto border-t-2 border-gray-300'>
+          {logoutComponent()}
         </div>
       </div>
     </>

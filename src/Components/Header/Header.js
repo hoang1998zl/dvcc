@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../issets/img/logo_orange.jpg'
 
 import { IoCube } from "react-icons/io5";
-import { FaArrowUpRightDots, FaGear, FaRegCalendarCheck, FaUser } from "react-icons/fa6";
+import { FaArrowUpRightDots, FaGear, FaLocationDot, FaUser } from "react-icons/fa6";
 import { LuClock3 } from "react-icons/lu";
-import { FaLocationDot } from "react-icons/fa6";
+import { HiOutlineLogout } from "react-icons/hi";
 
 import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
 import { dvccService } from '../../services/dvccService';
@@ -130,6 +130,25 @@ export default function Header() {
       )
     })
   }
+  const logoutComponent = () => {
+    return <button
+      type="button"
+      onClick={() => {
+        localStorageService.removeItem("token");
+        window.location.href = "https://labortracking.vn";
+      }}
+      className={`h-full text-gray-600 focus:outline-none px-2 hover:text-orange-400`}
+    >
+      <div className='flex justify-center'>
+        <HiOutlineLogout/>
+      </div>
+      <div className='text-xs'>
+        <span>
+          Đăng xuất
+        </span>
+      </div>
+    </button>
+  }
 
   return (<div>
     <div
@@ -160,13 +179,13 @@ export default function Header() {
       <ul className='flex-1 h-full hidden lg:flex justify-center items-center gap-x-2'>
         {renderMenuHeader()}
       </ul>
-
-      {permission=='PREMIUM' && (<button
+      {permission!=='PREMIUM' &&(<div className='text-2xl border-s-2 border-gray-300'>{logoutComponent()}</div>)}
+      {permission==='PREMIUM' && (<button
         type="button"
         onClick={() => {
           dispatch(setIsOpenBusiness(!isOpenBusiness));
         }}
-        className='h-full text-gray-600 focus:outline-none px-2 border-s-2 border-gray-300'
+        className={`h-full text-gray-600 focus:outline-none px-2 border-s-2 border-gray-300 hover:text-orange-400 ${(currentMenu===7||currentMenu===8)&&'text-orange-400'}`}
       >
         <div className='text-xl leading-6'>
           <i className="fa-solid fa-ellipsis-vertical"></i>
@@ -180,6 +199,6 @@ export default function Header() {
       </button>)}
       {autoReload()}
     </div>
-    {permission=='PREMIUM' && (<Bussiness/>)}</div>
+    {permission==='PREMIUM' && (<Bussiness logoutComponent={logoutComponent}/>)}</div>
   )
 }

@@ -5,7 +5,7 @@ import TaoCongThuc from '../TaoCongThuc/TaoCongThuc';
 import '../../../issets/css/CustomTab.css';
 import SaveIcon from '@mui/icons-material/Save';
 import { toast } from 'react-toastify';
-import { Popconfirm } from 'antd';
+import { Popconfirm, Modal } from 'antd';
 
 export default function BangThongSo() {
     let token = localStorageService.getItem("token");
@@ -13,6 +13,7 @@ export default function BangThongSo() {
     let [macroList,setMacroList] = useState([]);
     let [reloadMacro, setReloadMacro] = useState();
     let [newMacro, setNewMacro] = useState({});
+    const [open, setOpen] = useState(false);
     let resetNewMacro = () => {
         setNewMacro({
             macro_name: '',
@@ -29,7 +30,13 @@ export default function BangThongSo() {
                 console.log(err);
             });
         resetNewMacro();
-    }, [reloadMacro])
+    }, [reloadMacro]);
+    const showModal = () => {
+        setOpen(true);
+    };
+    const handleCancel = () => {
+        setOpen(false);
+    };
     const checkNullValues = (obj) => {
         for (let key in obj) {
           if (!obj[key]) {
@@ -50,8 +57,7 @@ export default function BangThongSo() {
     };
     const changeInput = (index, field, value) => {
         if(field=='macro_kyhieu'){
-            value = value.substring(0, 5);
-            value = value.replace(regex, "");
+            value = value.substring(0, 5).replace(/^\d+/, '').replace(regex, "");
         }
         let clone;
         if(index < 0) {
@@ -147,9 +153,18 @@ export default function BangThongSo() {
     }
 
     return (
-        <div id='bangThongSo' className='grid grid-cols-1 xl:grid-cols-2 gap-4 max-h-[calc(100vh-11.5rem)] overflow-y-auto'>
-            <div className='bg-white rounded-lg p-4'>
-                <h1 className='text-left font-bold mb-2 text-lg uppercase text-orange-400'>Bảng Macro hệ thống</h1>
+        <div id='bangThongSo' className='grid grid-cols-1 xl:grid-cols-2 gap-4'>
+            <div className='bg-white rounded-lg p-4 max-h-[calc(100vh-11.5rem)] overflow-y-auto customScrollbar'>
+                <div className='w-full relative'>
+                    <h1 className='text-left font-bold mb-2 text-lg uppercase text-orange-400'>Bảng Macro hệ thống</h1>
+                    <button
+                        type="button"
+                        className='w-6 h-6 rounded-full border border-sky-400 text-sky-400 bg-white hover:bg-sky-400 hover:text-white bg-opacity-70 self-center focus:outline-none absolute top-1/2 right-0 -translate-y-1/2'
+                        onClick={showModal}
+                    >
+                        <i class="fa-solid fa-question"></i>
+                    </button>
+                </div>
                 <div className='w-full overflow-auto rounded'>
                     <table className='customTable w-max min-w-full mx-auto'>
                         <thead className='leading-8'>
@@ -215,7 +230,7 @@ export default function BangThongSo() {
                                 })
                                 :''
                             }
-                            <tr>
+                            <tr className='addRow'>
                                 <td>
                                     <button
                                         type='button'
@@ -240,8 +255,30 @@ export default function BangThongSo() {
                         </tbody>
                     </table>
                 </div>
+                <Modal
+                    open={open}
+                    onCancel={handleCancel}
+                    title={<p className='text-lg'>Tạo Macro lương</p>}
+                    footer={[]}
+                >
+                    <div className='text-base'>
+                        <p><span style={{ color: "red", fontWeight: "600" }}>**1.</span> Macro lương dùng để thể hiện các thuộc tính cấu thành nên bảng lương. Ví dụ như: ngày công, giờ công, phụ cấp,...</p>
+                        <p><span style={{ color: "red", fontWeight: "600" }}>**2.</span> Ký hiệu Macro lương được quy ước gồm:</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- Chữ in hoa không dấu</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- Số</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- Ký tự đầu tiên phải là một chữ in hoa</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- Hiện tại chỉ cho phép tối đa gồm 5 ký tự</p>
+                        <p><span style={{ color: "red", fontWeight: "600" }}>**3.</span> Ví dụ một số ký hiệu đúng là:</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- TGCHT</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- NCHT</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- PC1</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- PC2</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;- PC3</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;...</p>
+                    </div>
+                </Modal>
             </div>
-            <div className='bg-white rounded-lg p-4'>
+            <div className='bg-white rounded-lg p-4 max-h-[calc(100vh-11.5rem)] overflow-y-auto customScrollbar'>
                 <TaoCongThuc/>
             </div>
         </div>
