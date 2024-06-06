@@ -76,7 +76,7 @@ export default function Bussiness({logoutComponent}) {
           </div>
         </div>
         <div className='flex justify-center text-3xl mt-auto border-t-2 border-gray-300'>
-          {logoutComponent()}
+          <div className='pt-2'>{logoutComponent()}</div>
         </div>
       </div>
     </>
