@@ -193,7 +193,7 @@ export default function Header() {
           <i className="fa-solid fa-ellipsis-vertical"></i>
         </div>
         <span className='-pt-3 block capitalize text-xs'>
-          for business
+          For PREMIUM
           <i className='fa-solid fa-caret-down ms-1'></i>
         </span>
       </button>)}

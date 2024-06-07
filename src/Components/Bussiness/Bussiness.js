@@ -54,8 +54,8 @@ export default function Bussiness({logoutComponent}) {
         className={`${isOpenBusiness == true ? 'w-full md:w-1/2 lg:w-1/3 2xl:w-1/5 p-4' : 'w-0 p-0'} h-[calc(100vh-4rem-1rem)] fixed top-16 right-0 overflow-y-auto rounded-lg lg:rounded-r-none bg-white transition-all delay-75 duration-100 ease-linear z-[1000] flex flex-col`}
       >
         <div className='w-full gap-x-2 flex justify-center items-end mb-6 lg:mb-6 2xl:mb-12'>
-          <h1 className='text-2xl lg:text-xl 2xl:text-2xl text-left flex-1'>
-            For Business
+          <h1 className='text-2xl lg:text-xl 2xl:text-2xl text-left flex-1 text-orange-400'>
+            PREMIUM MODE
           </h1>
           <button
             type="button"
