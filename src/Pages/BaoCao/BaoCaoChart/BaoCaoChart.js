@@ -94,10 +94,10 @@ export default function BaoCaoChart() {
           <div className={`p-2 delay-500 w-full transform ${currentIndex.index == index ?"translate-y-0":"translate-y-full"} h-full
            bg-white absolute left-0 top-0 z-50 rounded-lg transition-all duration-300`}>
             <div className='w-full h-full overflow-y-auto customScrollbar'>
-              <h2 className='text-blue-500 font-medium'>Online: </h2>
-              {renderOnline()}
               <h2 className='text-gray-500 font-medium'>Offline: </h2>
               {renderOffline()}
+              <h2 className='text-blue-500 font-medium'>Online: </h2>
+              {renderOnline()}
             </div>
           </div> 
           <p
