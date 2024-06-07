@@ -106,16 +106,24 @@ export default function NhatKyChinhSua() {
       )
     })
   }
+  let renderNgay = (log) => {
+    switch(log?.log_field){
+      case "phep_dauthang": return "Phép Tháng Trước";
+      case "phep_congthem": return "Phép Cộng Thêm";
+      default: return log?.log_field.slice(1) + "/" + log?.ns_nhanvien_bangluongchinh?.fMonth + "/" + log?.ns_nhanvien_bangluongchinh?.fYear;
+    }
+  }
   let renderLog = () => {
     return logList.map((log,index) => {
       return <tr className='addRow'>
       <td className='hidden md:table-cell text-center'>{index + 1}</td>
       <td className='text-left'>
         <p>{log?.ns_nhanvien_bangluongchinh?.ns_nhanvien?.nv_name}</p>
-        {log?.log_field === "phep_dauthang" ? <p className='md:hidden'>Phép Tháng Trước</p>: <p className='md:hidden'>{log?.log_field.slice(1)}/{log?.ns_nhanvien_bangluongchinh?.fMonth}/{log?.ns_nhanvien_bangluongchinh?.fYear} </p>}
+        {/* {log?.log_field === "phep_dauthang" ? <p className='md:hidden'>Phép Tháng Trước</p>: <p className='md:hidden'>{log?.log_field.slice(1)}/{log?.ns_nhanvien_bangluongchinh?.fMonth}/{log?.ns_nhanvien_bangluongchinh?.fYear} </p>} */}
       </td>
-      {log?.log_field === "phep_dauthang" ? <td className='hidden md:table-cell'>Phép Đầu Tháng</td> : 
-      <td className='hidden md:table-cell'>{log?.log_field === "phep_dauthang" ? "Phép Tháng Trước" : log?.log_field.slice(1)}/{log?.ns_nhanvien_bangluongchinh?.fMonth}/{log?.ns_nhanvien_bangluongchinh?.fYear}</td>}
+      {/* {log?.log_field === "phep_dauthang" ? <td className='hidden md:table-cell'>Phép Đầu Tháng</td> :  */}
+      {/* <td className='hidden md:table-cell'>{log?.log_field === "phep_dauthang" ? "Phép Tháng Trước" : log?.log_field.slice(1)}/{log?.ns_nhanvien_bangluongchinh?.fMonth}/{log?.ns_nhanvien_bangluongchinh?.fYear}</td>} */}
+      <td>{renderNgay(log)}</td>
       <td>{log?.log_oldvalue == "null" ? "" : log?.log_oldvalue}</td>
       <td>{log?.log_newvalue == "null" ? "" : log?.log_newvalue}</td>
       <td className='hidden md:table-cell'><p className='line-clamp-3'>{log?.chu_thich}</p></td>
