@@ -44,7 +44,7 @@ export default function BangLuongTong() {
   }, [month,year,danhmuc_id]);
   useEffect(()=>{
     let tmp = [];
-    for(let i = 1;i<10;i++){
+    for(let i = 1;i<11;i++){
       tmp?.push([]);
     };
     bangLuongList?.columns?.map((item,index)=>{
