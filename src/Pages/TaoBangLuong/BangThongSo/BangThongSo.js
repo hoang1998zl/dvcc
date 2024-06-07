@@ -162,23 +162,25 @@ export default function BangThongSo() {
                         className='w-6 h-6 rounded-full border border-sky-400 text-sky-400 bg-white hover:bg-sky-400 hover:text-white bg-opacity-70 self-center focus:outline-none absolute top-1/2 right-0 -translate-y-1/2'
                         onClick={showModal}
                     >
-                        <i class="fa-solid fa-question"></i>
+                        <i className="fa-solid fa-question"></i>
                     </button>
                 </div>
                 <div className='w-full overflow-auto rounded'>
                     <table className='customTable w-max min-w-full mx-auto'>
                         <thead className='leading-8'>
-                            <th>STT</th>
-                            <th>Tên Macro</th>
-                            <th className='w-[80px]'>Ký Hiệu</th>
-                            <th className='hidden lg:table-cell'>Ý Nghĩa</th>
-                            <th>Nguồn dữ liệu</th>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Macro</th>
+                                <th className='w-[80px]'>Ký Hiệu</th>
+                                <th className='hidden lg:table-cell'>Ý Nghĩa</th>
+                                <th>Nguồn dữ liệu</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {macroList.length > 0?
                                 macroList?.map((item,index) => {
                                     return (
-                                        <tr>
+                                        <tr key={index}>
                                             <td onMouseOver={() => handleMouseOver(item?.macro_id)} onMouseOut={handleMouseOut}>
                                                 {(isHovering==item?.macro_id && item?.macro_nguon == 1)? (
                                                     <Popconfirm

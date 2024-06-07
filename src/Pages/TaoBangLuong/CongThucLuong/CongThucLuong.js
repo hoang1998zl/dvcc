@@ -51,7 +51,7 @@ export default function CongThucLuong() {
       .catch((err) => {
         console.log(err);
       });
-  }, [reload,reloadPage,month,year]);
+  }, [reload,reloadPage,month,year,token]);
   useEffect(()=>{
     if(cotList[0]&&(!(newHTTL?.danhmuc_id) || newHTTL.danhmuc_id<=0)){
       resetNewHTTL();
@@ -231,7 +231,7 @@ export default function CongThucLuong() {
 
   let renderMucLuong = () => {
     return httlList?.map((item, index) => {
-      return <tr>
+      return <tr key={index}>
         <td width={"30%"} className='text-left px-2'>{item?.danhmuc_name}</td>
         <td 
           className='cursor-pointer'
@@ -298,9 +298,11 @@ export default function CongThucLuong() {
         <div className='w-full overflow-x-auto'>
           <table className='customTable text-center'>
             <thead className='leading-8'>
-              <th className='px-2 text-left'>Phòng Ban</th>
-              <th className='px-2 text-left'>Thứ tự các cột hiển thị trong lương</th>
-              <th className='px-2 text-left'>Công thức tính cột "THỰC LÃNH"</th>
+              <tr>
+                <th className='px-2 text-left'>Phòng Ban</th>
+                <th className='px-2 text-left'>Thứ tự các cột hiển thị trong lương</th>
+                <th className='px-2 text-left'>Công thức tính cột "THỰC LÃNH"</th>
+              </tr>
             </thead>
             <tbody>
               {renderMucLuong()}
@@ -324,16 +326,18 @@ export default function CongThucLuong() {
             <>
               <table className='customTable w-full text-center'>
                 <thead className='leading-8'>
-                  <th className='px-2'>
-                    STT
-                  </th>
-                  <th>Xóa</th>
-                  <th className='px-2'>Tên Cột</th>
+                  <tr>
+                    <th className='px-2'>
+                      STT
+                    </th>
+                    <th>Xóa</th>
+                    <th className='px-2'>Tên Cột</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {httlList[danhmucIndex].ns_bangluong_hienthi_tinhluong[0].map((item,index)=>{
                     return(
-                    <tr>
+                    <tr key={index}>
                       <td>{index+1}</td>
                       <td>
                         <Popconfirm
@@ -401,18 +405,18 @@ export default function CongThucLuong() {
             <>
               <table className='customTable w-full text-center'>
                 <thead className='leading-8'>
-                  <th className='px-2'>
-                    STT
-                  </th>
-                  <th>Xóa</th>
-                  <th className='px-2'>Cộng/Trừ</th>
-                  <th className='px-2'>Hệ số</th>
-                  <th className='px-2'>Tên Cột</th>
+                  <tr>
+                    <th className='px-2'>STT</th>
+                    <th>Xóa</th>
+                    <th className='px-2'>Cộng/Trừ</th>
+                    <th className='px-2'>Hệ số</th>
+                    <th className='px-2'>Tên Cột</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {httlList[danhmucIndex].ns_bangluong_hienthi_tinhluong[1].map((item,index)=>{
                     return(
-                    <tr>
+                    <tr key={index}>
                       <td>{index+1}</td>
                       <td>
                         <Popconfirm

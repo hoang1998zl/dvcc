@@ -25,12 +25,13 @@ export default function LuongChinh({fMonth,fYear}) {
       fMonth,
       fYear
     }
-    macroLuongService.getNhapLieu(token, data).then((res) => {
-      setNhapLieuList(res.data.data);
-      })
-      .catch((err) => {
+    // if(danhmuc_id>0){
+      macroLuongService.getNhapLieu(token, data).then((res) => {
+        setNhapLieuList(res.data.data);
+      }).catch((err) => {
           console.log(err);
       });
+    // }
   }, [fMonth,fYear,danhmuc_id,reloadNhapLieu]);
   let changeData = (index, idx, value) => {
     let clone = [...nhapLieuList];
@@ -69,12 +70,12 @@ export default function LuongChinh({fMonth,fYear}) {
   }
   let renderBangLuong = () => {
     return nhapLieuList.map((item,index) => {
-      return <tr>
+      return <tr key={index}>
         <td className='w-12'>{index + 1}</td>
         <td className='text-left px-2 bg-transparent'>{item.nv_name}</td>
         {item?.ns_bangluong_nhaplieu?.map((itm,idx) => {
             return (
-              <td className='w-[150px]'><input className='w-full focus:outline-none text-center bg-transparent' type="text" value={new Intl.NumberFormat('EN-US').format(itm.value)} onChange={(e) => {
+              <td key={idx} className='w-[150px]'><input className='w-full focus:outline-none text-center bg-transparent' type="text" value={new Intl.NumberFormat('EN-US').format(itm.value)} onChange={(e) => {
                 changeData(index,idx,e.target.value);
               }} onKeyDown={(e) => handleKeyDown(e)} onBlur={() => handleOnBlur(index,idx)} /></td>
             )
@@ -86,15 +87,15 @@ export default function LuongChinh({fMonth,fYear}) {
   return (
     <div id='luongChinh' className='bg-white my-4 w-full overflow-x-auto'>
       <table className='text-center customTable'>
-        <thead>
+        <thead><tr>
           <th className='w-12'>STT</th>
           <th className='text-left px-2'>Nhân Viên</th>
-          {macroList?.map((item) => {
+          {macroList?.map((item,index) => {
             return (
-              <th>{item.macro_name}</th>
+              <th key={index}>{item.macro_name}</th>
             )
           })}
-        </thead>
+        </tr></thead>
         <tbody>
           {renderBangLuong()}
         </tbody>

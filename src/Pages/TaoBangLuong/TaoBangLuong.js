@@ -5,12 +5,10 @@ import BangNhapLieu from './BangNhapLieu/BangNhapLieu';
 import CongThucLuong from './CongThucLuong/CongThucLuong';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { setCTLflag } from '../../Redux-toolkit/reducer/MenuSlice';
+import { useSelector } from 'react-redux';
 
 export default function TaoBangLuong() {
   const { CTLflag } = useSelector(state => state.MenuSlice);
-  let dispatch = useDispatch();
   const items = [
     {
       key: '1',
@@ -28,12 +26,10 @@ export default function TaoBangLuong() {
       children: <CongThucLuong />,
     },
   ];
-  let renderTBL = (
+  return (
     <div id='taoBangLuong' className='m-4 p-4 rounded-lg bg-white shadow-md'>
       <Tabs className='customTab' type='card' defaultActiveKey={CTLflag?'4':'1'} items={items}> </Tabs>
       <ToastContainer/>
     </div>
   );
-  dispatch(setCTLflag(false));
-  return renderTBL;
 }

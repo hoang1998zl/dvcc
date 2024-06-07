@@ -34,7 +34,7 @@ export default function TaoCongThuc() {
                 console.log(err);
             });
         resetNewCot();
-    }, [reloadCot])
+    }, [reloadCot,token])
     const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
@@ -43,7 +43,7 @@ export default function TaoCongThuc() {
         setOpen(false);
     };
     let changeInput = (index, field, value) => {
-        if(field=='cot_congthuc'){
+        if(field==='cot_congthuc'){
             value = value.replace(regex, "");
         }
         let clone;
@@ -86,7 +86,7 @@ export default function TaoCongThuc() {
         });
     }
     const handleKeyDown = (e) => {
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             e.target.blur();
         }
     }
@@ -103,7 +103,7 @@ export default function TaoCongThuc() {
                 setReloadCot(Date.now());
                 dispatch(setReloadPage(Date.now()));
             } else {
-                if(res.data.updatedData.status!='nothingChanged'){
+                if(res.data.updatedData.status!=='nothingChanged'){
                     toast.error(res.data.updatedData.content, {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 2000
@@ -138,7 +138,7 @@ export default function TaoCongThuc() {
 
     let renderCot = () => {
         return cotList?.map((item, index) => {
-            return <tr>
+            return <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
                     <input onChange={(e) => changeInput(index, 'cot_name', e.target.value)} className='w-full focus:outline-none px-2' type="text" value={item?.cot_name} onKeyDown={(e) => handleKeyDown(e)} onBlur={() => handleOnBlur(index)}  /></td>
@@ -189,17 +189,19 @@ export default function TaoCongThuc() {
                         className='w-6 h-6 rounded-full border border-sky-400 text-sky-400 bg-white hover:bg-sky-400 hover:text-white bg-opacity-70 self-center focus:outline-none absolute top-1/2 right-0 -translate-y-1/2'
                         onClick={showModal}
                     >
-                        <i class="fa-solid fa-question"></i>
+                        <i className="fa-solid fa-question"></i>
                     </button>
                 </div>
                 <div className='w-full overflow-auto rounded'>
                     <table className='customTable w-max min-w-full text-center'>
                         <thead className='leading-8'>
-                            <th>STT</th>
-                            <th className='px-2 text-left'>Tên Cột</th>
-                            <th className='px-2 text-left'>Công Thức</th>
-                            <th className='px-2 text-center'>Phân loại</th>
-                            <th className='min-w-[30px]'></th>
+                            <tr>
+                                <th>STT</th>
+                                <th className='px-2 text-left'>Tên Cột</th>
+                                <th className='px-2 text-left'>Công Thức</th>
+                                <th className='px-2 text-center'>Phân loại</th>
+                                <th className='min-w-[30px]'></th>
+                            </tr>
                         </thead>
                         <tbody>
                             {renderCot()}

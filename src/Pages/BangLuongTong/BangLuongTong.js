@@ -37,7 +37,6 @@ export default function BangLuongTong() {
       fYear:year
     }
     macroLuongService.getBangLuong(token, data).then((res) => {
-      console.log(res.data);
       setBangLuongList(res.data);
     }).catch((err) => {
       console.log(err);
@@ -164,9 +163,9 @@ export default function BangLuongTong() {
                     {moment().format('DD-MM-YYYY')}
                   </span>
                 </p>
-                {classify[9]?.map((item)=>{
+                {classify[9]?.map((item,index)=>{
                   return(
-                    <p style={{margin:'4px'}}>
+                    <p key={index} style={{margin:'4px'}}>
                       <span>
                         {item.cot_name}
                       </span>
@@ -192,9 +191,9 @@ export default function BangLuongTong() {
                 </b>
               </div>
               <div style={{clear: 'both',}}>
-                {classify[1]?.map((item)=>{
+                {classify[1]?.map((item,index)=>{
                   return(
-                    <div style={{fontSize: '12px',padding: '4px',clear: 'both',textAlign: 'left'}}>
+                    <div key={index} style={{fontSize: '12px',padding: '4px',clear: 'both',textAlign: 'left'}}>
                       <span>
                         {item.cot_name}
                       </span>
@@ -204,9 +203,9 @@ export default function BangLuongTong() {
                     </div>
                   );
                 })}
-                {classify[2]?.map((item)=>{
+                {classify[2]?.map((item,index)=>{
                   return(
-                    <div style={{fontSize: '12px',padding: '4px',clear: 'both',textAlign: 'left'}}>
+                    <div key={index} style={{fontSize: '12px',padding: '4px',clear: 'both',textAlign: 'left'}}>
                       <span>
                         {item.cot_name}
                       </span>
@@ -218,9 +217,9 @@ export default function BangLuongTong() {
                 })}
               </div>
               <div style={{width: '100%',color: '#000',backgroundColor: '#ccc',}}>
-                {classify[5]?.map((item)=>{
+                {classify[5]?.map((item,index)=>{
                   return(
-                    <b style={{fontSize: '12px',padding: '4px',clear: 'both',display:'block',textAlign: 'left'}}>
+                    <b key={index} style={{fontSize: '12px',padding: '4px',clear: 'both',display:'block',textAlign: 'left'}}>
                       <span>
                           {item.cot_name}
                       </span>
@@ -243,9 +242,9 @@ export default function BangLuongTong() {
                   </span>
                 </b>
               </div>
-              {classify[3]?.map((item)=>{
+              {classify[3]?.map((item,index)=>{
                 return(
-                  <div style={{fontSize: '12px',margin: '4px',clear: 'both',textAlign: 'left'}}>
+                  <div key={index} style={{fontSize: '12px',margin: '4px',clear: 'both',textAlign: 'left'}}>
                     <span>
                         {item.cot_name}
                     </span>
@@ -255,9 +254,9 @@ export default function BangLuongTong() {
                   </div>
                 );
               })}
-              {classify[6]?.map((item)=>{
+              {classify[6]?.map((item,index)=>{
                 return(
-                  <div style={{width: '100%',color: '#000',backgroundColor: '#ccc',}}>
+                  <div key={index} style={{width: '100%',color: '#000',backgroundColor: '#ccc',}}>
                     <b style={{fontSize: '12px',padding: '4px',clear: 'both',display:'block',textAlign: 'left'}}>
                       <span>
                           {item.cot_name}
@@ -282,19 +281,21 @@ export default function BangLuongTong() {
             </div>
           </div>
           <div style={{width:'100%',clear: 'both',marginBottom: '10px',}}>
-            <table style={{width: '100%',border: '1px solid #000',fontSize: '12px',}} cellspacing="0">
+            <table style={{width: '100%',border: '1px solid #000',fontSize: '12px',}} cellSpacing="0">
               <thead style={{width: '100%',color: '#fff',backgroundColor: '#38bdf8',fontStyle: 'italic',}}>
-                <th style={{borderBottom: '1px solid #000',padding: '4px',textAlign: 'left',}}>
-                  Thông tin liên quan khác
-                </th>
-                <th style={{borderBottom: '1px solid #000',padding: '4px',textAlign: 'right',}}>
-                  (VNĐ)
-                </th>
+                <tr>
+                  <th style={{borderBottom: '1px solid #000',padding: '4px',textAlign: 'left',}}>
+                    Thông tin liên quan khác
+                  </th>
+                  <th style={{borderBottom: '1px solid #000',padding: '4px',textAlign: 'right',}}>
+                    (VNĐ)
+                  </th>
+                </tr>
               </thead>
               <tbody>
-                {classify[4]?.map((item)=>{
+                {classify[4]?.map((item,index)=>{
                   return(
-                    <tr>
+                    <tr key={index}>
                       <td style={{padding: '4px',textAlign: 'left',}}>
                         {item.cot_name}
                       </td>
@@ -346,6 +347,9 @@ export default function BangLuongTong() {
                   onClick={()=> {
                     dispatch(setCTLflag(true));
                     dispatch(setCurrentMenu(7));
+                    setTimeout(()=>{
+                      dispatch(setCTLflag(false));
+                    },1500);
                   }}
                 >
                   <i className='fa-regular fa-pen-to-square'></i>
@@ -383,39 +387,41 @@ export default function BangLuongTong() {
               <div className='bangLuongTab w-full overflow-y-auto rounded'>
                 <table className='w-max min-w-full customTable'>
                   <thead className='leading-8'>
-                    <th className='w-16'>
-                      STT
-                    </th>
-                    <th className='px-2'>
-                      <div className='flex items-center'>
-                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"
-                          onClick={()=>sortBangLuong('asc')}
-                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
-                        <p className='flex-1'>
-                          Tên nhân viên
-                        </p>
-                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"
-                        onClick={()=>sortBangLuong('desc')}
-                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 10h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
-                      </div>
-                    </th>
-                    {bangLuongList?.columns?.map((cot)=>{
-                      return <th>{cot.cot_name}</th>
-                    })}
-                    <th>Thực Lãnh</th>
-                    <th className='w-16'>In</th>
-                    <th className='w-16'>Gửi email</th>
+                    <tr>
+                      <th className='w-16'>
+                        STT
+                      </th>
+                      <th className='px-2'>
+                        <div className='flex items-center'>
+                          <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-left text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"
+                            onClick={()=>sortBangLuong('asc')}
+                          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 10v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 21h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+                          <p className='flex-1'>
+                            Tên nhân viên
+                          </p>
+                          <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="hover:text-orange-500 float-right text-xl cursor-pointer active:text-sky-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"
+                          onClick={()=>sortBangLuong('desc')}
+                          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21v-5c0 -1.38 .62 -2 2 -2s2 .62 2 2v5m0 -3h-4"></path><path d="M19 10h-4l4 -7h-4"></path><path d="M4 15l3 3l3 -3"></path><path d="M7 6v12"></path></svg>
+                        </div>
+                      </th>
+                      {bangLuongList?.columns?.map((cot,index)=>{
+                        return <th key={index}>{cot.cot_name}</th>
+                      })}
+                      <th>Thực Lãnh</th>
+                      <th className='w-16'>In</th>
+                      <th className='w-16'>Gửi email</th>
+                    </tr>
                   </thead>
                   <tbody>
                     {bangLuongList?.rows?.map((row,index)=>{
-                      return <tr>
+                      return <tr key={index}>
                         <td>{index+1}</td>
                         <td className='text-left'><p className='px-2'>{row.nv_name}</p></td>
                         {row.result?.length>0 ? row.result?.map((value,idx)=>{
                           if(idx==row.result?.length-1 && row.result?.length!=bangLuongList?.columns.length){
                             sum += Number(value);
                           };
-                          return <td>{new Intl.NumberFormat('EN-US').format(value)}</td>
+                          return <td key={idx}>{new Intl.NumberFormat('EN-US').format(value)}</td>
                         }) : <td className='abc1'>0</td>}
                         {(row.result?.length==bangLuongList?.columns.length && row.result?.length != 0?<td className='abc'>0</td>:'')}
                         <td><button type="button" onClick={() => { setNVIndex(index);setIsPrint(true); }}><i className='fa-solid fa-print text-base text-red-600'></i></button></td>
@@ -423,7 +429,7 @@ export default function BangLuongTong() {
                       </tr>
                     })}
                     <tr className='text-lg'>
-                      <td colSpan={bangLuongList?.columns?.length+2} className='font-bold text-orange-400 uppercase'>Tổng cộng:</td>
+                      <td colSpan={bangLuongList?.columns?.length>0?bangLuongList?.columns?.length+2:2} className='font-bold text-orange-400 uppercase'>Tổng cộng:</td>
                       <td className='font-bold'>
                         {new Intl.NumberFormat('EN-US').format(sum)}
                       </td>

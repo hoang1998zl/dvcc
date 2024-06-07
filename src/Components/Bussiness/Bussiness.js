@@ -22,9 +22,10 @@ export default function Bussiness({logoutComponent}) {
     },
   ];
   const renderApp = () => {
-    return LstApp.map((item) => {
+    return LstApp.map((item,index) => {
       return (
         <a
+          key={index}
           type='button'
           className={`flex flex-col justify-start items-center cursor-pointer hover:text-orange-400 [&>*:first-child]:hover:shadow-lg [&>*:first-child]:hover:border-orange-400 ${currentMenu==item.menuID?'text-orange-400':'text-gray-500'}`}
           onClick={()=>{dispatch(setCurrentMenu(item.menuID));dispatch(setIsOpenBusiness(false))}}
