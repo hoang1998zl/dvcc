@@ -333,6 +333,7 @@ export default function ChiNhanh() {
           </td>
           <td className='text-center' >
                     <Popconfirm
+                    okType='danger'
                         onConfirm={() => handleDeleteChiNhanh(item.chi_nhanh_id)}
                         title="Xoá địa điểm"
                         description="Xác nhận xoá địa điểm này?"

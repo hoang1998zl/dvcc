@@ -134,5 +134,14 @@ export const cauHinhChungService = {
                 token
             }
         })
+    },
+    xoaCaLamViec: (token,id) => {
+        return axios({
+            url: BASE_URL + `api/gio-cong/xoa-ca-lam-viec/` + id,
+            method: "DELETE",
+            headers: {
+                token
+            }
+        })
     }
 }

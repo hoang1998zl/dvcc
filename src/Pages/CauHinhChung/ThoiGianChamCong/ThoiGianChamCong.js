@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FaArrowUpRightDots, FaRegClock } from "react-icons/fa6";
-import { BsFillBriefcaseFill } from "react-icons/bs";
-import { Modal, Switch, Tooltip } from 'antd';
+import { FaRegClock } from "react-icons/fa6";
+import { Modal, Popconfirm, Switch, Tooltip } from 'antd';
 import { cauHinhChungService } from '../../../services/cauHinhChungService';
 import { localStorageService } from '../../../services/localStorageService';
 import moment from 'moment/moment';
@@ -107,6 +106,22 @@ export default function ThoiGianChamCong() {
       .catch((err) => {
         console.log(err);
       });
+  }
+  let handleXoaCa = (id) => {
+    cauHinhChungService.xoaCaLamViec(token,id).then((res) => {
+      setReload(Date.now());
+      toast.success("Xóa ca thành công!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+      });
+    })
+    .catch((err) => {
+      setReload(Date.now());
+      toast.error(err?.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000
+      });
+    });
   }
   // const renderCaLamViec = () => {
   //   return gioLamViec?.theoCa?.map((ca, index) => {
@@ -271,6 +286,22 @@ export default function ThoiGianChamCong() {
             id="gio_cong_chuan"
             value={ca.gio_cong_chuan ? ca.gio_cong_chuan : ""}
           />Giờ/Ca
+        </td>
+        <td className='text-center' >
+          <Popconfirm
+          okType='danger'
+            onConfirm={() => handleXoaCa(ca.id)}
+            title="Xoá ca làm việc"
+            description="Xác nhận xoá ca làm việc này?"
+            okText="Đồng ý"
+            cancelText="Huỷ bỏ"
+          >
+            <button
+              className='focus:outline-none py-0.5 px-2 bg-orange-400 text-white rounded-sm'
+            >
+              <i className='fa-solid fa-trash-alt'></i>
+            </button>
+          </Popconfirm>
         </td>
         {/* <td className='text-center'>
           <input
@@ -468,6 +499,7 @@ export default function ThoiGianChamCong() {
               <th className='text-center'>Giờ vào</th>
               <th className='text-center'>Giờ ra</th>
               <th className='text-center'>Giờ công chuẩn</th>
+              <th></th>
               {/* <th className='text-center'>Tăng ca vào</th>
               <th className='text-center'>Tăng Ca ra</th>
               <th className='text-center'>Giờ công tăng ca</th> */}
@@ -497,6 +529,7 @@ export default function ThoiGianChamCong() {
                     type="text" className='text-center w-11 focus:outline-none focus:border-b-[1px] focus:border-black bg-transparent'
                     name='hanhChinh' id="gio_cong_chuan" value={gioLamViec.hanhChinh?.gio_cong_chuan ? gioLamViec.hanhChinh?.gio_cong_chuan : ""} />Giờ/Ca
                 </td>
+                <td></td>
                 {/* <td>
                   <input
                     onChange={(e) => changeInput(e, 0, gioLamViec.hanhChinh?.id ? gioLamViec.hanhChinh.id : 0)}
@@ -551,6 +584,7 @@ export default function ThoiGianChamCong() {
                 <td>
                   {/* <input onChange={(e) => changeInput(e, 0, gioLamViec.hanhChinh?.id ? gioLamViec.hanhChinh.id : 0)} onKeyDown={(e) => { (e.key == "Enter") && handleCreateUpdateGioCong(e, gioLamViec.hanhChinh?.id ? gioLamViec.hanhChinh.id : 0) }} type="time" className='text-center w-full rounded focus-within:outline-none px-2 bg-transparent' name='hanhChinh' id='gio_ket_thuc' value={gioLamViec.hanhChinh?.gio_ket_thuc ? gioLamViec.hanhChinh?.gio_ket_thuc : ""} /> */}
                 </td>
+                <td></td>
                 <td></td>
               </tr>
             </tbody>
