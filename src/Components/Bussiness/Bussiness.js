@@ -38,7 +38,6 @@ export default function Bussiness({logoutComponent}) {
             hoveringAudio.play();
           }}
           onMouseLeave={()=>{
-            hoveringAudio.pause();
             hoveringAudio.currentTime = 0;
           }}
         >
