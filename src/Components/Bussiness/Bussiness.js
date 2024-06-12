@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
 import { GiNotebook } from "react-icons/gi";
 import { LiaMoneyCheckAltSolid } from "react-icons/lia";
+import audio from "../../issets/sound/low_spring_open.mp3"
 
 export default function Bussiness({logoutComponent}) {
   const dispatch = useDispatch();
   const isOpenBusiness = useSelector((state) => state.MenuSlice.isOpenBusiness);
   const currentMenu = useSelector((state)=> state.MenuSlice.currentMenu);
+  const hoveringAudio = new Audio(audio);
   const LstApp = [
     {
       name: 'Macro Lương',
@@ -21,6 +23,9 @@ export default function Bussiness({logoutComponent}) {
       menuID: 8,
     },
   ];
+  useEffect(() => {
+    hoveringAudio.load();
+  }, []);
   const renderApp = () => {
     return LstApp.map((item,index) => {
       return (
@@ -29,6 +34,12 @@ export default function Bussiness({logoutComponent}) {
           type='button'
           className={`flex flex-col justify-start items-center cursor-pointer hover:text-orange-400 [&>*:first-child]:hover:shadow-lg [&>*:first-child]:hover:border-orange-400 ${currentMenu==item.menuID?'text-orange-400':'text-gray-500'}`}
           onClick={()=>{dispatch(setCurrentMenu(item.menuID));dispatch(setIsOpenBusiness(false))}}
+          onMouseEnter={()=>{
+            hoveringAudio.play();
+          }}
+          onMouseLeave={()=>{
+            hoveringAudio.currentTime = 0;
+          }}
         >
           <div
             className={`w-12 h-12 p-1 rounded-md border flex justify-center items-center text-2xl ${currentMenu==item.menuID&&'border-orange-400'}`}
