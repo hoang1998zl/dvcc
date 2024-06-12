@@ -194,7 +194,6 @@ export default function LichSuNghiKhac() {
               />
               <p className='w-max flex-1 text-left'>
                 <strong>{nghiKhac?.ns_nhanvien_dvcc_nghi_khac_nv_idTons_nhanvien?.nv_name} </strong>
-                <span>đã thực hiện công tác</span>
               </p>
               <p className='text-right'>
                 <p className='text-orange-400 font-semibold'>{moment(nghiKhac?.thoigian).format("HH:mm")}</p>
