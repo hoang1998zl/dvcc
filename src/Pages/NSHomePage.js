@@ -12,6 +12,7 @@ import "./NS.css"
 import TaiKhoan from './TaiKhoan/TaiKhoan';
 import BangLuongTong from './BangLuongTong/BangLuongTong';
 import TaoBangLuong from './TaoBangLuong/TaoBangLuong';
+import { HoveringAudio } from '../Components/HoveringAudio';
 
 export default function NSHomePage() {
 
@@ -70,6 +71,7 @@ export default function NSHomePage() {
       {
         loading && <Loading />
       }
+      <HoveringAudio/>
     </div>
   )
 }

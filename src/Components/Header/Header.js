@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import logo from '../../issets/img/logo_orange.jpg'
 
 import { IoCube } from "react-icons/io5";
@@ -15,6 +14,7 @@ import { setNewNoti } from '../../Redux-toolkit/reducer/DuyetAppSlice';
 import { localStorageService } from '../../services/localStorageService';
 import { macroLuongService } from '../../services/macroLuongService';
 import Bussiness from '../Bussiness/Bussiness';
+import { playHoveringAudio, stopHoveringAudio } from '../HoveringAudio';
 
 export default function Header() {
 
@@ -138,6 +138,12 @@ export default function Header() {
         window.location.href = "https://labortracking.vn";
       }}
       className={`h-full text-gray-600 focus:outline-none px-2 hover:text-orange-400`}
+      onMouseEnter={()=>{
+        playHoveringAudio();
+      }}
+      onMouseLeave={()=>{
+        stopHoveringAudio();
+      }}
     >
       <div className='flex justify-center'>
         <HiOutlineLogout/>
