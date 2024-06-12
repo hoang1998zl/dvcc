@@ -28,7 +28,7 @@ export default function TaoBangLuong() {
   ];
   return (
     <div id='taoBangLuong' className='m-4 p-4 rounded-lg bg-white shadow-md'>
-      <Tabs className='customTab' type='card' defaultActiveKey={CTLflag?'4':'1'} items={items}> </Tabs>
+      <Tabs className='customTab' type='card' defaultActiveKey={CTLflag?'4':'1'} items={items}/>
       <ToastContainer/>
     </div>
   );
