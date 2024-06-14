@@ -139,6 +139,7 @@ export default function BangChamCong() {
                 <td>{ngayCong?.tong_khongphep}</td>
                 <td>{(Number(ngayCong?.gio_nghile) + Number(ngayCong?.gio_nghiphep)).toFixed(2)}</td>
                 <td>{(Number(ngayCong.tong_giocong) + Number(ngayCong?.gio_nghile) + Number(ngayCong?.gio_nghiphep)).toFixed(2)}</td>
+                <td>{ngayCong?.gio_tang_ca}</td>
                 <td>
                     {year + "-" + month >= moment().subtract(1,"month").format("YYYY-MM") ? 
                         <input onKeyDown={(e) => { (e.key == "Enter") && updateBangCong(e, ngayCong?.luong_id) }} onChange={(e) => changeInput(e, index, ngayCong?.luong_id)} id="phep_dauthang" className='w-full bg-transparent text-center' type="text" value={ngayCong?.phep_dauthang ? ngayCong.phep_dauthang : ""} />
@@ -921,6 +922,9 @@ export default function BangChamCong() {
                                     Tổng Giờ Công
                                 </th>
                                 <th>
+                                    Giờ Công Tăng Ca
+                                </th>
+                                <th>
                                     Phép Tháng Trước
                                 </th>
                                 <th>
@@ -1012,6 +1016,9 @@ export default function BangChamCong() {
                                 Tổng Giờ Công
                             </th>
                             <th>
+                                Giờ Công Tăng Ca
+                            </th>
+                            <th>
                                 Phép Tháng Trước
                             </th>
                             <th>
@@ -1046,6 +1053,7 @@ export default function BangChamCong() {
                                     <td>{item?.tong_khongphep}</td>
                                     <td>{Number(item?.gio_nghile) + Number(item?.gio_nghiphep)}</td>
                                     <td>{Number(item?.tong_giocong) + Number(item?.gio_nghile) + Number(item?.gio_nghiphep)}</td>
+                                    <td>{item?.gio_tang_ca}</td>
                                     <td>{item?.phep_dauthang}</td>
                                     <td>{item?.phep_congthem}</td>
                                     <td>{item?.phep_conlai}</td>
