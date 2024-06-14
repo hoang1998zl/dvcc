@@ -16,6 +16,8 @@ export default function BangCongTangCa() {
     let [reload,setReload] = useState(0);
     const [bangCong,setBangCong] = useState([]);
     const [ngayCong,setNgayCong] = useState([]);
+    const [date,setDate] = useState("");
+    let [nhanVien,setNhanVien] = useState({});
     const [drag, setDrag] = useState(false);
     const [isOpenNhatKy, setIsOpenNhatKy] = useState(false);
     const [currentRow, setCurrentRow] = useState(0);
@@ -25,6 +27,11 @@ export default function BangCongTangCa() {
     let month = useSelector(state => state.ChamCongSlice.month);
     let year = useSelector(state => state.ChamCongSlice.year);
     let danhmuc_id = useSelector(state => state.ChamCongSlice.danhmuc_id);
+    let [baseFormat,setBaseFormat] = useState({
+        gio_cong_thuan: null,
+        he_so: null,
+        tong_gio_cong: null
+    })
 
     useEffect(() => {
         chamCongService.layBangCongTangCa(token,{month,year,danhmuc_id}).then((res) => {
@@ -64,6 +71,37 @@ export default function BangCongTangCa() {
         clone[index][key] = value;
         setNgayCong(clone);
     }
+    let changeInputCreate = (key,value) => {
+        value = value.replace(/[^\d.-]/g, '');
+        let clone = {...baseFormat};
+        if(!isNull(value) && value !== ""){
+          if(key == "gio_cong_thuan"){
+            if(Number(value <= 0)){
+              value = "0";  
+            }
+            if(isNaN(value)){
+              value = "0";
+            }
+            clone.tong_gio_cong = Number(value) * Number(clone.he_so);
+            clone.tong_gio_cong = clone.tong_gio_cong.toFixed(2);
+          }
+          if(key == "he_so"){
+            if(Number(value < 1)){
+              value = "1";  
+            }
+            if(Number(value > 3)){
+              value = "3";  
+            }
+            if(isNaN(value)){
+              value = "1";
+            }
+            clone.tong_gio_cong = Number(value) * Number(clone.gio_cong_thuan);
+            clone.tong_gio_cong = clone.tong_gio_cong.toFixed(2);
+          }
+        }  
+        clone[key] = value;
+        setBaseFormat(clone);
+    }
     const getChiTietNgay = (index,nv_id) => {
         index++;
         if(index < 10){
@@ -76,6 +114,36 @@ export default function BangCongTangCa() {
         }).catch((err) => {
             console.log(err);
         })
+    }
+    let createtangCa = (ngay) => {
+        let data = {
+            ngay,
+            nv_id: nhanVien.nv_id,
+            gio_cong_thuan: baseFormat.gio_cong_thuan,
+            he_so: baseFormat.he_so,
+            tong_gio_cong: baseFormat.tong_gio_cong
+        }
+        chamCongService.createTangCa(token,data).then((res) => {
+            setReload(Date.now());
+            toast.success("Cập nhật thành công!!!", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+        }).catch((err) => {
+            toast.error(err.response.data.content, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000
+            });
+            console.log(err);
+        })
+        setBaseFormat({
+            gio_cong_thuan: null,
+            he_so: null,
+            tong_gio_cong: null
+        })
+        let indexNgay = moment(ngay,"YYYY-MM-DD").format("DD");
+        indexNgay = Number(indexNgay) - 1;
+        getChiTietNgay(indexNgay,nhanVien?.nv_id)
     }
     let updateTangCa = (index,nv_id,time) => {
         chamCongService.updateTangCa(token,ngayCong[index]).then((res) => {
@@ -253,33 +321,61 @@ export default function BangCongTangCa() {
         })
     }
     const renderChiTietNgayCong = () => {
-        return ngayCong?.map((item,index) => {
-            return <div key={index} className='w-full mb-2 p-2' style={{ gridTemplateColumns: 'auto 1fr', border: "1px solid #dddd" }}>
-                <p>
-                    Từ <b>{item?.thoi_gian_bat_dau}</b> {moment(item?.ngay_bat_dau).format("ddd")}, <b>{moment(item?.ngay_bat_dau).format("DD/MM/YYYY")}</b> 
-                </p>
-                <p>
-                    Đến <b>{item?.thoi_gian_ket_thuc}</b> {moment(item?.ngay_ket_thuc).format("ddd")}, <b>{moment(item?.ngay_ket_thuc).format("DD/MM/YYYY")}</b>
-                </p>
+        if(ngayCong.length > 0){
+            return ngayCong?.map((item,index) => {
+                return <div key={index} className='w-full mb-2 p-2' style={{ gridTemplateColumns: 'auto 1fr', border: "1px solid #dddd" }}>
+                    <p>
+                        Từ <b>{item?.thoi_gian_bat_dau}</b> {moment(item?.ngay_bat_dau).format("ddd")}, <b>{moment(item?.ngay_bat_dau).format("DD/MM/YYYY")}</b> 
+                    </p>
+                    <p>
+                        Đến <b>{item?.thoi_gian_ket_thuc}</b> {moment(item?.ngay_ket_thuc).format("ddd")}, <b>{moment(item?.ngay_ket_thuc).format("DD/MM/YYYY")}</b>
+                    </p>
+                    <div className='grid grid-cols-2 items-center'>
+                        <div>
+                            <p>Giờ Công Thuần: </p>
+                        </div>
+                        <div className='py-1'><Input onChange={(e) => changeInput(e.target.name,e.target.value,index)} name='gio_cong_thuan'  value={item?.gio_cong_thuan} /></div>
+                        <div>
+                            <p>Hệ Số: </p>
+                        </div>
+                        <div className='py-1'><Input onChange={(e) => changeInput(e.target.name,e.target.value,index)} name='he_so' value={item?.he_so} /></div>
+                        <div>
+                            <p>Tổng Giờ Công: </p>
+                        </div>
+                        <div className='py-1'><Input onChange={(e) => changeInput(e.target.name,e.target.value,index)} name='tong_gio_cong' value={item?.tong_gio_cong} /></div>
+                        </div>
+                        <div>
+                            <button onClick={() => updateTangCa(index,item?.nv_id,item?.ngay_bat_dau)} className='bg-orange-500 text-white px-2 py-1 rounded-md mt-2'>Lưu</button>
+                        </div>
+                    </div>
+            })
+        }else{
+            if(date == ""){
+                return;
+            }
+            return <div className='w-full mb-2 p-2' style={{ gridTemplateColumns: 'auto 1fr', border: "1px solid #dddd" }}>
+                <h1 className='uppercase font-bold text-lg'>{nhanVien?.nv_name}</h1>
+                <p>{date + "/" + month +  "/" + year}</p>
                 <div className='grid grid-cols-2 items-center'>
-                    <div>
-                        <p>Giờ Công Thuần: </p>
-                    </div>
-                    <div className='py-1'><Input onChange={(e) => changeInput(e.target.name,e.target.value,index)} name='gio_cong_thuan'  value={item?.gio_cong_thuan} /></div>
-                    <div>
-                        <p>Hệ Số: </p>
-                    </div>
-                    <div className='py-1'><Input onChange={(e) => changeInput(e.target.name,e.target.value,index)} name='he_so' value={item?.he_so} /></div>
-                    <div>
-                        <p>Tổng Giờ Công: </p>
-                    </div>
-                    <div className='py-1'><Input onChange={(e) => changeInput(e.target.name,e.target.value,index)} name='tong_gio_cong' value={item?.tong_gio_cong} /></div>
-                    </div>
-                    <div>
-                        <button onClick={() => updateTangCa(index,item?.nv_id,item?.ngay_bat_dau)} className='bg-orange-500 text-white px-2 py-1 rounded-md mt-2'>Lưu</button>
-                    </div>
-                </div>
-        })
+                        <div>
+                            <p>Giờ Công Thuần: </p>
+                        </div>
+                        <div className='py-1'><Input onChange={(e) => changeInputCreate(e.target.name,e.target.value)} name='gio_cong_thuan' value={baseFormat?.gio_cong_thuan} /></div>
+                        <div>
+                            <p>Hệ Số: </p>
+                        </div>
+                        <div className='py-1'><Input onChange={(e) => changeInputCreate(e.target.name,e.target.value)} name='he_so' value={baseFormat?.he_so}/></div>
+                        <div>
+                            <p>Tổng Giờ Công: </p>
+                        </div>
+                        <div className='py-1'><Input onChange={(e) => changeInputCreate(e.target.name,e.target.value)} name='tong_gio_cong' value={baseFormat?.tong_gio_cong} /></div>
+                        </div>
+                        <div>
+                            <button onClick={() => createtangCa(year + "-" + month + "-" + date)} className='bg-orange-500 text-white px-2 py-1 rounded-md mt-2'>Lưu</button>
+                        </div>
+            </div>
+        }
+        
     }
     const renderBangCong = () => {
         return bangCong?.map((item,index) => {
@@ -288,7 +384,11 @@ export default function BangCongTangCa() {
                 {
                     item?.ngayCong?.map((ngayCong,ind) => {
                         return  <td
-                                    onClick={() => getChiTietNgay(ind,item?.nhanVien?.nv_id)}
+                                    onClick={() => {
+                                        getChiTietNgay(ind,item?.nhanVien?.nv_id);
+                                        setDate(ind < 9 ? "0" + (ind + 1) : String(ind + 1));
+                                        setNhanVien(item?.nhanVien);
+                                    }}
                                     className='text-center cursor-pointer' key={ind}>{ngayCong}
                                 </td>
                     })

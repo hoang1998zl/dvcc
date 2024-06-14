@@ -246,5 +246,15 @@ export const  chamCongService = {
                 token
             }
         })
+    },
+    createTangCa: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/bang-cong/post/them-tang-ca",
+            method: "POST",
+            data,
+            headers:{
+                token
+            }
+        })
     }
 }
