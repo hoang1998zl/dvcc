@@ -47,5 +47,15 @@ export const baoCaoService = {
                 token
             }
         })
+    },
+    layNhanVienXinPhep: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/bao-cao/lay-nv-xin-phep",
+            method: "POST",
+            data:data,
+            headers: {
+                token
+            }
+        })
     }
 }
