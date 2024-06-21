@@ -90,7 +90,7 @@ export default function BaoCaoSoPhep() {
             break;
         }
         return nvList.map((nv,index) => {
-          return <p key={index}>{nv[key]?.nv_name}</p>
+          return <p key={index}>- {nv[key]?.nv_name}</p>
         })
       }
       return (
