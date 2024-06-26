@@ -112,6 +112,10 @@ export default function TaiKhoanDvcc() {
             setTextUsername("Tài khoản không hợp lệ! " + `${congTy?.company_code}` + ".tài khoản");
             return;
           }
+          if (!codeCompany[1]) {
+            setTextUsername("Tài khoản không hợp lệ! " + `${congTy?.company_code}` + ".tài khoản");
+            return;
+          }
         };
         if (baseFormat?.nv_password == "" || baseFormat?.nv_password == null) {
           setTextPassWord("Vui lòng nhập mật khẩu");
