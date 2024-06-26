@@ -210,7 +210,7 @@ export default function LichSuNghiKhac() {
             </p>
           </td>
           <td>
-            <p className='line-clamp-1'>
+            <p className=''>
               {nghiKhac?.ly_do}
               
             </p>

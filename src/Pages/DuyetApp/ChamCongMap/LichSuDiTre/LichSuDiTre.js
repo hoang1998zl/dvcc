@@ -229,7 +229,7 @@ export default function LichSuDiTre() {
                 </span>
               </td>
               <td>
-                <p className='line-clamp-1'>
+                <p className=''>
                   {somTre?.ly_do}
                 </p>
               </td>

@@ -257,7 +257,7 @@ export default function DiTreVeSom() {
             </span>
           </td>
           <td>
-            <p className='line-clamp-1'>
+            <p className=''>
               {somTre?.ly_do}
             </p>
           </td>

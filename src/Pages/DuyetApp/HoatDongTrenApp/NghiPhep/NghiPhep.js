@@ -209,7 +209,7 @@ export default function NghiPhep() {
         </p>
       </td>
       <td>
-        <p className='line-clamp-1'>
+        <p className=''>
           {phep?.ly_do}
         </p>
       </td>

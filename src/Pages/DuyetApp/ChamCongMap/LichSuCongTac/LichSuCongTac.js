@@ -212,7 +212,7 @@ export default function LichSuCongTac() {
         <p>Nơi Công Tác: {congTac?.noi_cong_tac}</p>
       </td>
       <td>
-        <p className='line-clamp-1'>
+        <p className=''>
           {congTac?.noi_dung_cong_tac}
           
         </p>

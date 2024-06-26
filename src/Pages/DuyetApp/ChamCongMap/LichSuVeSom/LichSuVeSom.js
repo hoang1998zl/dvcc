@@ -228,7 +228,7 @@ export default function LichSuVeSom() {
             </span>
           </td>
           <td>
-            <p className='line-clamp-1'>
+            <p className=''>
               {somTre?.ly_do}
             </p>
           </td>
