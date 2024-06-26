@@ -13,6 +13,7 @@ import TaiKhoan from './TaiKhoan/TaiKhoan';
 import BangLuongTong from './BangLuongTong/BangLuongTong';
 import TaoBangLuong from './TaoBangLuong/TaoBangLuong';
 import { HoveringAudio } from '../Components/HoveringAudio';
+import ThongBaoNoiBo from './ThongBaoNoiBo';
 
 export default function NSHomePage() {
 
@@ -50,6 +51,7 @@ export default function NSHomePage() {
       case 6: return <TaiKhoan />;
       case 7: return <TaoBangLuong />;
       case 8: return <BangLuongTong />;
+      case 9: return <ThongBaoNoiBo/>;
       default: return <BaoCao />;
     }
   }

@@ -256,5 +256,15 @@ export const  chamCongService = {
                 token
             }
         })
+    },
+    sendThongBaoNoiBo: (token,data) => {
+        return axios({
+            url: BASE_URL + "api/bang-cong/post/gui-thong-bao-noi-bo",
+            method: "POST",
+            data,
+            headers:{
+                token
+            }
+        })
     }
 }

@@ -5,6 +5,7 @@ import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/M
 import { GiNotebook } from "react-icons/gi";
 import { LiaMoneyCheckAltSolid } from "react-icons/lia";
 import {playHoveringAudio,stopHoveringAudio} from "../HoveringAudio";
+import { MdNotificationAdd } from "react-icons/md";
 
 export default function Bussiness({logoutComponent}) {
   const dispatch = useDispatch();
@@ -20,6 +21,11 @@ export default function Bussiness({logoutComponent}) {
       name: 'Bảng lương',
       icon: <LiaMoneyCheckAltSolid />,
       menuID: 8,
+    },
+    {
+      name: 'Gửi thông báo',
+      icon: <MdNotificationAdd />,
+      menuID: 9,
     },
   ];
   const renderApp = () => {
