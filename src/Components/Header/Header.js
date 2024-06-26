@@ -7,6 +7,7 @@ import { IoCube } from "react-icons/io5";
 import { FaArrowUpRightDots, FaGear, FaLocationDot, FaUser } from "react-icons/fa6";
 import { LuClock3 } from "react-icons/lu";
 import { HiOutlineLogout } from "react-icons/hi";
+import { MdNotificationAdd } from "react-icons/md";
 
 import { setCurrentMenu, setIsOpenBusiness } from '../../Redux-toolkit/reducer/MenuSlice';
 import { dvccService } from '../../services/dvccService';
@@ -92,6 +93,11 @@ export default function Header() {
     //   menu_name: "Bảng Lương",
     //   menu_icon: <FaRegCalendarCheck />,
     // },
+    {
+      menu_id: 9,
+      menu_name: 'Gửi thông báo',
+      menu_icon: <MdNotificationAdd />,
+    },
   ];
 
   const renderMenuHeader = () => {
