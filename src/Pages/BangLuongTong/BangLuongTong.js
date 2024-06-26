@@ -79,9 +79,10 @@ export default function BangLuongTong() {
     if(list.length>0){
       list.map((itm)=>{
         const nv_id = bangLuongList?.rows[itm]?.nv_id;
-        const subject = 'Bảng lương tháng '+month+'/'+year;
+        const subject = month+'/'+year;
         const componentHTML = renderToString(renderPayslip(itm));
-        macroLuongService.sendBangLuongToEmail(token, {nv_id,subject,componentHTML}).then((res) => {
+        const thuclanh = new Intl.NumberFormat('vi-VN',{style: 'currency',currency: 'VND',}).format(bangLuongList?.rows[itm]?.result[bangLuongList?.rows[itm]?.result.length-1]?bangLuongList?.rows[itm]?.result[bangLuongList?.rows[itm]?.result.length-1]:0);
+        macroLuongService.sendBangLuongToEmail(token, {nv_id,subject,componentHTML,thuclanh}).then((res) => {
           if(list.length===1){
             if(res.data.processStatus==nv_id){
               toast.success(res.data.message, {
