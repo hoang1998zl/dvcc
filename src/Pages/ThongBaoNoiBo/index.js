@@ -17,6 +17,7 @@ export default function ThongBaoNoiBo() {
   const { TextArea } = Input;
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     chamCongService.getPhongBan(token).then((res) => {
@@ -45,13 +46,14 @@ export default function ThongBaoNoiBo() {
         autoClose: 2000
       });
     }
-    chamCongService.sendThongBaoNoiBo(token,{title,content,danhmuc_id}).then((res) => {
+    chamCongService.sendThongBaoNoiBo(token,{file,title,content,danhmuc_id}).then((res) => {
       toast.success("Gửi thông báo thành công!!!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000
       });
       setTitle('');
       setContent('');
+      setFile(null);
     }).catch((err) => {
       toast.error(err.response.data.content, {
         position: toast.POSITION.TOP_RIGHT,
@@ -107,7 +109,7 @@ export default function ThongBaoNoiBo() {
             <div className='bangLuongTab w-full overflow-y-auto rounded'>
               <Input className='w-full' value={title} onInput={(e)=>setTitle(e.target.value)}/>
             </div>
-            <div className='mb-2'>
+            <div className='mb-2 mt-2'>
               <h1 className='flex-1 text-left text-orange-400 font-semibold text-lg'>
                 <span className='ms-4'>
                   Nội dung thông báo:
@@ -116,6 +118,18 @@ export default function ThongBaoNoiBo() {
             </div>
             <div className='bangLuongTab w-full overflow-y-auto rounded'>
               <TextArea rows={4} value={content} onInput={(e)=>setContent(e.target.value)}/>
+            </div>
+            <div className='mb-2 mt-2'>
+              <h1 className='flex-1 text-left text-orange-400 font-semibold text-lg'>
+                <span className='ms-4'>
+                  Ảnh nền (nếu có):
+                </span>
+              </h1>
+            </div>
+            <div className='bangLuongTab w-full overflow-y-auto rounded flex'>
+              <label htmlFor="file" className="inline-block bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded cursor-pointer">Chọn ảnh nền</label>
+              <input type="file" id="file" className="hidden" onChange={(e)=>setFile(e.target.files[0])}/>
+              {file && (<p className='ml-2 flex flex-col justify-center items-center text-orange-400 italic'>{file.name}</p>)}
             </div>
             <button
               type="button"

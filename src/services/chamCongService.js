@@ -258,10 +258,17 @@ export const  chamCongService = {
         })
     },
     sendThongBaoNoiBo: (token,data) => {
+        const formData = new FormData();
+        if(data.file) {
+            formData.append('fileTBNB', data.file);
+        }
+        formData.append('title', JSON.stringify(data.title));
+        formData.append('content', JSON.stringify(data.content));
+        formData.append('danhmuc_id', JSON.stringify(data.danhmuc_id));
         return axios({
             url: BASE_URL + "api/bang-cong/post/gui-thong-bao-noi-bo",
             method: "POST",
-            data,
+            data: formData,
             headers:{
                 token
             }
